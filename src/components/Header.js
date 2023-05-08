@@ -4,8 +4,97 @@ import chat from "../img/chat.png";
 import heart from "../img/heart.png";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import LoginModal from "./LoginModal";
+import LoginModal from "./Modal/LoginModal";
 import dummy from "../data.json";
+
+//sessionStorage 사용? session cookies?
+function Header() {
+  //const userId = dummy.words.filter(word => (word.day === day));
+  const [user, setUser] = useState(1);
+  const [login, setLogin] = useState(false);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const getLoginOrNot = () => {
+    //로그인 여부 체크, 나중에는 문자열 있는지없는지
+    if (user === 1) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  };
+  const goLogout = () => {
+    setUser(0); //나중에는 쿠키 삭제
+    //getLoginOrNot(); 새로고침?
+  };
+  const goLogin = () => {
+    //로그인창
+    setLoginModalIsOpen(true);
+  };
+  const goSignup = () => {
+    navigate(`/signup`);
+  };
+  const goMypage = () => {
+    navigate(`/mypage/${user}`);
+  };
+
+  useEffect(() => {
+    getLoginOrNot();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loginModalIsOpen]);
+
+  return (
+    <HeaderBar>
+      <a href="/">
+        <img
+          style={{ width: "12em", height: "8em" }}
+          src={logo}
+          alt="logo"
+        ></img>
+      </a>
+      <Div>
+        {login ? (
+          //채팅
+          <Btn>
+            <img src={chat} className="chatImg" alt="chat"></img>
+          </Btn>
+        ) : null}
+        {login ? (
+          //알림
+          <Btn>
+            <img src={heart} className="heartImg" alt="heart"></img>
+          </Btn>
+        ) : null}
+
+        {login ? (
+          <Btn>
+            <p onClick={goMypage}>{user} 님</p>
+          </Btn>
+        ) : (
+          <Btn>
+            <p onClick={goSignup}>회원가입</p>
+          </Btn>
+        )}
+        {login ? (
+          <Btn onClick={goLogout}>
+            <p>로그아웃</p>
+          </Btn>
+        ) : (
+          <Btn>
+            <p onClick={goLogin}>로그인</p>
+            {loginModalIsOpen && (
+              <LoginModal
+                open={loginModalIsOpen}
+                onClose={() => {
+                  setLoginModalIsOpen(false);
+                }}
+              />
+            )}
+          </Btn>
+        )}
+      </Div>
+    </HeaderBar>
+  );
+}
 
 const HeaderBar = styled.nav`
   margin: auto;
@@ -47,7 +136,7 @@ const Btn = styled.button`
     font-family: "Noto Sans KR", sans-serif;
   }
   :hover {
-    color: darkblue;
+    color: #385493;
     cursor: pointer;
   }
   .chatImg,
@@ -56,89 +145,5 @@ const Btn = styled.button`
     height: 2em;
   }
 `;
-
-//sessionStorage 사용? session cookies?
-function Header() {
-  //const userId = dummy.words.filter(word => (word.day === day));
-  const [user, setUser] = useState(1);
-  const [login, setLogin] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const navigate = useNavigate();
-  const getLoginOrNot = () => {
-    //로그인 여부 체크, 나중에는 문자열 있는지없는지
-    if (user === 1) {
-      setLogin(true);
-    } else {
-      setLogin(false);
-    }
-  };
-  const goLogout = () => {
-    setUser(0); //나중에는 쿠키 삭제
-    //getLoginOrNot(); 새로고침?
-  };
-  const goLogin = () => {
-    //로그인창
-    setIsLoginModalOpen(true);
-    openLoginModal();
-  };
-  const openLoginModal = () => {
-    
-  
-  ;}
-  const goMypage = () => {
-    navigate(`/mypage/${user}`);
-  };
-
-  useEffect(() => {
-    getLoginOrNot();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
-  return (
-    <HeaderBar>
-      <a href="/">
-        <img
-          style={{ width: "12em", height: "8em" }}
-          src={logo}
-          alt="logo"
-        ></img>
-      </a>
-      <Div>
-        {login ? (
-          //채팅
-          <Btn>
-            <img src={chat} className="chatImg" alt="chat"></img>
-          </Btn>
-        ) : null}
-        {login ? (
-          //알림
-          <Btn>
-            <img src={heart} className="heartImg" alt="heart"></img>
-          </Btn>
-        ) : null}
-
-        {login ? (
-          <Btn>
-            <p onClick={goMypage}>{user} 님</p>
-          </Btn>
-        ) : (
-          <Btn>
-            <p>회원가입</p>
-          </Btn>
-        )}
-        {login ? (
-          <Btn onClick={goLogout}>
-            <p>로그아웃</p>
-          </Btn>
-        ) : (
-          <Btn>
-            <p onClick={goLogin}>로그인</p>
-          </Btn>
-        )}
-      </Div>
-      <LoginModal/>
-    </HeaderBar>
-  );
-}
 
 export default Header;

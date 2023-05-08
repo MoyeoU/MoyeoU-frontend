@@ -1,8 +1,7 @@
-//import logo from "./logo.svg";
-//import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Mypage from "./routes/Mypage";
+import Signup from "./routes/Signup";
 
 function App() {
   return (
@@ -18,6 +17,12 @@ function App() {
           //마이페이지 경로
           path="/myPage/:id"
           element={<Mypage />}
+        ></Route>
+        <Route
+          //path={`${process.env.PUBLIC_URL}/movie/:id`}
+          //회원가입 경로
+          path="/signup"
+          element={<Signup />}
         ></Route>
       </Routes>
     </Router>

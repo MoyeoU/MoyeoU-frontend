@@ -20,14 +20,14 @@ const Li = styled.li`
   font-family: "Noto Sans KR", sans-serif;
   color: gray;
   :hover {
-    color: darkblue;
+    color: #385493;
     cursor: pointer;
   }
   :onclick {
     color: red;
   }
   &.active {
-    color: darkblue;
+    color: #385493;
   }
 `;
 
