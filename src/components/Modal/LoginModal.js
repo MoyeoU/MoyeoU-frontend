@@ -2,55 +2,48 @@ import styled from "styled-components";
 import image from "../../img/MoyeoU.jpg";
 import Modal from "./Modal";
 import { useState } from "react";
+import dummy from "../../data.json";
 
 function LoginModal({ onClose }) {
-  // const [id, setId] = useState("");
-  // const [pw, setPw] = useState("");
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
   const [formValue, setFormValue] = useState({
     id: "",
     pw: "",
   });
-  console.log(formValue);
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
+    setId(formValue.id);
+    setPw(formValue.pw);
+    onClickLogin();
   };
-  // const onChange = (key, value) => {
-  //   setFormValue((state) => ({
-  //     ...state,
-  //     key:value,
-  //   }));
-  // }
+  const onClickLogin = () => {
+    //db 연동
+    localStorage.clear();
+    localStorage.setItem("id", dummy.user[0].id);
+    document.location.href = "/";
+  };
+
   return (
     <Modal onClose={onClose}>
       <Div>
         <img src={image} alt="logo" />
         <form onSubmit={onSubmit}>
           <input
-            id="id"
-            value={formValue.id}
-            setValue={(value) => {
-              setFormValue((state) => ({
-                // name을 제외한 나머지 값들도 얕은복사로 가져오기.
-                ...state,
-                id: value,
-              }));
-            }}
             placeholder="학교 이메일"
+            type="email"
+            value={formValue.id}
+            onChange={(e) => setFormValue({ ...formValue, id: e.target.value })}
+            required
           />
           <br />
           <br />
           <input
-            id="pw"
-            value={formValue.pw}
-            setValue={(value) => {
-              setFormValue((state) => ({
-                // name을 제외한 나머지 값들도 얕은복사로 가져오기.
-                ...state,
-                pw: value,
-              }));
-            }}
             placeholder="비밀번호"
+            type="password"
+            value={formValue.pw}
+            onChange={(e) => setFormValue({ ...formValue, pw: e.target.value })}
+            required
           />
           <br />
           <br />

@@ -7,27 +7,28 @@ import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import dummy from "../data.json";
 
-//sessionStorage 사용? session cookies?
 function Header() {
   //const userId = dummy.words.filter(word => (word.day === day));
-  const [user, setUser] = useState(1);
+  const [user, setUser] = useState("");
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const navigate = useNavigate();
   const getLoginOrNot = () => {
     //로그인 여부 체크, 나중에는 문자열 있는지없는지
-    if (user === 1) {
+    setUser(localStorage.getItem("id"));
+    if (user) {
       setLogin(true);
     } else {
       setLogin(false);
     }
   };
   const goLogout = () => {
-    setUser(0); //나중에는 쿠키 삭제
+    localStorage.removeItem("id");
+    setUser(""); //나중에는 쿠키 삭제
+    document.location.href = "/";
     //getLoginOrNot(); 새로고침?
   };
   const goLogin = () => {
-    //로그인창
     setLoginModalIsOpen(true);
   };
   const goSignup = () => {

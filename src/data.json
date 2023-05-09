@@ -5,7 +5,23 @@
       "id": "moimoi",
       "pw": "1234",
       "email": "1234@o.cnu.ac.kr"
+    },
+    {
+      "name": "이주희",
+      "id": "zhzzang",
+      "pw": "5678",
+      "email": "5678@o.cnu.ac.kr"
     }
   ],
-  "board": []
+  "board": [
+    {
+      "title": "타이틀타이틀타이틀타이틀",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "2",
+      "tag": ["태그1", "태그2"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "moimoi"
+    }
+  ]
 }

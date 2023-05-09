@@ -1,6 +1,52 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+function BoardType() {
+  let data = [
+    "전체",
+    "팀프로젝트",
+    "어학",
+    "프로그래밍",
+    "자격증",
+    "취미/교양",
+    "고시/공무원",
+    "기타",
+  ];
+  const [typeClick, setTypeClick] = useState("");
+
+  const filtering = (event) => {
+    setTypeClick((prev) => {
+      return event.target.value;
+    });
+    //정렬 어떻게?
+    console.log(event.target.value);
+  };
+  return (
+    <Div>
+      <Section>
+        <Ul>
+          {data.map((item, idx) => {
+            return (
+              <>
+                <Li
+                  value={idx}
+                  className={idx === typeClick ? "active" : ""}
+                  onClick={filtering}
+                >
+                  {item}
+                </Li>
+              </>
+            );
+          })}
+        </Ul>
+      </Section>
+    </Div>
+  );
+}
+
+const Div = styled.div`
+  clear: both;
+`;
 
 const Section = styled.section`
   background-color: gray;
@@ -31,45 +77,4 @@ const Li = styled.li`
   }
 `;
 
-function BoardType() {
-  let data = [
-    "전체",
-    "팀프로젝트",
-    "어학",
-    "프로그래밍",
-    "자격증",
-    "취미/교양",
-    "고시/공무원",
-    "기타",
-  ];
-  const [typeClick, setTypeClick] = useState("");
-  const navigate = useNavigate();
-
-  const filtering = (event) => {
-    setTypeClick((prev) => {
-      return event.target.value;
-    });
-    //정렬 어떻게?
-    console.log(event.target.value);
-  };
-  return (
-    <Section>
-      <Ul>
-        {data.map((item, idx) => {
-          return (
-            <>
-              <Li
-                value={idx}
-                className={idx === typeClick ? "active" : ""}
-                onClick={filtering}
-              >
-                {item}
-              </Li>
-            </>
-          );
-        })}
-      </Ul>
-    </Section>
-  );
-}
 export default BoardType;
