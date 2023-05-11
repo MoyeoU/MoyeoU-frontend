@@ -45,7 +45,10 @@ function BoardType() {
 }
 
 const Div = styled.div`
+  text-align: center;
+  margin: 3em;
   clear: both;
+  justify-content: center;
 `;
 
 const Section = styled.section`
@@ -59,7 +62,7 @@ const Ul = styled.ul`
 
 const Li = styled.li`
   float: left;
-  margin: 0 3vw;
+  margin: 0 2vw;
   padding: 2vw 0;
   font-weight: 900;
   font-size: 30px;
@@ -68,9 +71,6 @@ const Li = styled.li`
   :hover {
     color: #385493;
     cursor: pointer;
-  }
-  :onclick {
-    color: red;
   }
   &.active {
     color: #385493;

@@ -98,38 +98,25 @@ function Header() {
 }
 
 const HeaderBar = styled.nav`
-  margin: auto;
+  //margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
-
-  .header-title {
-    span {
-      font-size: 3rem;
-      display: flex;
-      align-items: center;
-      font-family: "Pacifico", cursive;
-    }
-  }
-  .header-menu {
-    display: flex;
-    flex-wrap: wrap;
-  }
+  padding: 0px 1%;
 `;
 const Div = styled.div`
   display: inline-block;
   float: right;
-  grid-gap: 30px;
+  //grid-gap: 30px;
   gap: 30px;
   align-items: center;
-  padding 40px 20px;
+  padding 1% 5%;
 `;
 const Btn = styled.button`
   color: #333;
   background-color: #fff;
   border: none;
-  margin: 0 20px;
+  margin: 0 1rem;
   p {
     list-style: none;
     font-weight: bold;

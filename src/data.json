@@ -15,7 +15,48 @@
   ],
   "board": [
     {
-      "title": "타이틀타이틀타이틀타이틀",
+      "id": "board1",
+      "title": "1타이틀타이틀타이틀타이틀",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "2",
+      "tag": ["태그1", "태그2"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "moimoi"
+    },
+    {
+      "id": "board2",
+      "title": "2타이틀타이틀타이틀타이틀",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "2",
+      "tag": ["태그1", "태그2"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "moimoi"
+    },
+    {
+      "id": "board3",
+      "title": "3타이틀타이틀타이틀타이틀",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "2",
+      "tag": ["태그1", "태그2"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "moimoi"
+    },
+    {
+      "id": "board4",
+      "title": "4타이틀타이틀타이틀타이틀",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "2",
+      "tag": ["태그1", "태그2"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "moimoi"
+    },
+    {
+      "id": "board5",
+      "title": "5타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
       "presentMember": "2",

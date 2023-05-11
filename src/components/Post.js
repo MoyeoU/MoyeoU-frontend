@@ -9,29 +9,56 @@ function Post({
   type,
   writer,
 }) {
+  console.log(tag[0]);
   return (
     <PostLayout>
-      <p>{{ complete } === "Y" ? `모집완료` : `모집중`}</p>
+      <CompleteBtn>
+        <button>{{ complete } === "Y" ? `모집완료` : `모집중`}</button>
+      </CompleteBtn>
       <h1>{title}</h1>
       <p>
         {presentMember}/{totalMember}
       </p>
-      {/* {tag.map((value) => ( */}
-      <button>{tag}</button>
-      {/*}  ))}*/}
+      {tag.map((tags) => (
+        <TagBtn>{tags}</TagBtn>
+      ))}
       <hr />
-      <p>{writer}</p>
+      <Writer>{writer} 님</Writer>
     </PostLayout>
   );
 }
 
 const PostLayout = styled.div`
-  clear: both;
-  width: 200px;
-  height: 300px;
+  //clear: both;
+  width: 15em;
+  height: 20em;
   border: 3px solid #385493;
-  border-radius: 20px;
+  border-radius: 30px;
+  float: left;
+  margin: 1em;
+  padding: 3em;
+  transition: all 0.2s linear;
+  :hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+`;
+
+const CompleteBtn = styled.div`
+  button {
+    margin: 0.5em;
+    pointer-events: none;
+  }
+`;
+
+const TagBtn = styled.button`
+  margin: 0.5em;
+  pointer-events: none;
+`;
+
+const Writer = styled.p`
   float: right;
+  font-weight: bold;
 `;
 
 export default Post;
