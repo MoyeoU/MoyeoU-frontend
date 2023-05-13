@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 function Post({
+  id,
   title,
   complete,
   totalMember,
@@ -9,9 +11,13 @@ function Post({
   type,
   writer,
 }) {
-  console.log(tag[0]);
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/postView/${id}`);
+  };
+
   return (
-    <PostLayout>
+    <PostLayout onClick={onClick}>
       <CompleteBtn>
         <button>{{ complete } === "Y" ? `모집완료` : `모집중`}</button>
       </CompleteBtn>

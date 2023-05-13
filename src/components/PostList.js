@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-function BoardType() {
+function PostList() {
   let data = [
     "전체",
     "팀프로젝트",
@@ -77,4 +77,4 @@ const Li = styled.li`
   }
 `;
 
-export default BoardType;
+export default PostList;

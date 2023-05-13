@@ -15,7 +15,7 @@
   ],
   "board": [
     {
-      "id": "board1",
+      "id": "post1",
       "title": "1타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
@@ -25,7 +25,7 @@
       "writer": "moimoi"
     },
     {
-      "id": "board2",
+      "id": "post2",
       "title": "2타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
@@ -35,7 +35,7 @@
       "writer": "moimoi"
     },
     {
-      "id": "board3",
+      "id": "post3",
       "title": "3타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
@@ -45,7 +45,7 @@
       "writer": "moimoi"
     },
     {
-      "id": "board4",
+      "id": "post4",
       "title": "4타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
@@ -55,7 +55,7 @@
       "writer": "moimoi"
     },
     {
-      "id": "board5",
+      "id": "post5",
       "title": "5타이틀타이틀타이틀타이틀",
       "complete": "N",
       "totalMember": "5",

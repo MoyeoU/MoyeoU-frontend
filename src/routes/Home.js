@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Add from "../components/Add";
-import BoardType from "../components/BoardType";
-import Board from "../components/Board";
+import PostList from "../components/PostList";
+import PostMain from "../components/PostMain";
 import styled from "styled-components";
 
 function Home() {
@@ -10,8 +10,8 @@ function Home() {
       <Header />
       <Add />
       <Div>
-        <BoardType />
-        <Board />
+        <PostList />
+        <PostMain />
       </Div>
     </>
   );
