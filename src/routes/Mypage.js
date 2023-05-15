@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import Header from "../components/Header";
 
 function Mypage() {
@@ -5,8 +6,16 @@ function Mypage() {
   return (
     <>
       <Header />
-      <p>hi {s}'s mypage</p>
+      <Div>
+        <p>hi {s}'s mypage</p>
+      </Div>
     </>
   );
 }
+
+const Div = styled.div`
+  height: auto;
+  min-height: 70vh;
+`;
+
 export default Mypage;

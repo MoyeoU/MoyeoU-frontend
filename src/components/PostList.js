@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function PostList() {
@@ -21,39 +22,50 @@ function PostList() {
     //정렬 어떻게?
     console.log(event.target.value);
   };
+  const navigate = useNavigate();
+  const goCreatePost = () => {
+    navigate(`/createPost`);
+  };
   return (
-    <Div>
-      <Section>
-        <Ul>
-          {data.map((item, idx) => {
-            return (
-              <>
-                <Li
-                  value={idx}
-                  className={idx === typeClick ? "active" : ""}
-                  onClick={filtering}
-                >
-                  {item}
-                </Li>
-              </>
-            );
-          })}
-        </Ul>
-      </Section>
-    </Div>
+    <>
+      <div>
+        <Tag>
+          <Ul>
+            {data.map((item, idx) => {
+              return (
+                <>
+                  <Li
+                    key={idx}
+                    value={idx}
+                    className={idx === typeClick ? "active" : ""}
+                    onClick={filtering}
+                  >
+                    {item}
+                  </Li>
+                </>
+              );
+            })}
+          </Ul>
+        </Tag>
+        <Gather>
+          <button>모집중</button>
+          <button>모집완료</button>
+          <WriteBtn onClick={goCreatePost}>글쓰기</WriteBtn>
+        </Gather>
+      </div>
+    </>
   );
 }
 
-const Div = styled.div`
-  text-align: center;
-  margin: 3em;
-  clear: both;
-  justify-content: center;
+const Tag = styled.div`
+  //text-align: center;
+  //margin: 3em;
+  //clear: both;
+  //justify-content: center;
 `;
 
-const Section = styled.section`
-  background-color: gray;
-  display: block;
+const Gather = styled.div`
+  clear: both;
 `;
 
 const Ul = styled.ul`
@@ -74,6 +86,16 @@ const Li = styled.li`
   }
   &.active {
     color: #385493;
+  }
+`;
+
+const WriteBtn = styled.button`
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  font-weight: bold;
+  :hover {
+    cursor: pointer;
   }
 `;
 

@@ -17,17 +17,19 @@ function Post({
   };
 
   return (
-    <PostLayout onClick={onClick}>
+    <PostLayout onClick={onClick} key={id}>
       <CompleteBtn>
-        <button>{{ complete } === "Y" ? `모집완료` : `모집중`}</button>
+        <p>{{ complete } === "Y" ? `모집완료` : `모집중`}</p>
       </CompleteBtn>
       <h1>{title}</h1>
       <p>
-        {presentMember}/{totalMember}
+        {presentMember}&nbsp;/&nbsp;{totalMember}
       </p>
-      {tag.map((tags) => (
-        <TagBtn>{tags}</TagBtn>
-      ))}
+      <TagBtn>
+        {tag.map((tags) => (
+          <p>{tags}</p>
+        ))}
+      </TagBtn>
       <hr />
       <Writer>{writer} 님</Writer>
     </PostLayout>
@@ -48,18 +50,34 @@ const PostLayout = styled.div`
     transform: scale(1.02);
     cursor: pointer;
   }
-`;
-
-const CompleteBtn = styled.div`
-  button {
-    margin: 0.5em;
-    pointer-events: none;
+  p {
+    font-weight: bold;
   }
 `;
 
-const TagBtn = styled.button`
-  margin: 0.5em;
-  pointer-events: none;
+const CompleteBtn = styled.div`
+  p {
+    background-color: #deeaf6;
+    margin: 0.5em;
+    pointer-events: none;
+    display: inline-block;
+    padding: 0.3em 0.5em;
+    border-radius: 0.5em;
+    color: #385493;
+    font-weight: bold;
+  }
+`;
+
+const TagBtn = styled.div`
+  p {
+    background-color: #dcdcdc;
+    margin: 0.5em;
+    pointer-events: none;
+    display: inline-block;
+    padding: 0.3em 0.5em;
+    border-radius: 0.5em;
+    font-weight: normal;
+  }
 `;
 
 const Writer = styled.p`

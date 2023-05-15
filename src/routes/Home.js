@@ -1,6 +1,5 @@
 import Header from "../components/Header";
-import Add from "../components/Add";
-import PostList from "../components/PostList";
+import Ad from "../components/Ad";
 import PostMain from "../components/PostMain";
 import styled from "styled-components";
 
@@ -8,18 +7,10 @@ function Home() {
   return (
     <>
       <Header />
-      <Add />
-      <Div>
-        <PostList />
-        <PostMain />
-      </Div>
+      <Ad />
+      <PostMain />
     </>
   );
 }
-
-const Div = styled.div`
-  //display: flex;
-  flex-wrap: wrap;
-`;
 
 export default Home;

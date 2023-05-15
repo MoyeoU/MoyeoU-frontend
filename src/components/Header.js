@@ -47,7 +47,7 @@ function Header() {
     <HeaderBar>
       <a href="/">
         <img
-          style={{ width: "12em", height: "8em" }}
+          style={{ width: "9em", height: "6em" }}
           src={logo}
           alt="logo"
         ></img>
@@ -102,7 +102,11 @@ const HeaderBar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 1%;
+  margin: 0px 1vw;
+  height: 10vh;
+  img {
+    margin: 1vh 1vw;
+  }
 `;
 const Div = styled.div`
   display: inline-block;
@@ -110,17 +114,17 @@ const Div = styled.div`
   //grid-gap: 30px;
   gap: 30px;
   align-items: center;
-  padding 1% 5%;
+  margin: 1vh 1vw 1vh 5vw;
 `;
 const Btn = styled.button`
   color: #333;
   background-color: #fff;
   border: none;
-  margin: 0 1rem;
+  margin: 0 1vw;
   p {
     list-style: none;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 2.5vh;
     font-family: "Noto Sans KR", sans-serif;
   }
   :hover {
