@@ -94,15 +94,13 @@ function Signup() {
 //   padding: 0 1em;
 // `;
 const H1Div = styled.div`
-  padding: 1em 0 0 0;
+  padding: 0 0 3vh 0;
 `;
 const Div = styled.div`
-  //position: absolute;
   height: auto;
   min-height: 70vh;
-  //   top: 50%;
-  //   left: 50%;
-  //   transform: translate(-50%, -50%);
+  overflow: auto;
+  padding: 5vh 5vw;
   table,
   tr,
   td {

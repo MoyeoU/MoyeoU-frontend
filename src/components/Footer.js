@@ -26,6 +26,8 @@ function Footer() {
 const Div = styled.div`
   background-color: #deeaf6;
   position: absolute;
+  //position: relative;
+  // transform: translateY(-100%);
   width: 100%;
   p {
     color: gray;

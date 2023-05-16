@@ -26,7 +26,8 @@ const Div = styled.div`
   padding: 3em;
   //justify-content: center;
   height: auto;
-  //min-height: 80vh;
+  min-height: 70vh;
+  overflow: auto;
 `;
 
 const PostDiv = styled.div`
@@ -38,8 +39,8 @@ const PostDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;*/
-  height: auto;
-  min-height: 100vh;
+  //height: auto;
+  //min-height: 100vh;
 `;
 
 export default PostMain;

@@ -16,6 +16,7 @@ function Mypage() {
 const Div = styled.div`
   height: auto;
   min-height: 70vh;
+  overflow: auto;
 `;
 
 export default Mypage;
