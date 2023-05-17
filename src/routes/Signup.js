@@ -100,7 +100,7 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  padding: 5vh 5vw;
+  padding: 5vh 10vw;
   table,
   tr,
   td {

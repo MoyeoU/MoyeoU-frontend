@@ -9,84 +9,114 @@ function CreatePost() {
   return (
     <>
       <Header />
-      <Div>
+      <CreateDiv>
         <form onSubmit={onSubmit}>
-          <div>
+          <Div>
             <Ul>
-              <input placeholder="제목을 입력해주세요." />
+              <TitleInput placeholder="제목을 입력해주세요." />
             </Ul>
             <Ul>
               <Li>
-                <label htmlFor="headCount">모집 인원</label>
-                <input name="headCount" id="headCount" />
+                <P>모집 인원</P>
+                <TextInput name="headCount" id="headCount" />
               </Li>
               <Li>
-                <label htmlFor="method">운영 방식</label>
-                <input name="method" id="method" />
-              </Li>
-            </Ul>
-            <Ul>
-              <Li>
-                <label htmlFor="startDate">시작 예정일</label>
-                <input name="startDate" id="startDate" />
-              </Li>
-              <Li>
-                <label htmlFor="duringTime">예상 기간</label>
-                <input name="duringTime" id="duringTime" />
+                <P>운영 방식</P>
+                <TextInput name="method" id="method" />
               </Li>
             </Ul>
             <Ul>
               <Li>
-                <label htmlFor="category">카테고리</label>
-                <input name="category" id="category" />
+                <P>시작 예정일</P>
+                <TextInput type="date" name="startDate" id="startDate" />
+              </Li>
+              <Li>
+                <P>예상 기간</P>
+                <TextInput name="duringTime" id="duringTime" />
               </Li>
             </Ul>
             <Ul>
               <Li>
-                <label htmlFor="hashtag">해시태그</label>
-                <input name="hashtag" id="hashtag" />
+                <P>카테고리</P>
+                <TextInput name="category" id="category" />
+              </Li>
+              <Li>
+                <P>해시태그</P>
+                <TextInput name="hashtag" id="hashtag" />
               </Li>
             </Ul>
-          </div>
-          <div>
+          </Div>
+          <Div>
             <Ul>
-              <Li>
-                <label htmlFor="editor">스터디에 대해 설명해주세요.</label>
+              <li>
+                <P>스터디에 대해 설명해주세요.</P>
                 <TextEditor />
-              </Li>
+              </li>
             </Ul>
-          </div>
-          <div>
+          </Div>
+          <Div>
             <Ul>
-              <Li>
-                <label htmlFor="applyForm">신청 양식을 만들어주세요.</label>
-                <input name="applyForm" id="applyForm" />
-              </Li>
+              <li>
+                <P>신청 양식을 만들어주세요.</P>
+                <TextInput name="applyForm" id="applyForm" />
+              </li>
             </Ul>
-          </div>
-          <Btn>
-            <button type="button">취소하기</button>
-            <button type="submit">등록하기</button>
-          </Btn>
+          </Div>
+          <Div>
+            <Btn>
+              <button type="button">취소하기</button>
+              <button type="submit">등록하기</button>
+            </Btn>
+          </Div>
         </form>
-      </Div>
+      </CreateDiv>
     </>
   );
 }
 
 const Li = styled.li`
-  //float: left;
+  float: left;
+  width: 50%;
 `;
 
 const Ul = styled.ul`
-  //float:
+  display: flex;
+  max-width: 100%;
 `;
 
-const Div = styled.div`
-  margin: 5vh 5vw;
+const TitleInput = styled.input`
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid gray;
+  width: 100%;
+  height: 10vh;
+  font-size: 2em;
+  font-weight: bold;
+`;
+
+const P = styled.p`
+  font-size: 2.5vh;
+  font-weight: bold;
+`;
+
+const TextInput = styled.input`
+  border: 1px solid gray;
+  font-size: 2.5vh;
+  width: 20vw;
+`;
+
+const CreateDiv = styled.div`
+  padding: 5vh 10vw;
   height: auto;
   min-height: 70vh;
   overflow: auto;
+  max-width: 100%;
+`;
+
+const Div = styled.div`
+  max-width: 100%;
+  height: auto;
 `;
 
 const Btn = styled.div`
@@ -100,6 +130,9 @@ const Btn = styled.div`
     color: white;
     font-weight: bold;
     border-radius: 5px;
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 
