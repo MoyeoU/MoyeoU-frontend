@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LoginModal from "./Modal/LoginModal";
 
 function PostList() {
   let data = [
@@ -14,6 +15,8 @@ function PostList() {
     "기타",
   ];
   const [typeClick, setTypeClick] = useState("");
+  const [login, setLogin] = useState(false);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const filtering = (event) => {
     setTypeClick((prev) => {
@@ -24,8 +27,28 @@ function PostList() {
   };
   const navigate = useNavigate();
   const goCreatePost = () => {
-    navigate(`/createPost`);
+    if (login) {
+      navigate(`/createPost`);
+    } else {
+      alert("로그인이 필요합니다.");
+      setLoginModalIsOpen(true);
+    }
   };
+
+  const getLoginOrNot = () => {
+    //로그인 여부 체크, 나중에는 문자열 있는지없는지
+    if (localStorage.getItem("id")) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  };
+
+  useEffect(() => {
+    getLoginOrNot();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loginModalIsOpen]);
+
   return (
     <>
       <div>
@@ -50,7 +73,17 @@ function PostList() {
         <Gather>
           <button>모집중</button>
           <button>모집완료</button>
-          <WriteBtn onClick={goCreatePost}>글쓰기</WriteBtn>
+          <WriteBtn>
+            <p onClick={goCreatePost}>글쓰기</p>
+            {loginModalIsOpen && (
+              <LoginModal
+                open={loginModalIsOpen}
+                onClose={() => {
+                  setLoginModalIsOpen(false);
+                }}
+              />
+            )}
+          </WriteBtn>
         </Gather>
       </div>
     </>
@@ -96,6 +129,8 @@ const WriteBtn = styled.button`
   font-weight: bold;
   :hover {
     cursor: pointer;
+  }
+  p {
   }
 `;
 

@@ -2,15 +2,19 @@
   "user": [
     {
       "name": "한서영",
-      "id": "moimoi",
+      "id": "hsy",
       "pw": "1234",
-      "email": "1234@o.cnu.ac.kr"
+      "email": "1234@o.cnu.ac.kr",
+      "star": "4.0",
+      "intro": "안녕하세요"
     },
     {
       "name": "이주희",
       "id": "zhzzang",
       "pw": "5678",
-      "email": "5678@o.cnu.ac.kr"
+      "email": "5678@o.cnu.ac.kr",
+      "star": "5.0",
+      "intro": "안녕하세요"
     }
   ],
   "board": [

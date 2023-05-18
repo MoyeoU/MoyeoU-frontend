@@ -27,22 +27,21 @@ const Div = styled.div`
   background-color: #deeaf6;
   //position: absolute;
   //position: relative;
-  // transform: translateY(-100%);
   width: 100%;
-  p {
-    color: gray;
-  }
   height: 20vh;
 `;
 
 const ImgDiv = styled.div`
   float: left;
-  margin: 2vw;
 `;
 
 const TextDiv = styled.div`
   float: right;
-  margin: 1vw;
+  color: gray;
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 `;
 
 export default Footer;

@@ -21,7 +21,7 @@ function Post({
       <CompleteBtn>
         <p>{{ complete } === "Y" ? `모집완료` : `모집중`}</p>
       </CompleteBtn>
-      <h1>{title}</h1>
+      <h3>{title}</h3>
       <p>
         {presentMember}&nbsp;/&nbsp;{totalMember}
       </p>
@@ -38,12 +38,12 @@ function Post({
 
 const PostLayout = styled.div`
   //clear: both;
-  width: 15em;
-  height: 20em;
+  width: 13em;
+  height: 16em;
   border: 3px solid #385493;
   border-radius: 30px;
   float: left;
-  margin: 1em;
+  margin: 0.8em;
   padding: 3em;
   transition: all 0.2s linear;
   :hover {

@@ -29,6 +29,7 @@ const Div = styled.div`
   min-height: 70vh;
   overflow: auto;
   max-width: 100%;
+  margin: 0 auto;
 `;
 
 const PostDiv = styled.div`

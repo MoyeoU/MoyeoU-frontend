@@ -34,9 +34,9 @@ function Header() {
   const goSignup = () => {
     navigate(`/signup`);
   };
-  const goMypage = () => {
-    navigate(`/mypage/${user}`);
-  };
+  // const goMypage = (user) => {
+  //   navigate(`/mypage/${user}`, { state: user });
+  // };
 
   useEffect(() => {
     getLoginOrNot();
@@ -47,7 +47,7 @@ function Header() {
     <HeaderBar>
       <a href="/">
         <img
-          style={{ width: "9em", height: "6em" }}
+          style={{ width: "8em", height: "4em" }}
           src={logo}
           alt="logo"
         ></img>
@@ -68,7 +68,9 @@ function Header() {
 
         {login ? (
           <Btn>
-            <p onClick={goMypage}>{user} 님</p>
+            <p onClick={() => navigate(`/mypage/${user}`, { state: user })}>
+              {user} 님
+            </p>
           </Btn>
         ) : (
           <Btn>
@@ -98,23 +100,20 @@ function Header() {
 }
 
 const HeaderBar = styled.nav`
-  //margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 1vw;
   height: 10vh;
   img {
-    margin: 1vh 1vw;
+    padding: 1vh 1vw;
   }
 `;
 const Div = styled.div`
   display: inline-block;
   float: right;
-  //grid-gap: 30px;
-  gap: 30px;
+  //gap: 30px;
   align-items: center;
-  margin: 1vh 1vw 1vh 5vw;
+  //margin: 1vh 1vw 1vh 5vw;
 `;
 const Btn = styled.button`
   color: #333;
