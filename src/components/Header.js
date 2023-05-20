@@ -104,36 +104,40 @@ const HeaderBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  img {
-    padding: 1vh 1vw;
-  }
+  // img {
+  //   padding: 1vh 1vw;
+  // }
 `;
 const Div = styled.div`
-  display: inline-block;
+  //display: inline-block;
   float: right;
   //gap: 30px;
-  align-items: center;
+  //align-items: center;
   //margin: 1vh 1vw 1vh 5vw;
 `;
-const Btn = styled.button`
+const Btn = styled.div`
+  float: left;
   color: #333;
   background-color: #fff;
   border: none;
   margin: 0 1vw;
+  display: flex;
+  justify-content: center;
+  :hover {
+    color: #385493;
+    cursor: pointer;
+  }
   p {
     list-style: none;
     font-weight: bold;
     font-size: 2.5vh;
     font-family: "Noto Sans KR", sans-serif;
+    margin: 1vh 0;
   }
-  :hover {
-    color: #385493;
-    cursor: pointer;
-  }
-  .chatImg,
-  .heartImg {
-    width: 2em;
-    height: 2em;
+  img {
+    margin: auto;
+    width: 1.5em;
+    height: 1.5em;
   }
 `;
 
