@@ -6,7 +6,8 @@
       "pw": "1234",
       "email": "1234@o.cnu.ac.kr",
       "star": "4.0",
-      "intro": "안녕하세요"
+      "intro": "안녕하세요",
+      "tag": ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"]
     },
     {
       "name": "이주희",
@@ -14,7 +15,8 @@
       "pw": "5678",
       "email": "5678@o.cnu.ac.kr",
       "star": "5.0",
-      "intro": "안녕하세요"
+      "intro": "안녕하세요",
+      "tag": ["태그1", "태그2", "태그3"]
     }
   ],
   "board": [
@@ -26,7 +28,8 @@
       "presentMember": "2",
       "tag": ["태그1", "태그2"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi"
+      "writer": "moimoi",
+      "date": "2023-03-03"
     },
     {
       "id": "post2",
@@ -36,7 +39,8 @@
       "presentMember": "2",
       "tag": ["태그1", "태그2"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi"
+      "writer": "moimoi",
+      "date": "2023-03-03"
     },
     {
       "id": "post3",
@@ -46,7 +50,8 @@
       "presentMember": "2",
       "tag": ["태그1", "태그2"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi"
+      "writer": "moimoi",
+      "date": "2023-03-03"
     },
     {
       "id": "post4",
@@ -56,7 +61,8 @@
       "presentMember": "2",
       "tag": ["태그1", "태그2"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi"
+      "writer": "moimoi",
+      "date": "2023-03-03"
     },
     {
       "id": "post5",
@@ -66,7 +72,8 @@
       "presentMember": "2",
       "tag": ["태그1", "태그2"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi"
+      "writer": "moimoi",
+      "date": "2023-03-03"
     }
   ]
 }

@@ -57,7 +57,7 @@ function Mypage() {
             <hr />
             <br />
             <p>관심 태그</p>
-            <Tag />
+            <Tag {...dummy.user[0]} key={dummy.user[0].id} />
           </More>
           <Btn>
             {user === state ? (
@@ -69,7 +69,24 @@ function Mypage() {
         </Left>
         <Middle> </Middle>
         <Right>
-          <StudyList />
+          <Filtering>
+            <MineOrNot>
+              <h2>활동 내역</h2>
+              <h2>&nbsp;&nbsp; | &nbsp;&nbsp;</h2>
+              <h2>내가 쓴 글</h2>
+              <br />
+            </MineOrNot>
+            <NowOrNot>
+              <h3>활동 중</h3>
+              <h3>&nbsp;&nbsp; | &nbsp;&nbsp;</h3>
+              <h3>활동 완료</h3>
+            </NowOrNot>
+          </Filtering>
+          <HistoryDiv>
+            {Object.values(dummy.board).map((posts) => (
+              <StudyList {...posts} key={posts.id} />
+            ))}
+          </HistoryDiv>
         </Right>
       </Div>
     </>
@@ -77,7 +94,7 @@ function Mypage() {
 }
 
 const Div = styled.div`
-  width: 80%;
+  width: 90%;
   max-width: 90%;
   height: auto;
   min-height: 70vh;
@@ -89,7 +106,8 @@ const Div = styled.div`
 const Left = styled.div`
   float: left;
   text-align: center;
-  width: 35%;
+  width: 30%;
+  margin: 2vh 2vw;
   h3 {
     font-weight: bold;
     font-size: 4vh;
@@ -122,7 +140,7 @@ const OneLiner = styled.div`
   border: 2px solid darkgray;
   min-height: 15vh;
   border-radius: 10px;
-  padding: 2vh 2vw;
+  margin: 1vh 1.5vw;
   margin-bottom: 2vh;
 `;
 
@@ -147,11 +165,38 @@ const Middle = styled.div`
   float: left;
   border: 1px solid #dcdcdc;
   height: 100vh;
-  margin: 3vh 5vw;
 `;
 
 const Right = styled.div`
-  width: 65%;
+  float: left;
+  width: 60%;
+  margin: 2vh 2vw;
+  h2 {
+    display: inline;
+  }
+  h3 {
+    display: inline;
+  }
+`;
+
+const Filtering = styled.div`
+  height: auto;
+  min-height: 12vh;
+  float: none;
+`;
+
+const MineOrNot = styled.div`
+  margin-bottom: 2vh;
+`;
+
+const NowOrNot = styled.div`
+  float: right;
+  margin-bottom: 2vh;
+`;
+
+const HistoryDiv = styled.div`
+  height: auto;
+  //overflow: auto;
 `;
 
 export default Mypage;

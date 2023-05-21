@@ -5,14 +5,14 @@ import PostList from "./PostList";
 import styled from "styled-components";
 
 function PostMain() {
-  const [post, setPost] = useState(dummy.board);
+  //const [post, setPost] = useState(dummy.board);
 
   return (
     <>
       <Div>
         <PostList />
         <PostDiv>
-          {Object.values(post).map((posts) => (
+          {Object.values(dummy.board).map((posts) => (
             <Post {...posts} key={posts.id} />
           ))}
         </PostDiv>
