@@ -72,13 +72,13 @@ function Mypage() {
           <Filtering>
             <MineOrNot>
               <h2>활동 내역</h2>
-              <h2>&nbsp;&nbsp; | &nbsp;&nbsp;</h2>
+              <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
               <h2>내가 쓴 글</h2>
               <br />
             </MineOrNot>
             <NowOrNot>
               <h3>활동 중</h3>
-              <h3>&nbsp;&nbsp; | &nbsp;&nbsp;</h3>
+              <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
               <h3>활동 완료</h3>
             </NowOrNot>
           </Filtering>
@@ -106,8 +106,8 @@ const Div = styled.div`
 const Left = styled.div`
   float: left;
   text-align: center;
-  width: 30%;
-  margin: 2vh 2vw;
+  width: 25%;
+  margin: 4vh 4vw;
   h3 {
     font-weight: bold;
     font-size: 4vh;
@@ -169,13 +169,14 @@ const Middle = styled.div`
 
 const Right = styled.div`
   float: left;
-  width: 60%;
-  margin: 2vh 2vw;
-  h2 {
-    display: inline;
-  }
+  width: 55%;
+  margin: 4vh 4vw;
+  h2,
   h3 {
     display: inline;
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 

@@ -1,19 +1,27 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function StudyList({ title, complete, tag, date }) {
+function StudyList({ id, title, complete, tag, date }) {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/postView/${id}`);
+  };
   return (
     <>
-      <Div>
+      <Div onClick={onClick}>
         <CompleteBtn>
           <p>{{ complete } === "Y" ? `모집완료` : `모집중`}</p>
         </CompleteBtn>
-        <h3>{title}</h3>
+        <TitleDiv>
+          <h3>{title}</h3>
+        </TitleDiv>
+
         <TagBtn>
           {tag.map((tags) => (
             <p>{tags}</p>
           ))}
+          <span>{date}</span>
         </TagBtn>
-        <Date>{date}</Date>
       </Div>
     </>
   );
@@ -24,12 +32,19 @@ const Div = styled.div`
   border-radius: 1em;
   margin-bottom: 1vh;
   padding: 1vh 1vw;
+  //height: auto;
+  //overflow: auto;
   :hover {
     cursor: pointer;
   }
 `;
 
+const TitleDiv = styled.div`
+  margin: 2vh 0.5vw;
+`;
+
 const CompleteBtn = styled.div`
+  height: 30%;
   p {
     background-color: #deeaf6;
     margin: 0.5em;
@@ -44,6 +59,7 @@ const CompleteBtn = styled.div`
 `;
 
 const TagBtn = styled.div`
+  height: 30%;
   p {
     background-color: #dcdcdc;
     margin: 0.5em;
@@ -54,10 +70,9 @@ const TagBtn = styled.div`
     font-weight: normal;
     font-size: 0.8em;
   }
-`;
-
-const Date = styled.div`
-  float: right;
+  span {
+    float: right;
+  }
 `;
 
 export default StudyList;
