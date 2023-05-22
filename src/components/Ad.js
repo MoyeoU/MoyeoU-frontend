@@ -4,7 +4,7 @@ import images from "../img/images.jpg";
 
 const AddDiv = styled.img`
   width: 100%;
-  height: 20vh;
+  height: 25vh;
 `;
 
 function Add() {

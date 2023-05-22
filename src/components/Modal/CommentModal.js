@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import image from "../../img/MoyeoU.jpg";
-import Modal from "./Modal";
+import Modal from "./Modal_ver2";
 import { useState } from "react";
 import dummy from "../../data.json";
 
