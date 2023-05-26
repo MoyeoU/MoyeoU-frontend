@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import StudyList from "../components/StudyList";
 import member from "../img/member.jpg";
-import UserScore from "../components/Mypage/UserScore";
+import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
 import dummy from "../data.json";
 import Tag from "../components/Tag";
@@ -34,9 +34,9 @@ function Mypage() {
         <Left>
           <img src={member} alt="member"></img>
           <h3>{state}</h3>
-          <UserScore />
+          <StarRate {...dummy.user[0]} />
           <p>
-            {dummy.user[0].star} / 5.0{" "}
+            {(dummy.user[0].star / 20).toFixed(1)} / 5.0{" "}
             <button onClick={viewComment}>{">"}</button>
             {commentModalIsOpen && (
               <CommentModal

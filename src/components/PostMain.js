@@ -1,4 +1,4 @@
-import { useState } from "react";
+//import { useState } from "react";
 import dummy from "../data.json";
 import Post from "./Post";
 import PostList from "./PostList";

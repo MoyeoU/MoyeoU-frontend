@@ -4,6 +4,7 @@ import Mypage from "./routes/Mypage";
 import Signup from "./routes/Signup";
 import PostView from "./routes/PostView";
 import CreatePost from "./components/CreatePost";
+import Evaluation from "./routes/Evaluation";
 
 function App() {
   return (
@@ -38,6 +39,12 @@ function App() {
             //createPost 경로
             path="/createPost"
             element={<CreatePost />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //notice 경로
+            path="/evaluateMember"
+            element={<Evaluation />}
           ></Route>
         </Routes>
       </Router>

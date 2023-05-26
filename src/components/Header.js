@@ -62,7 +62,12 @@ function Header() {
         {login ? (
           //알림
           <Btn>
-            <img src={heart} className="heartImg" alt="heart"></img>
+            <img
+              src={heart}
+              className="heartImg"
+              alt="heart"
+              onClick={() => navigate(`/evaluateMember`, { state: user })}
+            ></img>
           </Btn>
         ) : null}
 

@@ -5,16 +5,16 @@ import { useState } from "react";
 import dummy from "../../data.json";
 
 function LoginModal({ onClose }) {
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  //const [id, setId] = useState("");
+  //const [pw, setPw] = useState("");
   const [formValue, setFormValue] = useState({
     id: "",
     pw: "",
   });
   const onSubmit = (event) => {
     event.preventDefault();
-    setId(formValue.id);
-    setPw(formValue.pw);
+    //setId(formValue.id);
+    //setPw(formValue.pw);
     onClickLogin();
   };
   const onClickLogin = () => {

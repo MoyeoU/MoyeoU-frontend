@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import image from "../../img/MoyeoU.jpg";
 import Modal from "./Modal_ver2";
-import { useState } from "react";
-import dummy from "../../data.json";
 
 function CommentModal({ onClose }) {
   {
@@ -52,31 +49,36 @@ function CommentModal({ onClose }) {
           <button type="submit">로그인</button>
         </form>
   </Div>*/}
+      <ul>
+        <li>
+          <p>dddddd</p>
+        </li>
+      </ul>
     </Modal>
   );
 }
 
-const Div = styled.div`
-  input {
-    width: 20em;
-    height: 3em;
-    border: 1px solid #a0a0a0;
-    border-radius: 5px;
-  }
-  button {
-    width: 20em;
-    height: 3em;
-    border: 1px solid #385493;
-    background-color: #385493;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-  }
-  img {
-    padding: 0em 0em 1em 0em;
-    width: 9em;
-    height: 6em;
-  }
-`;
+// const Div = styled.div`
+//   input {
+//     width: 20em;
+//     height: 3em;
+//     border: 1px solid #a0a0a0;
+//     border-radius: 5px;
+//   }
+//   button {
+//     width: 20em;
+//     height: 3em;
+//     border: 1px solid #385493;
+//     background-color: #385493;
+//     color: white;
+//     font-weight: bold;
+//     border-radius: 5px;
+//   }
+//   img {
+//     padding: 0em 0em 1em 0em;
+//     width: 9em;
+//     height: 6em;
+//   }
+// `;
 
 export default CommentModal;
