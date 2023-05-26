@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../img/MoyeoU.jpg";
-import chat from "../img/chat.png";
-import heart from "../img/heart.png";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import data from "../data.json";
+import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
 
 function Header() {
   //const userId = data.words.filter(word => (word.day === day));
@@ -56,18 +55,16 @@ function Header() {
         {login ? (
           //채팅
           <Btn>
-            <img src={chat} className="chatImg" alt="chat"></img>
+            <BsChat size="25" />
           </Btn>
         ) : null}
         {login ? (
           //알림
           <Btn>
-            <img
-              src={heart}
-              className="heartImg"
-              alt="heart"
+            <BsHeart
+              size="25"
               onClick={() => navigate(`/evaluateMember`, { state: user })}
-            ></img>
+            />
           </Btn>
         ) : null}
 
@@ -109,9 +106,6 @@ const HeaderBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  // img {
-  //   padding: 1vh 1vw;
-  // }
 `;
 const Div = styled.div`
   //display: inline-block;

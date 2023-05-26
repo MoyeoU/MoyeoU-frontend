@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
 function EvaluateModal({ onClose }) {
   const onSubmit = (event) => {
@@ -12,6 +13,24 @@ function EvaluateModal({ onClose }) {
     comment: "",
   });
 
+  const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const handleStarClick = (index) => {
+    let clickStates = [...clicked];
+    for (let i = 0; i < 5; i++) {
+      clickStates[i] = i <= index ? true : false;
+    }
+    setClicked(clickStates);
+  };
+  useEffect(() => {
+    sendReview();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clicked]); //컨디마 컨디업
+
+  const sendReview = () => {
+    let score = clicked.filter(Boolean).length;
+  };
+  const ARRAY = [0, 1, 2, 3, 4];
+
   return (
     <>
       <Modal onClose={onClose}>
@@ -22,7 +41,18 @@ function EvaluateModal({ onClose }) {
                 <span>Hyeong2e</span> 님에 대한 평가
               </h2>
             </Name>
-            <Star></Star>
+            <Star>
+              {ARRAY.map((el, idx) => {
+                return (
+                  <FaStar
+                    key={idx}
+                    size="35"
+                    onClick={() => handleStarClick(el)}
+                    className={clicked[el] && "yellowStar"}
+                  />
+                );
+              })}
+            </Star>
             <Comment>
               <input
                 placeholder="평가 메시지를 입력하세요."
@@ -46,7 +76,7 @@ function EvaluateModal({ onClose }) {
 
 const Div = styled.div`
   margin: 1vh 1vw;
-  height: 45vh;
+  height: 50vh;
   overflow: auto;
 `;
 
@@ -59,7 +89,15 @@ const Name = styled.div`
   }
 `;
 
-const Star = styled.div``;
+const Star = styled.div`
+  & svg {
+    color: #cacaca;
+    cursor: pointer;
+  }
+  .yellowStar {
+    color: #385493;
+  }
+`;
 
 const Comment = styled.div`
   margin: 2vh auto;
@@ -68,6 +106,8 @@ const Comment = styled.div`
   input {
     width: 80%;
     height: 20vh;
+    border: 1px solid gray;
+    border-radius: 1em;
   }
 `;
 
