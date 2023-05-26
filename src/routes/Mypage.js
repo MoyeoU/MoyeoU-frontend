@@ -6,7 +6,7 @@ import StudyList from "../components/StudyList";
 import member from "../img/member.jpg";
 import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
-import dummy from "../data.json";
+import data from "../data.json";
 import Tag from "../components/Tag";
 
 function Mypage() {
@@ -34,9 +34,9 @@ function Mypage() {
         <Left>
           <img src={member} alt="member"></img>
           <h3>{state}</h3>
-          <StarRate {...dummy.user[0]} />
+          <StarRate {...data.user[0]} />
           <p>
-            {(dummy.user[0].star / 20).toFixed(1)} / 5.0{" "}
+            {(data.user[0].star / 20).toFixed(1)} / 5.0{" "}
             <button onClick={viewComment}>{">"}</button>
             {commentModalIsOpen && (
               <CommentModal
@@ -52,12 +52,12 @@ function Mypage() {
           <br />
           <More>
             <p>소개</p>
-            <OneLiner>{dummy.user[0].intro}</OneLiner>
+            <OneLiner>{data.user[0].intro}</OneLiner>
             <br />
             <hr />
             <br />
             <p>관심 태그</p>
-            <Tag {...dummy.user[0]} key={dummy.user[0].id} />
+            <Tag {...data.user[0]} key={data.user[0].id} />
           </More>
           <Btn>
             {user === state ? (
@@ -83,7 +83,7 @@ function Mypage() {
             </NowOrNot>
           </Filtering>
           <HistoryDiv>
-            {Object.values(dummy.board).map((posts) => (
+            {Object.values(data.board).map((posts) => (
               <StudyList {...posts} key={posts.id} />
             ))}
           </HistoryDiv>

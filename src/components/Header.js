@@ -5,10 +5,10 @@ import heart from "../img/heart.png";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
-import dummy from "../data.json";
+import data from "../data.json";
 
 function Header() {
-  //const userId = dummy.words.filter(word => (word.day === day));
+  //const userId = data.words.filter(word => (word.day === day));
   const [user, setUser] = useState("");
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);

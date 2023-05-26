@@ -2,25 +2,21 @@ import styled from "styled-components";
 import image from "../../img/MoyeoU.jpg";
 import Modal from "./Modal";
 import { useState } from "react";
-import dummy from "../../data.json";
+import data from "../../data.json";
 
 function LoginModal({ onClose }) {
-  //const [id, setId] = useState("");
-  //const [pw, setPw] = useState("");
   const [formValue, setFormValue] = useState({
     id: "",
     pw: "",
   });
   const onSubmit = (event) => {
     event.preventDefault();
-    //setId(formValue.id);
-    //setPw(formValue.pw);
     onClickLogin();
   };
   const onClickLogin = () => {
     //db 연동
     localStorage.clear();
-    localStorage.setItem("id", dummy.user[0].id);
+    localStorage.setItem("id", data.user[0].id);
     document.location.href = "/";
   };
 

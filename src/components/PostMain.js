@@ -1,18 +1,18 @@
 //import { useState } from "react";
-import dummy from "../data.json";
+import data from "../data.json";
 import Post from "./Post";
 import PostList from "./PostList";
 import styled from "styled-components";
 
 function PostMain() {
-  //const [post, setPost] = useState(dummy.board);
+  //const [post, setPost] = useState(data.board);
 
   return (
     <>
       <Div>
         <PostList />
         <PostDiv>
-          {Object.values(dummy.board).map((posts) => (
+          {Object.values(data.board).map((posts) => (
             <Post {...posts} key={posts.id} />
           ))}
         </PostDiv>
