@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 function StarRate({ star }) {
   const AVR_RATE = star;
+  console.log(star);
   const STAR_IDX_ARR = ["first", "second", "third", "fourth", "last"];
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0]);
   const calcStarRates = () => {

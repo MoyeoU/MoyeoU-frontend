@@ -5,12 +5,16 @@ import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import data from "../data.json";
 import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
+import NotificationModal from "../components/Modal/NotificationModal";
+import ChatModal from "../components/Modal/ChatModal";
 
 function Header() {
   //const userId = data.words.filter(word => (word.day === day));
   const [user, setUser] = useState("");
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const [notificationModalIsOpen, setNotificationModalIsOpen] = useState(false);
+  const [chatModalIsOpen, setChatModalIsOpen] = useState(false);
   const navigate = useNavigate();
   const getLoginOrNot = () => {
     //로그인 여부 체크, 나중에는 문자열 있는지없는지
@@ -33,9 +37,12 @@ function Header() {
   const goSignup = () => {
     navigate(`/signup`);
   };
-  // const goMypage = (user) => {
-  //   navigate(`/mypage/${user}`, { state: user });
-  // };
+  const goChat = () => {
+    setChatModalIsOpen(true);
+  };
+  const goAlert = () => {
+    setNotificationModalIsOpen(true);
+  };
 
   useEffect(() => {
     getLoginOrNot();
@@ -55,16 +62,29 @@ function Header() {
         {login ? (
           //채팅
           <Btn>
-            <BsChat size="25" />
+            <BsChat size="25" onClick={goChat} />
+            {chatModalIsOpen && (
+              <ChatModal
+                open={chatModalIsOpen}
+                onClose={() => {
+                  setChatModalIsOpen(false);
+                }}
+              />
+            )}
           </Btn>
         ) : null}
         {login ? (
           //알림
           <Btn>
-            <BsHeart
-              size="25"
-              onClick={() => navigate(`/evaluateMember`, { state: user })}
-            />
+            <BsHeart size="25" onClick={goAlert} />
+            {notificationModalIsOpen && (
+              <NotificationModal
+                open={notificationModalIsOpen}
+                onClose={() => {
+                  setNotificationModalIsOpen(false);
+                }}
+              />
+            )}
           </Btn>
         ) : null}
 

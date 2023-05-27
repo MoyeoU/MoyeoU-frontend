@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useOutSideClick from "../../hooks/useOutSideClick";
 import ModalContainer from "./ModalContainer";
 
-function Modal({ onClose, children }) {
+function Modal({ onClose }) {
   const modalRef = useRef(null);
   const handleClose = () => {
     onClose?.();
@@ -21,49 +21,42 @@ function Modal({ onClose, children }) {
 
   return (
     <ModalContainer>
-      <Overlay>
-        <ModalWrap ref={modalRef}>
-          <CloseButton onClick={handleClose}>
-            <i className="fa-solid fa-xmark">X</i>
-          </CloseButton>
-          <Contents>{children}</Contents>
-        </ModalWrap>
-      </Overlay>
+      <ModalWrap ref={modalRef}>
+        <CloseButton onClick={handleClose}>
+          <p className="fa-solid fa-xmark">X</p>
+        </CloseButton>
+        <Contents></Contents>
+      </ModalWrap>
     </ModalContainer>
   );
 }
 
-const Overlay = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 10vw;
-  //background: rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-`;
-
 const ModalWrap = styled.div`
-  width: 30vw;
-  height: fit-content;
-  border-radius: 15px;
-  border: 2px solid #5d5d5d;
+  width: 25vw;
+  //height: fit-content;
+  min-height: 60vh;
+  max-height: 60vh;
+  overflow-y: scroll;
+  border-radius: 5px;
   background-color: #fff;
-  position: fixed;
-  top: 43vh;
-  left: 39vw;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  // top: 65px;
+  // right: 280px;
+  top: 10%;
+  right: 18%;
+  //right14%, 220px
+  box-shadow: 0 5px 25px gray;
 `;
 
 const CloseButton = styled.div`
-  float: right;
-  //width: 40px;
-  //height: 40px;
-  margin: 1vh 1vw;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  //margin: 1vh 1vw;
   cursor: pointer;
-  i {
+  p {
+    margin: 1vh 1vw;
+    float: right;
     color: #5d5d5d;
     font-size: 3vh;
   }
@@ -72,11 +65,6 @@ const CloseButton = styled.div`
 const Contents = styled.div`
   //margin: 80px 10px 80px 10px;
   text-align: center;
-  //   h1 {
-  //     font-size: 30px;
-  //     font-weight: 600;
-  //     margin-bottom: 60px;
-  //   }
 `;
 
 export default Modal;

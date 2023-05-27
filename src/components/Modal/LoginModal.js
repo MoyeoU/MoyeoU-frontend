@@ -68,8 +68,8 @@ const Div = styled.div`
   }
   img {
     padding: 0em 0em 1em 0em;
-    width: 9em;
-    height: 6em;
+    width: 10em;
+    height: 5em;
   }
 `;
 

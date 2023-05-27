@@ -31,7 +31,7 @@ function Modal({ onClose, children }) {
       <Overlay>
         <ModalWrap ref={modalRef}>
           <CloseButton onClick={handleClose}>
-            <i className="fa-solid fa-xmark">X</i>
+            <p className="fa-solid fa-xmark">X</p>
           </CloseButton>
           <Contents>{children}</Contents>
         </ModalWrap>
@@ -69,7 +69,8 @@ const CloseButton = styled.div`
   height: 40px;
   margin: 20px;
   cursor: pointer;
-  i {
+  p {
+    margin: 0;
     color: #5d5d5d;
     font-size: 30px;
   }
