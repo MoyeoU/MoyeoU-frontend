@@ -3,7 +3,7 @@ import Home from "./routes/Home";
 import Mypage from "./routes/Mypage";
 import Signup from "./routes/Signup";
 import PostView from "./routes/PostView";
-import CreatePost from "./components/CreatePost";
+import CreatePost from "./routes/CreatePost";
 import Evaluation from "./routes/Evaluation";
 
 function App() {

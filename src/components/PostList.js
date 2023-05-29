@@ -51,54 +51,83 @@ function PostList() {
 
   return (
     <>
-      <div>
-        <Tag>
-          <Ul>
-            {data.map((item, idx) => {
-              return (
-                <>
-                  <Li
-                    key={idx}
-                    value={idx}
-                    className={idx === typeClick ? "active" : ""}
-                    onClick={filtering}
-                  >
-                    {item}
-                  </Li>
-                </>
-              );
-            })}
-          </Ul>
-        </Tag>
-        <Gather>
-          <button>모집중</button>
-          <button>모집완료</button>
-          <WriteBtn>
-            <p onClick={goCreatePost}>글쓰기</p>
-            {loginModalIsOpen && (
-              <LoginModal
-                open={loginModalIsOpen}
-                onClose={() => {
-                  setLoginModalIsOpen(false);
-                }}
-              />
-            )}
-          </WriteBtn>
-        </Gather>
-      </div>
+      <Ul>
+        {data.map((item, idx) => {
+          return (
+            <>
+              <Li
+                key={idx}
+                value={idx}
+                className={idx === typeClick ? "active" : ""}
+                onClick={filtering}
+              >
+                {item}
+              </Li>
+            </>
+          );
+        })}
+      </Ul>
+      <Gather>
+        <Classification>모집중</Classification>
+        <Classification>모집완료</Classification>
+
+        <WriteBtn>
+          <p onClick={goCreatePost}>글쓰기</p>
+          {loginModalIsOpen && (
+            <LoginModal
+              open={loginModalIsOpen}
+              onClose={() => {
+                setLoginModalIsOpen(false);
+              }}
+            />
+          )}
+        </WriteBtn>
+      </Gather>
     </>
   );
 }
 
-const Tag = styled.div`
-  //text-align: center;
-  //margin: 3em;
-  //clear: both;
-  //justify-content: center;
-`;
-
 const Gather = styled.div`
   clear: both;
+  margin: 0 1vw 1vh;
+  overflow: auto;
+`;
+
+const Classification = styled.button`
+  width: 10%;
+  height: 5%;
+  background-color: white;
+  padding: 1vh 1vw;
+  border-radius: 0.5em;
+  color: gray;
+  border: 3px solid #deeaf6;
+  font-weight: bold;
+  margin: 0 1vw;
+  :hover {
+    cursor: pointer;
+    background-color: #deeaf6;
+  }
+`;
+
+const WriteBtn = styled.button`
+  float: right;
+  //width: 10%;
+  //height: 5%;
+  border: none;
+  margin: 0vh 1vw;
+  background-color: white;
+  font-weight: bold;
+  :hover {
+    cursor: pointer;
+  }
+  p {
+    font-size: 1.5em;
+    margin: 0;
+    color: gray;
+    :hover {
+      color: black;
+    }
+  }
 `;
 
 const Ul = styled.ul`
@@ -107,10 +136,9 @@ const Ul = styled.ul`
 
 const Li = styled.li`
   float: left;
-  margin: 0 2vw;
-  padding: 2vw 0;
+  margin: 0 3vw 5vh 0;
   font-weight: 900;
-  font-size: 30px;
+  font-size: 25px;
   font-family: "Noto Sans KR", sans-serif;
   color: gray;
   :hover {
@@ -119,18 +147,6 @@ const Li = styled.li`
   }
   &.active {
     color: #385493;
-  }
-`;
-
-const WriteBtn = styled.button`
-  border: none;
-  background-color: white;
-  font-size: 20px;
-  font-weight: bold;
-  :hover {
-    cursor: pointer;
-  }
-  p {
   }
 `;
 

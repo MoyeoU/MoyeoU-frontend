@@ -5,7 +5,10 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 
 function EvaluateModal({ onClose }) {
   const onSubmit = (event) => {
-    event.preventDefault();
+    const count = localStorage.getItem("count");
+    localStorage.removeItem("count");
+    localStorage.setItem("count", Number(count) + 1);
+    //event.preventDefault();
   };
 
   const [formValue, setFormValue] = useState({
@@ -24,7 +27,7 @@ function EvaluateModal({ onClose }) {
   useEffect(() => {
     sendReview();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clicked]); //컨디마 컨디업
+  }, [clicked]);
 
   const sendReview = () => {
     let score = clicked.filter(Boolean).length;

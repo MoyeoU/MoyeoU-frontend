@@ -12,6 +12,11 @@ function Modal({ onClose }) {
     onClose?.();
   };
   const [user, setUser] = useState("");
+  const onClick = () => {
+    localStorage.removeItem("count");
+    localStorage.setItem("count", 0);
+    navigate(`/evaluateMember`, { state: user });
+  };
   useEffect(() => {
     setUser(localStorage.getItem("id"));
     const $body = document.querySelector("body");
@@ -34,7 +39,8 @@ function Modal({ onClose }) {
           <Div>
             <span>'토익' 스터디가 종료되었습니다.</span>
             <button
-              onClick={() => navigate(`/evaluateMember`, { state: user })}
+              //onClick={() => navigate(`/evaluateMember`, { state: user })}
+              onClick={onClick}
             >
               평가하기
             </button>

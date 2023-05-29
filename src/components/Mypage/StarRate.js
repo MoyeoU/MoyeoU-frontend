@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-function StarRate({ star }) {
-  const AVR_RATE = star;
-  console.log(star);
+function StarRate(props) {
+  const AVR_RATE = props.star;
+  console.log(props.star);
   const STAR_IDX_ARR = ["first", "second", "third", "fourth", "last"];
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0]);
   const calcStarRates = () => {
@@ -35,7 +35,7 @@ function StarRate({ star }) {
               fill="#cacaca"
             >
               <clipPath id={`${item}StarClip`}>
-                <rect width={`${ratesResArr[idx]}`} height="39" />
+                <rect width={`${ratesResArr[idx]}`} height="28" />
               </clipPath>
               <path
                 id={`${item}Star`}

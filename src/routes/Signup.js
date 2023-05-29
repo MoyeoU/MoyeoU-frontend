@@ -1,19 +1,29 @@
 import styled from "styled-components";
-import image from "../img/MoyeoU.jpg";
 import Header from "../components/Header";
 
 function Signup() {
+  const onCancel = () => {
+    document.location.href = "/";
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    onClickSignUp();
+  };
+  const onClickSignUp = () => {
+    alert("회원가입이 완료되었습니다.");
+    document.location.href = "/";
+  };
+
   return (
     <>
       <Header />
       <Div>
-        {/* <ImgDiv>
-          <img src={image} alt="logo" />
-        </ImgDiv> */}
         <H1Div>
-          <h1>MoyeoU에 오신 것을 환영합니다!</h1>
+          <h1>
+            <span>MoyeoU</span>에 오신 것을 환영합니다!
+          </h1>
         </H1Div>
-        <form>
+        <form onSubmit={onSubmit}>
           <table>
             <tbody>
               <tr>
@@ -21,7 +31,13 @@ function Signup() {
                   <label htmlFor="id">이메일(학교)</label>
                 </td>
                 <td>
-                  <input name="id" id="id" placeholder="example@o.cnu.ac.kr" />
+                  <input
+                    name="id"
+                    id="id"
+                    type="email"
+                    placeholder="example@o.cnu.ac.kr"
+                    required
+                  />
                 </td>
                 <td>
                   <button type="button" id="sendCode">
@@ -32,7 +48,7 @@ function Signup() {
               <tr>
                 <td></td>
                 <td>
-                  <input name="receivedCode" id="receivedCode" />
+                  <input name="receivedCode" id="receivedCode" required />
                 </td>
                 <td>
                   <button type="button" id="sendCode">
@@ -45,7 +61,7 @@ function Signup() {
                   <label htmlFor="major">학과</label>
                 </td>
                 <td>
-                  <input name="major" id="major" />
+                  <input name="major" id="major" required />
                 </td>
                 <td></td>
               </tr>
@@ -54,7 +70,7 @@ function Signup() {
                   <label htmlFor="studentNum">학번</label>
                 </td>
                 <td>
-                  <input name="studentNum" id="studentNum" />
+                  <input name="studentNum" id="studentNum" required />
                 </td>
                 <td></td>
               </tr>
@@ -63,7 +79,7 @@ function Signup() {
                   <label htmlFor="nickname">닉네임</label>
                 </td>
                 <td>
-                  <input name="nickname" id="nickname" />
+                  <input name="nickname" id="nickname" required />
                 </td>
                 <td></td>
               </tr>
@@ -72,7 +88,7 @@ function Signup() {
                   <label htmlFor="pw">비밀번호</label>
                 </td>
                 <td>
-                  <input name="pw" id="pw" />
+                  <input name="pw" id="pw" required />
                 </td>
                 <td></td>
               </tr>
@@ -80,7 +96,9 @@ function Signup() {
           </table>
           <hr />
           <Btn>
-            <button type="button">취소하기</button>
+            <button type="button" onClick={onCancel}>
+              취소하기
+            </button>
             <button type="submit">가입하기</button>
           </Btn>
         </form>
@@ -88,13 +106,11 @@ function Signup() {
     </>
   );
 }
-
-// const ImgDiv = styled.div`
-//   float: left;
-//   padding: 0 1em;
-// `;
 const H1Div = styled.div`
   padding: 0 0 3vh 0;
+  span {
+    color: #385493;
+  }
 `;
 const Div = styled.div`
   height: auto;
@@ -121,6 +137,9 @@ const Div = styled.div`
     background-color: lightgray;
     color: black;
     border-radius: 5px;
+    :hover {
+      cursor: pointer;
+    }
   }
   img {
     display: block;
@@ -141,6 +160,9 @@ const Btn = styled.div`
     color: white;
     font-weight: bold;
     border-radius: 5px;
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 

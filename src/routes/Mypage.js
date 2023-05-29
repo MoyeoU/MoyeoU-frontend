@@ -2,12 +2,12 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import StudyList from "../components/StudyList";
+import StudyHistory from "../components/Mypage/StudyHistory";
 import member from "../img/member.jpg";
 import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
 import data from "../data.json";
-import Tag from "../components/Tag";
+import Tag from "../components/Mypage/Tag";
 
 function Mypage() {
   const [user, setUser] = useState("");
@@ -34,7 +34,7 @@ function Mypage() {
         <Left>
           <img src={member} alt="member"></img>
           <h3>{state}</h3>
-          <StarRate {...data.user[0]} />
+          <StarRate star={data.user[0].star} />
           <p>
             {(data.user[0].star / 20).toFixed(1)} / 5.0{" "}
             <button onClick={viewComment}>{">"}</button>
@@ -84,7 +84,7 @@ function Mypage() {
           </Filtering>
           <HistoryDiv>
             {Object.values(data.board).map((posts) => (
-              <StudyList {...posts} key={posts.id} />
+              <StudyHistory {...posts} key={posts.id} />
             ))}
           </HistoryDiv>
         </Right>

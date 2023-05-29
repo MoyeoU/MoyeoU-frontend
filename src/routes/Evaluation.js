@@ -1,8 +1,29 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import EvaluationList from "../components/EvaluateList";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Evaluation() {
+  const MEMBERCNT = 3;
+  const [count, setCount] = useState(0);
+  const onClick = () => {
+    console.log(count);
+    console.log(MEMBERCNT);
+    if (Number(count) === MEMBERCNT) {
+      alert("평가가 완료되었습니다.");
+      localStorage.removeItem("count");
+      localStorage.setItem("count", 0);
+      document.location.href = "/";
+    } else {
+      alert("평가를 모두 완료해주세요.");
+    }
+  };
+  useEffect(() => {
+    setCount(localStorage.getItem("count"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count]);
+
   return (
     <>
       <Header />
@@ -17,8 +38,8 @@ function Evaluation() {
           <EvaluationList />
         </List>
         <Close>
-          <h4>0 / 3</h4>
-          <button>완료</button>
+          <h4>{count} / 3</h4>
+          <button onClick={onClick}>완료</button>
         </Close>
       </Div>
     </>

@@ -10,7 +10,9 @@ function EvaluateList() {
     setEvaluateModalIsOpen(true);
   };
 
-  useEffect(() => {}, [evaluateModalIsOpen]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [evaluateModalIsOpen]);
 
   return (
     <>

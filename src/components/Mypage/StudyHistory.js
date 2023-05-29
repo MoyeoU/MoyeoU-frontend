@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function StudyList({ id, title, complete, tag, date }) {
+function StudyHistory({ id, title, complete, tag, date }) {
   const navigate = useNavigate();
   const onClick = () => {
     navigate(`/postView/${id}`);
@@ -75,4 +75,4 @@ const TagBtn = styled.div`
   }
 `;
 
-export default StudyList;
+export default StudyHistory;
