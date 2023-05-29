@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { BsPerson } from "react-icons/bs";
+import { BsPersonFill } from "react-icons/bs";
 
 function Post({
   id,
@@ -24,7 +24,7 @@ function Post({
         <h4>{title}</h4>
       </Title>
       <span>
-        <BsPerson />
+        <BsPersonFill />
         &nbsp;
         {presentMember}&nbsp;/&nbsp;{totalMember}
       </span>

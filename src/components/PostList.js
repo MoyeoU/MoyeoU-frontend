@@ -139,7 +139,7 @@ const WriteBtn = styled.button`
   //width: 10%;
   //height: 5%;
   border: none;
-  margin: 0vh 1vw;
+  margin: 0vh 3vw;
   background-color: white;
   font-weight: bold;
   :hover {

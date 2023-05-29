@@ -1,0 +1,294 @@
+body{
+    margin:0;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+ul{
+    list-style: none;
+    padding-inline-start: 0px;
+}
+#root{
+    min-height: 100%;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+.navbar{
+    margin:auto;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    height: 85px;
+    padding : 0 10px;
+
+}
+.moyeou-logo{
+    width:70.4px;
+    height:32px;
+}
+.leftArrow{
+    width: 30px;
+    height: 30px;
+}
+.navbar_writing{
+    background-color: white;
+    display:inline-block;
+    text-align: center;
+    margin: 0;
+    padding: 1px 6px;
+    font-weight: 600;
+    font-size: 16px;
+    color:black;
+}
+#articlewrapper{
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 10px 10px 50px 10px;
+}
+#studyPost_header{
+    display: flex;
+    flex-direction: column;
+    margin-top : 30px;
+}
+#studyPost_headerIn{
+    display: flex;
+    margin: 0;
+    align-items:center;
+}
+#recruitTag{
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10%;
+    width : 60px;
+    background-color:#DEEBF7;
+    color:dimgray;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 60px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+#studyPost_title{
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 50px;
+    line-height: 120%;
+    color:black;
+}
+#studyPost_user_date_comment{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    /*gap: 10px;*/
+}
+#studyPost_user{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.userImg{
+    cursor: pointer;
+    display: block;
+    height: 30px;
+    width: 30px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+#userName{
+    color: black;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    padding-right: 15px;
+    border-right: 2px solid #e1e1e1;
+}
+#studyPost_date{
+    font-size: 14px;
+    color: #717171;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    border-right: 2px solid #e1e1e1;
+}
+#studyPost_commentNum{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.commentImg{
+    display: block;
+    height: 25px;
+    width: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+#numberOfComment{
+    font-size: 16px;
+    color: #717171;
+    text-align: center;
+}
+#studyPost_hashTag{
+    margin-top: 18px;
+    padding-bottom: 30px;
+    border-bottom: 3px solid #f2f2f2;
+    display: flex;
+    align-items: center;
+}
+#studyPost_hashtagList{
+    flex-wrap: wrap;
+    overflow: auto;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+    gap:10px;
+}
+.hashTag{
+    padding: 8px 10px;
+    background: #f2f4f8;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: #4a5e75;
+}
+#studyPost_info_wrap{
+    border-bottom: 3px solid #f2f2f2;
+}
+#studyPost_info_grid{
+    margin-top: 60px;
+    margin-bottom: 50px;
+    display: grid;
+    grid-row-gap: 24px;
+    grid-template-columns: repeat(2,3fr);
+}
+.studyPost_info_item{
+    display: flex;
+    position: relative;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+#studyPost_info_title{
+    color: #717171;
+    margin-right: 35px;
+}
+#studyPost_info_content{
+    color: #333;
+}
+#studyPost_content{
+    margin-top: 50px;
+    width: 100%;
+    font-size: 20px;
+    word-break: break-all;
+    line-height: 150%;
+}
+#studyPost_applyBox{
+    margin-top: 20px;
+    border-top: 3px solid #f2f2f2;
+    padding-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+#studyApplyButton{
+    padding: 5px 20px;
+    height: 35px;
+    background: #2F5597;
+    border-radius: 40px;
+    font-weight: 700;
+    color: white;
+    font-size: 15px;
+}
+#studyPost_commentWrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+#studyPost_comment_title{
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #717171;
+}
+#studyPost_comment_container{
+    display: flex;
+    grid-gap: 30px;
+    margin-bottom: 20px;
+}
+#commentInput{
+    font-family: inherit;
+    font-size: 16px;
+    padding: 10px;
+    outline: none;
+    border: 2px solid #e1e1e1;
+    width: 100%;
+    border-radius: 16px;
+    min-height: 100px;
+    resize: none;
+}
+.sendButtonimg{
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+#sendButton{
+    padding-top: 60px;
+    background-color: white;
+}
+#commentList{
+    width: 100%;
+    margin-top: 40px;
+}
+.comment_item{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid #717171;
+}
+#comment_item_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+#comment_userInfo{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.commentLogo{
+    display: block;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+#comment_userName{
+    color: #333;
+    font-weight: bold;
+}
+#comment_dateAndTime{
+    font-size: 14px;
+    color: #717171;
+}
+#comment_content{
+    margin-left: 18px;
+}
