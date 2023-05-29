@@ -119,7 +119,7 @@ const Gather = styled.div`
 `;
 
 const Classification = styled.button`
-  width: 10%;
+  width: 8%;
   height: 5%;
   background-color: white;
   padding: 1vh 1vw;
@@ -127,7 +127,7 @@ const Classification = styled.button`
   color: gray;
   border: 3px solid #deeaf6;
   font-weight: bold;
-  margin: 0 1vw;
+  margin: 0 0.5vw;
   :hover {
     cursor: pointer;
     background-color: #deeaf6;
@@ -139,7 +139,7 @@ const WriteBtn = styled.button`
   //width: 10%;
   //height: 5%;
   border: none;
-  margin: 0vh 3vw;
+  margin: 0vh 4vw;
   background-color: white;
   font-weight: bold;
   :hover {

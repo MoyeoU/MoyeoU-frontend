@@ -23,11 +23,16 @@ function Post({
       <Title>
         <h4>{title}</h4>
       </Title>
-      <span>
-        <BsPersonFill />
-        &nbsp;
-        {presentMember}&nbsp;/&nbsp;{totalMember}
-      </span>
+      <Person>
+        <PersonImg>
+          <BsPersonFill />
+        </PersonImg>
+        <span>
+          &nbsp;
+          {presentMember}&nbsp;/&nbsp;{totalMember}
+        </span>
+      </Person>
+
       <br />
       {tag.map((tags) => (
         <TagBtn>{tags}</TagBtn>
@@ -37,7 +42,15 @@ function Post({
     </PostLayout>
   );
 }
-
+const Person = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const PersonImg = styled.div`
+  float: left;
+  display: flex;
+  justify-content: flex-end;
+`;
 const PostLayout = styled.div`
   width: 200px;
   margin: 1% 1%;
@@ -58,8 +71,8 @@ const PostLayout = styled.div`
   }
 `;
 const Title = styled.div`
-  min-height: 5em;
-  max-height: 5em;
+  min-height: 4em;
+  max-height: 4em;
   p {
     overflow: hidden;
     text-overflow: ellipsis;

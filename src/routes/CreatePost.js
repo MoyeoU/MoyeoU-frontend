@@ -103,10 +103,10 @@ function CreatePost() {
                 <P>
                   신청 양식을 만들어주세요.
                   <button type="button" onClick={onCreate}>
-                    추가
+                    +
                   </button>
+                  <ApplyForm />
                 </P>
-
                 {/* <TextInput name="applyForm" id="applyForm" /> */}
                 {create.map((number) => {
                   console.log(number);
@@ -160,7 +160,16 @@ const P = styled.p`
   font-size: 2.5vh;
   font-weight: bold;
   button {
+    //border:2px solid gray;
+    //border-radius:15px;
+    background-color:white;
+    font-size:25px;
+    color:gray;
     margin 0 1vw;
+    :hover{
+      cursor:pointer;
+      color:black;
+    }
   }
 `;
 
@@ -181,6 +190,7 @@ const CreateDiv = styled.div`
 const Div = styled.div`
   max-width: 100%;
   height: auto;
+  margin: 0 10vw;
 `;
 
 const Btn = styled.div`

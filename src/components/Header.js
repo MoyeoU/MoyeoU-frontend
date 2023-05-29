@@ -5,6 +5,7 @@ import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import data from "../data.json";
 import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BiChat, BiHeart } from "react-icons/bi";
 import NotificationModal from "../components/Modal/NotificationModal";
 import ChatModal from "../components/Modal/ChatModal";
 
@@ -64,7 +65,7 @@ function Header() {
         {login ? (
           //채팅
           <Btn>
-            <BsChat size="25" onClick={goChat} />
+            <BiChat size="25" onClick={goChat} />
             {chatModalIsOpen && (
               <ChatModal
                 open={chatModalIsOpen}
@@ -78,7 +79,7 @@ function Header() {
         {login ? (
           //알림
           <Btn>
-            <BsHeart size="25" onClick={goAlert} />
+            <BiHeart size="25" onClick={goAlert} />
             {notificationModalIsOpen && (
               <NotificationModal
                 open={notificationModalIsOpen}
@@ -133,8 +134,8 @@ const Img = styled.div`
   margin: 0 5%;
 `;
 const RightDiv = styled.div`
-  display: inline;
-  justify-content: center;
+  display: flex;
+  float: left;
   align-items: center;
   margin: 0 4%;
 `;
@@ -145,7 +146,7 @@ const Btn = styled.div`
   border: none;
   margin: 0 1vw;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   :hover {
     color: #385493;
     cursor: pointer;

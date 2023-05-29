@@ -116,23 +116,28 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  padding: 5vh 10vw;
+  padding: 3vh 5vw;
+  margin: 0 15vw;
   table,
   tr,
   td {
     border: none;
-    width: 100%;
+    width: auto;
+    text-align: right;
+    margin: 0 auto;
+    padding: 1% 2%;
   }
   input {
-    width: 20em;
+    width: 25em;
     height: 3em;
     border: 1px solid lightgray;
     border-radius: 5px;
   }
   button {
-    margin: 0.5em;
-    width: 8em;
-    height: 2.5em;
+    margin: 3%;
+    width: 6em;
+    height: 3em;
+    font-size: 1.5vh;
     border: 1px solid lightgray;
     background-color: lightgray;
     color: black;
@@ -147,6 +152,8 @@ const Div = styled.div`
     width: 9em;
     height: 6em;
   }
+  label {
+  }
 `;
 
 const Btn = styled.div`
@@ -159,6 +166,7 @@ const Btn = styled.div`
     background-color: #385493;
     color: white;
     font-weight: bold;
+    font-size: 1.7vh;
     border-radius: 5px;
     :hover {
       cursor: pointer;

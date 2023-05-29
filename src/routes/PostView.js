@@ -1,29 +1,21 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import "../article/articledetail.css";
-
-import logo22 from "../article/src/logo22.jpg";
-import leftArrow from "../article/src/leftArrow.jpg";
-import userImg from "../article/src/userImg.jpg";
-import commentImg from "../article/src/commentImg.jpg";
-import commentLogo from "../article/src/commentLogo.jpg";
-import send from "../article/src/send.jpg";
+import leftArrow from "../img/leftArrow.jpg";
+import userImg from "../img/userImg.jpg";
+import commentImg from "../img/commentImg.jpg";
+import commentLogo from "../img/commentLogo.jpg";
+import send from "../img/send.jpg";
 
 function PostView() {
   return (
     <>
       <Header />
       <div id="root">
-        <nav className="navbar">
-          <a href="./articledetail.html">
-            <img className="moyeou-logo" src={logo22} alt="logo"></img>
-          </a>
-          <button className="navbar_writing">글 쓰기</button>
-        </nav>
         <div id="articlewrapper">
           <section id="studyPost_header">
             <div id="studyPost_headerIn">
-              <a href="./articledetail.html">
+              <a href="/">
                 <img className="leftArrow" src={leftArrow} alt="back"></img>
               </a>
               <div id="recruitTag">모집 중</div>
@@ -47,7 +39,7 @@ function PostView() {
                   src={commentImg}
                   alt="commentLogo"
                 ></img>
-                <div id="numberOfComment">1</div>
+                <div id="numberOfComment">2</div>
               </div>
             </div>
             <div id="studyPost_hashTag">
@@ -129,7 +121,9 @@ function PostView() {
                   <div id="comment_dateAndTime">2023-05-29 오후 03:56</div>
                 </section>
                 <section id="comment_content">
-                  <p id="comment_content_ex1">윤청싫어!</p>
+                  <p id="comment_content_ex1">
+                    JS 기본지식 없어도 신청 가능한가요?
+                  </p>
                 </section>
               </li>
               <li className="comment_item">
@@ -147,13 +141,7 @@ function PostView() {
                   <div id="comment_dateAndTime">2023-05-29 오후 03:56</div>
                 </section>
                 <section id="comment_content">
-                  <p id="comment_content_ex1">
-                    윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어!
-                    윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어!
-                    윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어!
-                    윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어!
-                    윤청싫어! 윤청싫어! 윤청싫어! 윤청싫어!{" "}
-                  </p>
+                  <p id="comment_content_ex1">대면은 안하나요? </p>
                 </section>
               </li>
             </ul>

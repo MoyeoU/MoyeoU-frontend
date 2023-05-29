@@ -42,6 +42,8 @@ function EvaluateList() {
 const Div = styled.div`
   overflow: auto;
   margin: 3vh auto;
+  display: flex;
+  align-items: center;
 `;
 
 const Img = styled.div`
@@ -66,6 +68,8 @@ const Btn = styled.div`
   float: left;
   width: 20%;
   height: 100%;
+  display: flex;
+  justify-content: flex-end;
   button {
     float: right;
     width: 50%;

@@ -36,6 +36,7 @@ const ImgDiv = styled.div`
 `;
 
 const TextDiv = styled.div`
+  margin-top: 5vh;
   float: right;
   color: gray;
   p {
