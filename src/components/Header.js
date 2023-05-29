@@ -51,13 +51,15 @@ function Header() {
 
   return (
     <HeaderBar>
-      <a href="/">
-        <img
-          style={{ width: "8em", height: "4em" }}
-          src={logo}
-          alt="logo"
-        ></img>
-      </a>
+      <Img>
+        <a href="/">
+          <img
+            style={{ width: "8em", height: "4em" }}
+            src={logo}
+            alt="logo"
+          ></img>
+        </a>
+      </Img>
       <Div>
         {login ? (
           //채팅
@@ -126,6 +128,9 @@ const HeaderBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 10vh;
+`;
+const Img = styled.div`
+  margin: 0 1%;
 `;
 const Div = styled.div`
   //display: inline-block;

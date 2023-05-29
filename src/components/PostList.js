@@ -51,26 +51,27 @@ function PostList() {
 
   return (
     <>
-      <Ul>
-        {data.map((item, idx) => {
-          return (
-            <>
-              <Li
-                key={idx}
-                value={idx}
-                className={idx === typeClick ? "active" : ""}
-                onClick={filtering}
-              >
-                {item}
-              </Li>
-            </>
-          );
-        })}
-      </Ul>
+      <List>
+        <ul>
+          {data.map((item, idx) => {
+            return (
+              <>
+                <li
+                  key={idx}
+                  value={idx}
+                  className={idx === typeClick ? "active" : ""}
+                  onClick={filtering}
+                >
+                  {item}
+                </li>
+              </>
+            );
+          })}
+        </ul>
+      </List>
       <Gather>
         <Classification>모집중</Classification>
         <Classification>모집완료</Classification>
-
         <WriteBtn>
           <p onClick={goCreatePost}>글쓰기</p>
           {loginModalIsOpen && (
@@ -86,6 +87,30 @@ function PostList() {
     </>
   );
 }
+
+const List = styled.div`
+  min-width: 100%;
+  max-width: 100%;
+  text-align: center;
+  margin-bottom: 10vh;
+  ul {
+    padding-inline-start: 0;
+  }
+  li {
+    display: inline;
+    margin: 2.5%;
+    font-weight: 900;
+    font-size: 25px;
+    color: gray;
+    :hover {
+      color: #385493;
+      cursor: pointer;
+    }
+    &.active {
+      color: #385493;
+    }
+  }
+`;
 
 const Gather = styled.div`
   clear: both;
@@ -127,26 +152,6 @@ const WriteBtn = styled.button`
     :hover {
       color: black;
     }
-  }
-`;
-
-const Ul = styled.ul`
-  list-style: none;
-`;
-
-const Li = styled.li`
-  float: left;
-  margin: 0 3vw 5vh 0;
-  font-weight: 900;
-  font-size: 25px;
-  font-family: "Noto Sans KR", sans-serif;
-  color: gray;
-  :hover {
-    color: #385493;
-    cursor: pointer;
-  }
-  &.active {
-    color: #385493;
   }
 `;
 

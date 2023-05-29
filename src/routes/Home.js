@@ -12,38 +12,22 @@ function Home() {
       <Ad />
       <Div>
         <PostList />
-        <PostDiv>
-          {Object.values(data.board).map((posts) => (
-            <Post {...posts} key={posts.id} />
-          ))}
-        </PostDiv>
+        {Object.values(data.board).map((posts) => (
+          <Post {...posts} key={posts.id} />
+        ))}
       </Div>
     </>
   );
 }
 
 const Div = styled.div`
-  //clear: both;
-  padding: 3em 5em;
-  //justify-content: center;
-  height: auto;
+  padding: 3% 5%;
+  justify-content: center;
   min-height: 70vh;
+  height: auto;
   overflow: auto;
   max-width: 100%;
   margin: 0 auto;
-`;
-
-const PostDiv = styled.div`
-  /*clear: both;
-  width: 100%;
-  max-width: 1300px;
-  min-height: 60rem;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;*/
-  //height: auto;
-  //min-height: 100vh;
 `;
 
 export default Home;

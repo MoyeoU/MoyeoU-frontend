@@ -50,7 +50,7 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  max-width: 100%;
+  max-width: 90%;
   margin: 0 auto;
   h3 {
     color: gray;

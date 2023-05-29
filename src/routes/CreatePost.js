@@ -11,7 +11,7 @@ function CreatePost() {
   };
   const onClickWrite = () => {
     alert("게시글 작성이 완료되었습니다.");
-    document.location.href = "/postView/:id";
+    document.location.href = "/postView/post1";
   };
   const goMain = () => {
     alert("게시글 작성이 취소되었습니다.");

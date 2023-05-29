@@ -32,7 +32,7 @@
   "board": [
     {
       "id": "post1",
-      "title": "1타이틀타이틀타이틀타이틀",
+      "title": "1타이틀타이틀타이틀타이틀1타이틀타이틀",
       "complete": "N",
       "totalMember": "5",
       "presentMember": "2",
@@ -43,47 +43,91 @@
     },
     {
       "id": "post2",
-      "title": "2타이틀타이틀타이틀타이틀",
+      "title": "컴융 졸프(자유주제) 팀원 모집합니다.",
       "complete": "N",
-      "totalMember": "5",
+      "totalMember": "3",
       "presentMember": "2",
-      "tag": ["태그1", "태그2"],
+      "tag": ["공과대학", "기타"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi",
+      "writer": "Nahyeong",
       "date": "2023-03-03"
     },
     {
       "id": "post3",
-      "title": "3타이틀타이틀타이틀타이틀",
+      "title": "실전코딩 한자리 남았어요!",
       "complete": "N",
-      "totalMember": "5",
-      "presentMember": "2",
-      "tag": ["태그1", "태그2"],
+      "totalMember": "4",
+      "presentMember": "3",
+      "tag": ["공과대학", "기타"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi",
-      "date": "2023-03-03"
+      "writer": "nananaa",
+      "date": "2023-03-08"
     },
     {
       "id": "post4",
-      "title": "4타이틀타이틀타이틀타이틀",
+      "title": "경영의 이해 팀플 하실 분 모집해요",
       "complete": "N",
-      "totalMember": "5",
-      "presentMember": "2",
-      "tag": ["태그1", "태그2"],
+      "totalMember": "4",
+      "presentMember": "0",
+      "tag": ["경상대학"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi",
-      "date": "2023-03-03"
+      "writer": "JUUHui",
+      "date": "2023-03-14"
     },
     {
       "id": "post5",
-      "title": "5타이틀타이틀타이틀타이틀",
+      "title": "기글 팀플 같이 하실 분",
+      "complete": "N",
+      "totalMember": "4",
+      "presentMember": "2",
+      "tag": ["경상대학", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "seo0",
+      "date": "2023-03-14"
+    },
+    {
+      "id": "post6",
+      "title": "코테준비 같이해요",
       "complete": "N",
       "totalMember": "5",
       "presentMember": "2",
-      "tag": ["태그1", "태그2"],
+      "tag": ["python", "기타"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi",
-      "date": "2023-03-03"
+      "writer": "hsy",
+      "date": "2023-04-12"
+    },
+    {
+      "id": "post7",
+      "title": "토익 스터디원 모집합니다",
+      "complete": "N",
+      "totalMember": "5",
+      "presentMember": "1",
+      "tag": ["TOEIC", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "bakssso",
+      "date": "2023-04-21"
+    },
+    {
+      "id": "post8",
+      "title": "[프론트엔드] 암환자 건강 관리 앱 개발자 모집합니다",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "0",
+      "tag": ["TypeScript"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "lia",
+      "date": "2023-04-22"
+    },
+    {
+      "id": "post9",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", ".."],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
     }
   ],
   "comm": [
