@@ -142,6 +142,7 @@ const OneLiner = styled.div`
   border-radius: 10px;
   margin: 1vh 1.5vw;
   margin-bottom: 2vh;
+  padding: 2%;
 `;
 
 const Btn = styled.div`

@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 
-function EvaluateModal({ onClose }) {
+function EvaluateModal(props) {
   const onSubmit = (event) => {
     const count = localStorage.getItem("count");
     localStorage.removeItem("count");
@@ -36,12 +36,12 @@ function EvaluateModal({ onClose }) {
 
   return (
     <>
-      <Modal onClose={onClose}>
+      <Modal onClose={props.onClose}>
         <Div>
           <form onSubmit={onSubmit}>
             <Name>
               <h2>
-                <span>Hyeong2e</span> 님에 대한 평가
+                <span>{props.member}</span> 님에 대한 평가
               </h2>
             </Name>
             <Star>
