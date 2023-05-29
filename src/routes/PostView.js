@@ -44,7 +44,7 @@ function PostView() {
             </div>
             <div id="studyPost_hashTag">
               <ul id="studyPost_hashtagList">
-                <li className="hashTag">javaScript</li>
+                <li className="hashTag">JavaScript</li>
                 <li className="hashTag">Linux</li>
               </ul>
             </div>

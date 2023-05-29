@@ -27,9 +27,9 @@ function Modal({ onClose }) {
           <p className="fa-solid fa-xmark">X</p>
         </CloseButton>
         <Contents>
-          {data.comm.map((props) => (
-            <Div>
-              <StarRate star={props.star} />
+          {data.comm.map((props, idx) => (
+            <Div id={props.comments}>
+              <StarRate star={props.star} id={idx} />
               <span>{props.comments}</span>
               <hr />
             </Div>
@@ -43,8 +43,8 @@ function Modal({ onClose }) {
 const ModalWrap = styled.div`
   width: 25vw;
   //height: fit-content;
-  min-height: 30vh;
-  max-height: 30vh;
+  min-height: 50vh;
+  max-height: 50vh;
   overflow-y: scroll;
   border-radius: 10px;
   background-color: #fff;

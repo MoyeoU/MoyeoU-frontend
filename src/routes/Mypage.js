@@ -34,7 +34,7 @@ function Mypage() {
         <Left>
           <img src={member} alt="member"></img>
           <h3>{state}</h3>
-          <StarRate star={data.user[0].star} />
+          <StarRate star={data.user[0].star} id="-1" />
           <p>
             {(data.user[0].star / 20).toFixed(1)} / 5.0{" "}
             <button onClick={viewComment}>{">"}</button>

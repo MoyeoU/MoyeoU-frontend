@@ -151,9 +151,11 @@ const TitleInput = styled.input`
 `;
 
 const Select = styled.select`
-  border: 1px solid gray;
-  font-size: 2.5vh;
+  border: 2px solid lightgray;
+  font-size: 2vh;
+  border-radius: 5px;
   width: 20vw;
+  height: 2vw;
 `;
 
 const P = styled.p`
@@ -174,9 +176,11 @@ const P = styled.p`
 `;
 
 const TextInput = styled.input`
-  border: 1px solid gray;
-  font-size: 2.5vh;
+  border: 2px solid lightgray;
+  font-size: 2vh;
+  border-radius: 5px;
   width: 20vw;
+  height: 2vw;
 `;
 
 const CreateDiv = styled.div`
