@@ -143,11 +143,14 @@ const TitleInput = styled.input`
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 3px solid gray;
+  border-bottom: 3px solid #0d47a1;
   width: 100%;
   height: 10vh;
   font-size: 2em;
   font-weight: bold;
+  ::placeholder {
+    color: lightgray;
+  }
 `;
 
 const Select = styled.select`
@@ -156,6 +159,8 @@ const Select = styled.select`
   border-radius: 5px;
   width: 20vw;
   height: 2vw;
+  box-sizing: content-box;
+  padding: 1px 2px;
 `;
 
 const P = styled.p`
@@ -181,6 +186,7 @@ const TextInput = styled.input`
   border-radius: 5px;
   width: 20vw;
   height: 2vw;
+  padding: 1px 2px;
 `;
 
 const CreateDiv = styled.div`
