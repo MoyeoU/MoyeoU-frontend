@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import EvaluationList from "../components/EvaluateList";
 import { useState } from "react";
 import { useEffect } from "react";
+import data from "../data.json";
 
 function Evaluation() {
   const MEMBERCNT = 3;
@@ -33,9 +34,9 @@ function Evaluation() {
           <h3>함께한 스터디원을 평가해주세요.</h3>
         </Notice>
         <List>
-          <EvaluationList />
-          <EvaluationList />
-          <EvaluationList />
+          <EvaluationList member={data.user[0].id} />
+          <EvaluationList member={data.user[1].id} />
+          <EvaluationList member={data.user[2].id} />
         </List>
         <Close>
           <h4>{count} / 3</h4>
