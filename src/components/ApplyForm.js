@@ -17,9 +17,15 @@ const Div = styled.div`
     font-size: 2.5vh;
   }
   input {
-    border: 1px solid #dcdcdc;
+    border: 2px solid lightgray;
     font-size: 2.5vh;
     width: 20vw;
+    height: 2vw;
+    border-radius: 5px;
+    text-indent: 0.5vw;
+    font-size: 2vh;
+    box-sizing: content-box;
+    padding: 1px 2px;
   }
 `;
 
