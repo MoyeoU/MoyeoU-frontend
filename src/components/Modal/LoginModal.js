@@ -56,6 +56,7 @@ const Div = styled.div`
     height: 3em;
     border: 1px solid #a0a0a0;
     border-radius: 5px;
+    text-indent: 0.5vw;
   }
   button {
     width: 20em;

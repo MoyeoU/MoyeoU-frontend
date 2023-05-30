@@ -9,9 +9,7 @@ function Evaluation() {
   const MEMBERCNT = 3;
   const [count, setCount] = useState(0);
   const onClick = () => {
-    console.log(count);
-    console.log(MEMBERCNT);
-    if (Number(count) === MEMBERCNT) {
+    if (Number(localStorage.getItem("count")) === MEMBERCNT) {
       alert("평가가 완료되었습니다.");
       localStorage.removeItem("count");
       localStorage.setItem("count", 0);
@@ -39,7 +37,7 @@ function Evaluation() {
           <EvaluationList member={data.user[2].id} />
         </List>
         <Close>
-          <h4>{count} / 3</h4>
+          {/* <h4>{count} / 3</h4> */}
           <button onClick={onClick}>완료</button>
         </Close>
       </Div>

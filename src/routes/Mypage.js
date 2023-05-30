@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { redirect, useLocation } from "react-router-dom";
 import StudyHistory from "../components/Mypage/StudyHistory";
 import member from "../img/member.jpg";
 import StarRate from "../components/Mypage/StarRate";
@@ -13,6 +13,19 @@ function Mypage() {
   const [user, setUser] = useState("");
   const { state } = useLocation();
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
+  const [firstTypeClick, setFirstTypeClick] = useState("");
+  const [secondTypeClick, setSecondTypeClick] = useState("");
+
+  const firstFiltering = (event) => {
+    setFirstTypeClick((prev) => {
+      return event.target.value;
+    });
+  };
+  const secondFiltering = (event) => {
+    setSecondTypeClick((prev) => {
+      return event.target.value;
+    });
+  };
 
   useEffect(() => {
     setUser(localStorage.getItem("id"));
@@ -71,15 +84,35 @@ function Mypage() {
         <Right>
           <Filtering>
             <MineOrNot>
-              <h2>활동 내역</h2>
+              <h2
+                className={-2 === firstTypeClick ? "active" : ""}
+                onClick={firstFiltering}
+              >
+                활동 내역
+              </h2>
               <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
-              <h2>내가 쓴 글</h2>
+              <h2
+                className={-3 === firstTypeClick ? "active" : ""}
+                onClick={firstFiltering}
+              >
+                내가 쓴 글
+              </h2>
               <br />
             </MineOrNot>
             <NowOrNot>
-              <h3>활동 중</h3>
+              <h3
+                className={-4 === secondTypeClick ? "active" : ""}
+                onClick={secondFiltering}
+              >
+                활동 중
+              </h3>
               <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
-              <h3>활동 완료</h3>
+              <h3
+                className={-5 === secondTypeClick ? "active" : ""}
+                onClick={secondFiltering}
+              >
+                활동 완료
+              </h3>
             </NowOrNot>
           </Filtering>
           <HistoryDiv>
@@ -189,11 +222,31 @@ const Filtering = styled.div`
 
 const MineOrNot = styled.div`
   margin-bottom: 2vh;
+  h2 {
+    color: #505050;
+    :hover {
+      color: #385493;
+      cursor: pointer;
+    }
+    &.active {
+      color: #385493;
+    }
+  }
 `;
 
 const NowOrNot = styled.div`
   float: right;
   margin-bottom: 2vh;
+  h3 {
+    color: #505050;
+    :hover {
+      color: #385493;
+      cursor: pointer;
+    }
+    &.active {
+      color: #385493;
+    }
+  }
 `;
 
 const HistoryDiv = styled.div`
