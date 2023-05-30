@@ -20,7 +20,7 @@ function Signup() {
       <Div>
         <H1Div>
           <h1>
-            <span>MoyeoU</span>에 오신 것을 환영합니다!
+            <span>모여유</span>에 오신 것을 환영합니다!
           </h1>
         </H1Div>
         <form onSubmit={onSubmit}>
@@ -52,7 +52,7 @@ function Signup() {
                 </td>
                 <td>
                   <button type="button" id="sendCode">
-                    인증하기
+                    인증
                   </button>
                 </td>
               </tr>
@@ -60,37 +60,25 @@ function Signup() {
                 <td>
                   <label htmlFor="major">학과</label>
                 </td>
-                <td>
+                <td colSpan="2">
                   <input name="major" id="major" required />
                 </td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>
-                  <label htmlFor="studentNum">학번</label>
-                </td>
-                <td>
-                  <input name="studentNum" id="studentNum" required />
-                </td>
-                <td></td>
               </tr>
               <tr>
                 <td>
                   <label htmlFor="nickname">닉네임</label>
                 </td>
-                <td>
+                <td colSpan="2">
                   <input name="nickname" id="nickname" required />
                 </td>
-                <td></td>
               </tr>
               <tr>
                 <td>
                   <label htmlFor="pw">비밀번호</label>
                 </td>
-                <td>
+                <td colSpan="2">
                   <input name="pw" id="pw" required />
                 </td>
-                <td></td>
               </tr>
             </tbody>
           </table>
@@ -111,6 +99,10 @@ const H1Div = styled.div`
   span {
     color: #385493;
   }
+  h1 {
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
 `;
 const Div = styled.div`
   height: auto;
@@ -123,27 +115,31 @@ const Div = styled.div`
   td {
     border: none;
     width: auto;
-    text-align: right;
+    text-align: center;
     margin: 0 auto;
-    padding: 1% 2%;
+    padding: 5px 5px 5px 1px;
   }
   input {
-    width: 25em;
+    width: 23em;
     height: 3em;
     border: 1px solid lightgray;
     border-radius: 5px;
+    text-indent: 0.5vw;
   }
   button {
     margin: 3%;
-    width: 6em;
+    width: 7em;
     height: 3em;
     font-size: 1.5vh;
+    font-weight: 500;
     border: 1px solid lightgray;
     background-color: lightgray;
     color: black;
     border-radius: 5px;
     :hover {
       cursor: pointer;
+      background-color:#C0C0C0;
+      transition: 0.5s;
     }
   }
   img {
@@ -153,6 +149,13 @@ const Div = styled.div`
     height: 6em;
   }
   label {
+    font-weight: 600;
+  }
+  #major, #nickname, #pw {
+    width: 30em;
+  }
+  hr {
+    margin-top : 5vh;
   }
 `;
 
@@ -170,6 +173,8 @@ const Btn = styled.div`
     border-radius: 5px;
     :hover {
       cursor: pointer;
+      background-color:#003366;
+      transition: 0.5s;
     }
   }
 `;
