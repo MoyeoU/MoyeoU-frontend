@@ -30,7 +30,7 @@ function StudyHistory({ id, title, complete, tag, date }) {
 const Div = styled.div`
   border: 1px solid gray;
   border-radius: 1em;
-  margin-bottom: 1vh;
+  margin-bottom: 3%;
   padding: 1vh 1vw;
   //height: auto;
   //overflow: auto;

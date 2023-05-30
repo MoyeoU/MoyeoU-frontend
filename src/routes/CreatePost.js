@@ -11,7 +11,7 @@ function CreatePost() {
   };
   const onClickWrite = () => {
     alert("게시글 작성이 완료되었습니다.");
-    document.location.href = "/postView/post1";
+    document.location.href = "/writer";
     //document.location.href = "../article.articledetail.html";
   };
   const goMain = () => {
@@ -107,11 +107,11 @@ function CreatePost() {
                   </button>
                   <ApplyForm />
                 </P>
-                {/* <TextInput name="applyForm" id="applyForm" /> */}
+                {/* <TextInput name="applyForm" id="applyForm" /> 
                 {create.map((number) => {
                   console.log(number);
                   <ApplyForm />;
-                })}
+                })}*/}
               </li>
             </Ul>
           </Div>
@@ -148,6 +148,9 @@ const TitleInput = styled.input`
   height: 10vh;
   font-size: 2em;
   font-weight: bold;
+  :focus {
+    outline: none;
+  }
   ::placeholder {
     color: lightgray;
   }

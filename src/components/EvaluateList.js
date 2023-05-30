@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import EvaluateModal from "./Modal/EvaluateModal";
 
-function EvaluateList() {
+function EvaluateList(props) {
   const [evaluateModalIsOpen, setEvaluateModalIsOpen] = useState(false);
   const goEvaluate = () => {
     setEvaluateModalIsOpen(true);
@@ -21,12 +21,13 @@ function EvaluateList() {
           <img src={member} alt="member"></img>
         </Img>
         <Name>
-          <h3>hyeong</h3>
+          <h3>{props.member}</h3>
         </Name>
         <Btn>
           <button onClick={goEvaluate}>평가하기</button>
           {evaluateModalIsOpen && (
             <EvaluateModal
+              member={props.member}
               open={evaluateModalIsOpen}
               onClose={() => {
                 setEvaluateModalIsOpen(false);
@@ -47,12 +48,13 @@ const Div = styled.div`
 `;
 
 const Img = styled.div`
-  float: left;
   width: 20%;
   height: 100%;
   img {
+    float: left;
     width: 50%;
     height: 50%;
+    margin: 2% 20%;
   }
 `;
 const Name = styled.div`
@@ -68,12 +70,13 @@ const Btn = styled.div`
   float: left;
   width: 20%;
   height: 100%;
-  display: flex;
+  //display: flex;
   justify-content: flex-end;
   button {
-    float: right;
+    float: left;
     width: 50%;
     height: 3em;
+    margin: 2% 20%;
     border: 1px solid #385493;
     background-color: #385493;
     color: white;

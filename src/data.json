@@ -7,7 +7,7 @@
       "email": "1234@o.cnu.ac.kr",
       "star": 10,
       "intro": "안녕하세요",
-      "tag": ["태그1", "태그2", "태그3", "태그4", "태그5", "태그6"],
+      "tag": ["React", "JavaScript", "Python"],
       "com": [80, 60, 60, 20, 40, 80]
     },
     {
@@ -17,29 +17,29 @@
       "email": "5678@o.cnu.ac.kr",
       "star": 67,
       "intro": "안녕하세요",
-      "tag": ["태그1", "태그2", "태그3"]
+      "tag": ["MySQL", "Spring"]
     },
     {
       "name": "김나형",
-      "id": "zhzzang",
+      "id": "Hyeong2e",
       "pw": "9012",
       "email": "9012@o.cnu.ac.kr",
       "star": 88,
       "intro": "안녕하세요",
-      "tag": ["태그1", "태그2", "태그3"]
+      "tag": ["React", "JavaScript", "Python"]
     }
   ],
   "board": [
     {
       "id": "post1",
-      "title": "1타이틀타이틀타이틀타이틀1타이틀타이틀",
+      "title": "스프링 스터디원 구합니다",
       "complete": "N",
-      "totalMember": "5",
+      "totalMember": "4",
       "presentMember": "2",
-      "tag": ["태그1", "태그2"],
+      "tag": ["Spring", "MySQL"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "moimoi",
-      "date": "2023-03-03"
+      "writer": "luvNY",
+      "date": "2023-03-01"
     },
     {
       "id": "post2",
@@ -68,7 +68,7 @@
       "title": "경영의 이해 팀플 하실 분 모집해요",
       "complete": "N",
       "totalMember": "4",
-      "presentMember": "0",
+      "presentMember": "1",
       "tag": ["경상대학"],
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "JUUHui",
@@ -76,14 +76,14 @@
     },
     {
       "id": "post5",
-      "title": "기글 팀플 같이 하실 분",
+      "title": "자바스크립트 스터디원 구합니다",
       "complete": "N",
       "totalMember": "4",
-      "presentMember": "2",
-      "tag": ["경상대학", "기타"],
+      "presentMember": "1",
+      "tag": ["JavaScript"],
       "type": ["팀프로젝트", "프로그래밍"],
-      "writer": "seo0",
-      "date": "2023-03-14"
+      "writer": "Hyeong2e",
+      "date": "2023-05-29"
     },
     {
       "id": "post6",
@@ -91,7 +91,7 @@
       "complete": "N",
       "totalMember": "5",
       "presentMember": "2",
-      "tag": ["python", "기타"],
+      "tag": ["Python", "기타"],
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "hsy",
       "date": "2023-04-12"
@@ -112,7 +112,7 @@
       "title": "[프론트엔드] 암환자 건강 관리 앱 개발자 모집합니다",
       "complete": "N",
       "totalMember": "2",
-      "presentMember": "0",
+      "presentMember": "1",
       "tag": ["TypeScript"],
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "lia",

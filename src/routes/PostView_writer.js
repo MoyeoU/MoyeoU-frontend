@@ -7,7 +7,7 @@ import commentImg from "../img/commentImg.jpg";
 import commentLogo from "../img/commentLogo.jpg";
 import send from "../img/send.jpg";
 
-function PostView() {
+function PostView_writer() {
   return (
     <>
       <Header />
@@ -20,7 +20,7 @@ function PostView() {
               </a>
               <div id="recruitTag">모집 중</div>
             </div>
-            <div id="studyPost_title">스프링 스터디원 구합니다</div>
+            <div id="studyPost_title">자바스크립트 스터디원 구합니다</div>
             <div id="studyPost_user_date_comment">
               <div id="studyPost_user">
                 <a href="./articledetail.html">
@@ -30,29 +30,28 @@ function PostView() {
                     alt="userProfileImage"
                   ></img>
                 </a>
-                <div id="userName">luvNY</div>
+                <div id="userName">Hyeong2e</div>
               </div>
-              <div id="studyPost_date">2023.03.01</div>
+              <div id="studyPost_date">2023.05.29</div>
               <div id="studyPost_commentNum">
                 <img
                   className="commentImg"
                   src={commentImg}
                   alt="commentLogo"
                 ></img>
-                <div id="numberOfComment">2</div>
+                <div id="numberOfComment">0</div>
               </div>
             </div>
             <div id="studyPost_hashTag">
               <ul id="studyPost_hashtagList">
-                <li className="hashTag">Spring</li>
-                <li className="hashTag">MySQL</li>
+                <li className="hashTag">JavaScript</li>
               </ul>
             </div>
             <section id="studyPost_info_wrap">
               <ul id="studyPost_info_grid">
                 <li className="studyPost_info_item">
                   <span id="studyPost_info_title">모집 현황</span>
-                  <span id="studyPost_info_content">2 / 4</span>
+                  <span id="studyPost_info_content">1 / 4</span>
                 </li>
                 <li className="studyPost_info_item">
                   <span id="studyPost_info_title">예상 기간</span>
@@ -60,35 +59,44 @@ function PostView() {
                 </li>
                 <li className="studyPost_info_item">
                   <span id="studyPost_info_title">진행 방식</span>
-                  <span id="studyPost_info_content">대면</span>
+                  <span id="studyPost_info_content">온라인</span>
                 </li>
                 <li className="studyPost_info_item">
                   <span id="studyPost_info_title">시작 예정</span>
-                  <span id="studyPost_info_content">2023.03.05</span>
+                  <span id="studyPost_info_content">2023.05.29</span>
                 </li>
               </ul>
             </section>
           </section>
           <div id="studyPost_content">
-            <p>안녕하세요! 스프링 함께 공부하실 분 모집합니다.</p>
+            <p>안녕하세요! 자바스크립트 함께 공부하실 분 모집합니다.</p>
             <p>
-              열심히 참여할 수 있고, 👉책임감 있는 분이 오셨으면 좋겠습니다.
+              😉스터디에 필요한 👉규칙이나 공부 방향은 팀원들과 👉함께 상의해서
+              만들 것이며 👉모두 성실하게 참여해 공부해 나갔으면 👉좋겠습니다.
+              열심히 참여할 수 있고, 👉책임감 있는 분이 오셨으면 좋 겠습니다.
               😉신청 폼 작성 부탁드립니다.
             </p>
             <p>
               <br />
             </p>
             <p>
-              매주 토요일 저녁에 시간 맞춰서 스터디룸에서 스터디 진행할
-              예정입니다!
+              스터디 수업 방식은 모던 자바스크립트😉 Deep Dive 책 공부한 뒤 줌을
+              통해 서로 이야기 나누는 방식으로 진행될 것입니다. 일정은 주말
+              저녁으로 생각하고😉 있습니다.
             </p>
             <p>
               <br />
             </p>
           </div>
           <div id="studyPost_applyBox">
-            <button className="studyApplyButton" name="apply">
-              신청 하기
+            <button className="studyApplyButton" name="close">
+              모집 완료
+            </button>
+            <button className="studyApplyButton" name="modify">
+              수정 하기
+            </button>
+            <button className="studyApplyButton" name="delete">
+              삭제 하기
             </button>
           </div>
           <div id="studyPost_commentWrap">
@@ -102,7 +110,7 @@ function PostView() {
                 <img className="sendButtonimg" src={send} alt="comment"></img>
               </button>
             </div>
-            <ul id="commentList">
+            {/* <ul id="commentList">
               <li className="comment_item">
                 <section id="comment_item_header">
                   <section id="comment_userInfo">
@@ -115,11 +123,11 @@ function PostView() {
                     </a>
                     <div id="comment_userName">sEoYoungoes</div>
                   </section>
-                  <div id="comment_dateAndTime">2023-03-02 오후 03:56</div>
+                  <div id="comment_dateAndTime">2023-05-29 오후 03:56</div>
                 </section>
                 <section id="comment_content">
                   <p id="comment_content_ex1">
-                    스프링 기본지식 없어도 신청 가능한가요?
+                    JS 기본지식 없어도 신청 가능한가요?
                   </p>
                 </section>
               </li>
@@ -133,15 +141,15 @@ function PostView() {
                         alt="commentLogo"
                       ></img>
                     </a>
-                    <div id="comment_userName">zhzzang</div>
+                    <div id="comment_userName">sEoYoungoes</div>
                   </section>
-                  <div id="comment_dateAndTime">2023-03-02 오후 03:56</div>
+                  <div id="comment_dateAndTime">2023-05-29 오후 03:56</div>
                 </section>
                 <section id="comment_content">
-                  <p id="comment_content_ex1">온라인은 안하나요? </p>
+                  <p id="comment_content_ex1">대면은 안하나요? </p>
                 </section>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
@@ -155,4 +163,4 @@ const Div = styled.div`
   overflow: auto;
 `;
 
-export default PostView;
+export default PostView_writer;
