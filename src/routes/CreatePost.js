@@ -38,6 +38,14 @@ function CreatePost() {
     "기타",
   ];
 
+  const hashtagList = [
+    "전체",
+    "JavaScript",
+    "React",
+    "Spring",
+    "MySQL"
+  ]
+
   return (
     <>
       <Header />
@@ -85,7 +93,14 @@ function CreatePost() {
               </Li>
               <Li>
                 <P>해시태그</P>
-                <TextInput name="hashtag" id="hashtag" required />
+                {/* <TextInput name="hashtag" id="hashtag" required /> */}
+                <Select name="hashtag" id="hashtag" required>
+                  {hashtagList.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </Select>
               </Li>
             </Ul>
           </Div>
