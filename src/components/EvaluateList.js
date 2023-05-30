@@ -1,36 +1,55 @@
 import styled from "styled-components";
 import member from "../img/member.jpg";
+import member2 from "../img/image1.png";
+import member3 from "../img/image2.png";
 import { useState } from "react";
 import { useEffect } from "react";
 import EvaluateModal from "./Modal/EvaluateModal";
 
 function EvaluateList(props) {
   const [evaluateModalIsOpen, setEvaluateModalIsOpen] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const goEvaluate = () => {
     setEvaluateModalIsOpen(true);
   };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [evaluateModalIsOpen]);
+  }, [evaluateModalIsOpen, submit]);
 
   return (
     <>
       <Div>
         <Img>
-          <img src={member} alt="member"></img>
+          <img
+            src={
+              props.member === "hsy"
+                ? member
+                : props.member === "zhzzang"
+                ? member2
+                : member3
+            }
+            alt="member"
+          ></img>
         </Img>
         <Name>
           <h3>{props.member}</h3>
         </Name>
         <Btn>
-          <button onClick={goEvaluate}>평가하기</button>
+          <button onClick={goEvaluate}>
+            {submit ? "평가완료" : "평가하기"}
+          </button>
           {evaluateModalIsOpen && (
             <EvaluateModal
               member={props.member}
               open={evaluateModalIsOpen}
               onClose={() => {
                 setEvaluateModalIsOpen(false);
+                setSubmit(true);
+                const count = localStorage.getItem("count");
+                localStorage.removeItem("count");
+                localStorage.setItem("count", Number(count) + 1);
+                console.log(localStorage.getItem("count"));
               }}
             />
           )}

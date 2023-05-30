@@ -28,8 +28,9 @@ function StudyHistory({ id, title, complete, tag, date }) {
 }
 
 const Div = styled.div`
-  border: 1px solid gray;
+  border: 3px solid darkgray;
   border-radius: 1em;
+  margin-top: 1%;
   margin-bottom: 3%;
   padding: 1vh 1vw;
   //height: auto;

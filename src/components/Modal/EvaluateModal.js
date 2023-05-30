@@ -8,7 +8,8 @@ function EvaluateModal(props) {
     const count = localStorage.getItem("count");
     localStorage.removeItem("count");
     localStorage.setItem("count", Number(count) + 1);
-    //event.preventDefault();
+    event.preventDefault();
+    console.log(localStorage.getItem("count"));
   };
 
   const [formValue, setFormValue] = useState({
@@ -38,7 +39,7 @@ function EvaluateModal(props) {
     <>
       <Modal onClose={props.onClose}>
         <Div>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={props.onClose}>
             <Name>
               <h2>
                 <span>{props.member}</span> 님에 대한 평가

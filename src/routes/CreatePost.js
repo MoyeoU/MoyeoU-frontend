@@ -38,13 +38,7 @@ function CreatePost() {
     "기타",
   ];
 
-  const hashtagList = [
-    "전체",
-    "JavaScript",
-    "React",
-    "Spring",
-    "MySQL"
-  ]
+  const hashtagList = ["전체", "JavaScript", "React", "Spring", "MySQL"];
 
   return (
     <>
@@ -163,6 +157,7 @@ const TitleInput = styled.input`
   height: 10vh;
   font-size: 2em;
   font-weight: bold;
+  text-indent: 0.5vw;
   :focus {
     outline: none;
   }
@@ -179,6 +174,7 @@ const Select = styled.select`
   height: 2vw;
   box-sizing: content-box;
   padding: 1px 2px;
+  text-indent: 0.5vw;
 `;
 
 const P = styled.p`
@@ -205,6 +201,7 @@ const TextInput = styled.input`
   width: 20vw;
   height: 2vw;
   padding: 1px 2px;
+  text-indent: 0.5vw;
 `;
 
 const CreateDiv = styled.div`
