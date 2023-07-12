@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import { redirect, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import StudyHistory from "../components/Mypage/StudyHistory";
 import member from "../img/member.jpg";
 import StarRate from "../components/Mypage/StarRate";
@@ -15,6 +15,7 @@ function Mypage() {
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
   const [firstTypeClick, setFirstTypeClick] = useState("");
   const [secondTypeClick, setSecondTypeClick] = useState("");
+  const navigate = useNavigate();
 
   const firstFiltering = (event) => {
     setFirstTypeClick((prev) => {
@@ -36,7 +37,10 @@ function Mypage() {
     setCommentModalIsOpen(true);
   };
 
-  const goEdit = () => {};
+  const goEdit = () => {
+    const id = localStorage.getItem("id");
+    navigate(`/edit/${id}`);
+  };
 
   const goChat = () => {};
 

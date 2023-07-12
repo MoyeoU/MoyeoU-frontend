@@ -6,7 +6,7 @@ import LoginModal from "./Modal/LoginModal";
 function PostList() {
   let data = [
     "전체",
-    "팀프로젝트",
+    "전공/팀플",
     "어학",
     "프로그래밍",
     "자격증",

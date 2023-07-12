@@ -5,8 +5,8 @@ import Signup from "./routes/Signup";
 import PostView from "./routes/PostView";
 import CreatePost from "./routes/CreatePost";
 import Evaluation from "./routes/Evaluation";
-
 import PostViewWriter from "./routes/PostView_writer";
+import Edit from "./routes/Edit";
 
 function App() {
   return (
@@ -53,6 +53,12 @@ function App() {
             //postView_writer 경로
             path="/writer"
             element={<PostViewWriter />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/edit/:id"
+            element={<Edit />}
           ></Route>
         </Routes>
       </Router>
