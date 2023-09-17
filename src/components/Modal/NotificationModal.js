@@ -4,6 +4,7 @@ import useOutSideClick from "../../hooks/useOutSideClick";
 import ModalContainer from "./ModalContainer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import data from "../../data.json";
 
 function Modal({ onClose }) {
   const modalRef = useRef(null);
@@ -32,20 +33,21 @@ function Modal({ onClose }) {
   return (
     <ModalContainer>
       <ModalWrap ref={modalRef}>
-        <CloseButton onClick={handleClose}>
-          <p className="fa-solid fa-xmark">X</p>
+        <CloseButton>
+          <p className="fa-solid fa-xmark" onClick={handleClose}>
+            X
+          </p>
         </CloseButton>
-        <Contents>
-          <Div>
-            <span>'토익' 스터디가 종료되었습니다.</span>
-            <button
-              //onClick={() => navigate(`/evaluateMember`, { state: user })}
-              onClick={onClick}
-            >
-              평가하기
-            </button>
-          </Div>
-        </Contents>
+        {/* <Div> */}
+        {Object.values(data.note).map((item) => (
+          <Contents>
+            <span>{item.notify}</span>
+            <button onClick={onClick}>{item.btn}</button>
+          </Contents>
+        ))}
+
+        {/* onClick={() => navigate(`/evaluateMember`, { state: user })} */}
+        {/* </Div> */}
       </ModalWrap>
     </ModalContainer>
   );
@@ -53,52 +55,59 @@ function Modal({ onClose }) {
 
 const ModalWrap = styled.div`
   width: 25vw;
-  //height: fit-content;
   min-height: 60vh;
   max-height: 60vh;
   overflow-y: scroll;
-  border-radius: 5px;
   background-color: #fff;
   position: absolute;
-  // top: 65px;
-  // right: 220px;
-  top: 10%;
-  right: 14%;
-  box-shadow: 0 5px 25px gray;
+  top: 10vh;
+  right: 18vw;
+  box-shadow: 0 0.7rem 3rem gray;
 `;
 
 const CloseButton = styled.div`
   width: 100%;
-  height: auto;
+  //height: auto;
   overflow: auto;
-  //margin: 1vh 1vw;
-  cursor: pointer;
   p {
+    cursor: pointer;
+    :hover {
+      color: black;
+    }
     margin: 1vh 1vw;
     float: right;
     color: #5d5d5d;
-    font-size: 3vh;
+    font-size: 2rem;
   }
 `;
 
-const Contents = styled.div`
-  //margin: 80px 10px 80px 10px;
-  text-align: center;
-`;
+//const Div = styled.div``;
 
-const Div = styled.div`
+const Contents = styled.div`
+  border-bottom: 0.1rem solid lightgray;
+  margin: 0vh 1vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   button {
-    margin: auto 1vw;
     width: 5vw;
     height: 5vh;
+    margin: 2vh 0;
     border: 1px solid #dcdcdc;
     background-color: #dcdcdc;
     color: black;
     font-weight: bold;
     border-radius: 5px;
     :hover {
+      background-color: darkgray;
       cursor: pointer;
     }
+    &:active {
+      opacity: 0.5;
+    }
+  }
+  span {
+    font-size: 1.2rem;
   }
 `;
 

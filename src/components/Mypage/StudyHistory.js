@@ -10,7 +10,7 @@ function StudyHistory({ id, title, complete, tag, date }) {
     <>
       <Div onClick={onClick}>
         <CompleteBtn>
-          <p>{{ complete } === "Y" ? `모집완료` : `모집중`}</p>
+          <p>{complete === "Y" ? `모집완료` : `모집중`}</p>
         </CompleteBtn>
         <TitleDiv>
           <h3>{title}</h3>

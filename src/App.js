@@ -7,11 +7,15 @@ import CreatePost from "./routes/CreatePost";
 import Evaluation from "./routes/Evaluation";
 import PostViewWriter from "./routes/PostView_writer";
 import Edit from "./routes/Edit";
+import ChatRoom from "./routes/ChatRoom";
+import Chat from "./routes/Chat";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route
             //path={`${process.env.PUBLIC_URL}/hello`}
@@ -59,6 +63,18 @@ function App() {
             //edit 경로
             path="/edit/:id"
             element={<Edit />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/chatRoom/:state"
+            element={<ChatRoom />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/chat"
+            element={<Chat />}
           ></Route>
         </Routes>
       </Router>

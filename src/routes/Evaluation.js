@@ -28,8 +28,8 @@ function Evaluation() {
       <Header />
       <Div>
         <Notice>
-          <h2>토익 스터디 모임이 종료되었습니다.</h2>
-          <h3>함께한 스터디원을 평가해주세요.</h3>
+          <h1>토익 스터디 모임이 종료되었습니다.</h1>
+          <h2>함께한 스터디원을 평가해주세요.</h2>
         </Notice>
         <List>
           <EvaluationList member={data.user[0].id} />
@@ -51,12 +51,13 @@ const Div = styled.div`
   overflow: auto;
   max-width: 90%;
   margin: 0 auto;
-  h3 {
+  h2 {
     color: gray;
   }
 `;
 
 const Notice = styled.div`
+  margin: 3vh 0;
   text-align: center;
 `;
 
@@ -70,13 +71,12 @@ const Close = styled.div`
   margin: 0 auto 5vh auto;
   text-align: center;
   button {
-    width: 10%;
-    height: 3em;
-    border: 1px solid #385493;
+    width: 7vw;
+    height: 5vh;
     background-color: #385493;
     color: white;
     font-weight: bold;
-    font-size: 80%;
+    font-size: 1.3rem;
     border-radius: 5px;
   }
 `;

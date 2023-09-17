@@ -49,8 +49,8 @@ const ModalWrap = styled.div`
   border-radius: 10px;
   background-color: #fff;
   position: absolute;
-  top: 45%;
-  left: 24%;
+  top: 38%;
+  left: 23%;
   box-shadow: 0 5px 25px gray;
 `;
 

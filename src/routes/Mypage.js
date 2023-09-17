@@ -13,25 +13,29 @@ function Mypage() {
   const [user, setUser] = useState("");
   const { state } = useLocation();
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
-  const [firstTypeClick, setFirstTypeClick] = useState("");
-  const [secondTypeClick, setSecondTypeClick] = useState("");
+  const [firstTypeClick, setFirstTypeClick] = useState("활동 내역");
+  const [secondTypeClick, setSecondTypeClick] = useState("활동 중");
   const navigate = useNavigate();
 
   const firstFiltering = (event) => {
-    setFirstTypeClick((prev) => {
-      return event.target.value;
-    });
+    setFirstTypeClick(event.target.innerText);
   };
+
   const secondFiltering = (event) => {
-    setSecondTypeClick((prev) => {
-      return event.target.value;
-    });
+    setSecondTypeClick(event.target.innerText);
+  };
+
+  const sendState = () => {
+    console.log(firstTypeClick);
+    console.log(secondTypeClick);
+    //백이랑연결
   };
 
   useEffect(() => {
     setUser(localStorage.getItem("id"));
+    sendState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, firstTypeClick, secondTypeClick]);
 
   const viewComment = () => {
     setCommentModalIsOpen(true);
@@ -42,7 +46,9 @@ function Mypage() {
     navigate(`/edit/${id}`);
   };
 
-  const goChat = () => {};
+  const goChat = () => {
+    navigate(`/chatRoom/${state}`, { state: state });
+  };
 
   return (
     <>
@@ -89,14 +95,14 @@ function Mypage() {
           <Filtering>
             <MineOrNot>
               <h2
-                className={-2 === firstTypeClick ? "active" : ""}
+                className={firstTypeClick === "활동 내역" ? "active" : ""}
                 onClick={firstFiltering}
               >
                 활동 내역
               </h2>
               <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
               <h2
-                className={-3 === firstTypeClick ? "active" : ""}
+                className={firstTypeClick === "내가 쓴 글" ? "active" : ""}
                 onClick={firstFiltering}
               >
                 내가 쓴 글
@@ -105,14 +111,14 @@ function Mypage() {
             </MineOrNot>
             <NowOrNot>
               <h3
-                className={-4 === secondTypeClick ? "active" : ""}
+                className={secondTypeClick === "활동 중" ? "active" : ""}
                 onClick={secondFiltering}
               >
                 활동 중
               </h3>
               <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
               <h3
-                className={-5 === secondTypeClick ? "active" : ""}
+                className={secondTypeClick === "활동 완료" ? "active" : ""}
                 onClick={secondFiltering}
               >
                 활동 완료
@@ -162,6 +168,9 @@ const Left = styled.div`
       cursor: pointer;
     }
   }
+  @media screen and (max-width: 750px) {
+    float: none;
+  }
 `;
 
 const More = styled.div`
@@ -203,6 +212,9 @@ const Middle = styled.div`
   float: left;
   border: 1px solid #dcdcdc;
   height: 100vh;
+  @media screen and (max-width: 750px) {
+    display: none;
+  }
 `;
 
 const Right = styled.div`
@@ -215,6 +227,9 @@ const Right = styled.div`
     :hover {
       cursor: pointer;
     }
+  }
+  @media screen and (max-width: 750px) {
+    float: none;
   }
 `;
 
@@ -234,6 +249,8 @@ const MineOrNot = styled.div`
     }
     &.active {
       color: #385493;
+      padding-bottom: 0.5vh;
+      border-bottom: 0.3rem solid #385493;
     }
   }
 `;
@@ -249,6 +266,8 @@ const NowOrNot = styled.div`
     }
     &.active {
       color: #385493;
+      padding-bottom: 0.3vh;
+      border-bottom: 0.2rem solid #385493;
     }
   }
 `;

@@ -16,12 +16,16 @@ function Post({
   const onClick = () => {
     navigate(`/postView/${id}`);
   };
+  const goMypage = (event) => {
+    event.stopPropagation();
+    navigate(`/mypage/${writer}`, { state: writer });
+  };
 
   return (
     <PostLayout onClick={onClick} key={id}>
-      <CompleteBtn>{{ complete } === "Y" ? `모집완료` : `모집중`}</CompleteBtn>
+      <CompleteBtn>{complete === "Y" ? `모집완료` : `모집중`}</CompleteBtn>
       <Title>
-        <h4>{title}</h4>
+        <h2>{title.length <= 30 ? title : title.slice(0, 28) + "..."}</h2>
       </Title>
       <Person>
         <PersonImg>
@@ -37,8 +41,11 @@ function Post({
       {tag.map((tags) => (
         <TagBtn>{tags}</TagBtn>
       ))}
+      <br />
+      <br />
+      <br />
       <hr />
-      <Writer>{writer} 님</Writer>
+      <Writer onClick={goMypage}>{writer} 님</Writer>
     </PostLayout>
   );
 }
@@ -52,15 +59,14 @@ const PersonImg = styled.div`
   justify-content: flex-end;
 `;
 const PostLayout = styled.div`
-  width: 200px;
-  margin: 1% 1%;
-  min-height: 16em;
-  max-height: 16em;
+  width: 15vw;
+  margin: 1vh 1vw;
+  padding: 1.5vh 1vw;
+  min-height: 35vh;
+  max-height: 35vh;
   border: 3px solid #385493;
   border-radius: 30px;
   float: left;
-  //margin: 0.8em;
-  padding: 3em;
   transition: all 0.2s linear;
   :hover {
     transform: scale(1.02);
@@ -73,6 +79,12 @@ const PostLayout = styled.div`
 const Title = styled.div`
   min-height: 4em;
   max-height: 4em;
+  // h3 {
+  //   width: 15.4vw;
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  //   white-space: nowrap;
+  // }
   p {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -86,7 +98,7 @@ const CompleteBtn = styled.p`
   padding: 0.3em 0.5em;
   border-radius: 0.5em;
   color: #385493;
-  font-size: 15px;
+  font-size: 1.3rem;
   font-weight: bold;
 `;
 
@@ -97,7 +109,7 @@ const TagBtn = styled.p`
   display: inline-block;
   padding: 0.3em 0.5em;
   border-radius: 0.5em;
-  font-size: 15px;
+  font-size: 1.3rem;
 `;
 
 const Writer = styled.p`

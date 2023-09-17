@@ -21,13 +21,13 @@ function Home() {
 }
 
 const Div = styled.div`
-  padding: 3% 5%;
+  padding: 5vh 10vw 10vh;
   justify-content: center;
+  align-items: center;
   min-height: 70vh;
   height: auto;
   overflow: auto;
   max-width: 100%;
-  margin: 0 auto;
 `;
 
 export default Home;

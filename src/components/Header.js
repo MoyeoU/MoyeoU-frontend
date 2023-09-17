@@ -39,7 +39,8 @@ function Header() {
     navigate(`/signup`);
   };
   const goChat = () => {
-    setChatModalIsOpen(true);
+    navigate(`/chat`, { state: user });
+    //setChatModalIsOpen(true);
   };
   const goAlert = () => {
     setNotificationModalIsOpen(true);
@@ -55,7 +56,7 @@ function Header() {
       <Img>
         <a href="/">
           <img
-            style={{ width: "6em", height: "3em" }}
+            style={{ width: "8rem", height: "4rem" }}
             src={logo}
             alt="logo"
           ></img>
@@ -66,14 +67,14 @@ function Header() {
           //채팅
           <Btn>
             <BiChat size="25" onClick={goChat} />
-            {chatModalIsOpen && (
+            {/* {chatModalIsOpen && (
               <ChatModal
                 open={chatModalIsOpen}
                 onClose={() => {
                   setChatModalIsOpen(false);
                 }}
               />
-            )}
+            )} */}
           </Btn>
         ) : null}
         {login ? (
@@ -131,37 +132,27 @@ const HeaderBar = styled.nav`
   height: 10vh;
 `;
 const Img = styled.div`
-  margin: 0 5%;
+  margin: 0 7vw;
 `;
 const RightDiv = styled.div`
   display: flex;
-  float: left;
   align-items: center;
-  margin: 0 4%;
+  margin: 0 6vw;
 `;
 const Btn = styled.div`
-  float: left;
   color: #333;
-  background-color: #fff;
+  background-color: white;
   border: none;
   margin: 0 1vw;
   display: flex;
-  justify-content: flex-end;
   :hover {
     color: #385493;
     cursor: pointer;
   }
   p {
-    list-style: none;
     font-weight: bold;
-    font-size: 2.5vh;
-    font-family: "Noto Sans KR", sans-serif;
+    font-size: 1.75rem;
     margin: 1vh 0;
-  }
-  img {
-    margin: auto;
-    width: 1.5em;
-    height: 1.5em;
   }
 `;
 

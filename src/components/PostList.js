@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
+import tagJson from "../tag.json";
+import Search from "../components/Search";
 
 function PostList() {
   let data = [
     "전체",
-    "전공/팀플",
+    "팀프로젝트",
     "어학",
     "프로그래밍",
     "자격증",
@@ -14,16 +16,54 @@ function PostList() {
     "고시/공무원",
     "기타",
   ];
-  const [typeClick, setTypeClick] = useState("");
+  const [typeClicked, setTypeClicked] = useState("전체"); //클릭한 카테고리
+  const [filteredTag, setFilteredTag] = useState(""); //해당 카테고리 태그들 리스트
+  const [finalTag, setFinalTag] = useState(""); //클릭한 태그 리스트
+  //final 없으면 그냥 filteredTag 보내기
+  const [gatheringTag, setGatheringTag] = useState("모집중"); //모집여부버튼
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
-  const filtering = (event) => {
-    setTypeClick((prev) => {
-      return event.target.value;
-    });
-    //정렬 어떻게?
-    console.log(event.target.value);
+  const onShowTag = () => {
+    if (typeClicked === "팀프로젝트") {
+      setFilteredTag(tagJson.tag1);
+    } else if (typeClicked === "어학") {
+      setFilteredTag(tagJson.tag2);
+    } else if (typeClicked === "프로그래밍") {
+      setFilteredTag(tagJson.tag3);
+    } else if (typeClicked === "자격증") {
+      setFilteredTag(tagJson.tag4);
+    } else if (typeClicked === "취미/교양") {
+      setFilteredTag(tagJson.tag5);
+    } else if (typeClicked === "고시/공무원") {
+      setFilteredTag(tagJson.tag6);
+    } else {
+      setFilteredTag("");
+    }
+  };
+  const typeFiltering = (event) => {
+    setTypeClicked(event.target.innerText);
+    setFinalTag("");
+    onShowTag();
+  };
+  const chooseFinalTag = (event) => {
+    setFinalTag((prevList) => [...prevList, event.target.innerText.slice(1)]);
+  };
+  const sendResult = () => {
+    if (finalTag === "") {
+      console.log(typeClicked);
+    } else {
+      console.log(finalTag);
+    }
+    console.log(gatheringTag);
+    //연결,,
+  };
+  const gathering = (event) => {
+    if (event.target.innerText === "모집중") {
+      setGatheringTag("모집중");
+    } else {
+      setGatheringTag("모집완료");
+    }
   };
   const navigate = useNavigate();
   const goCreatePost = () => {
@@ -33,6 +73,10 @@ function PostList() {
       alert("로그인이 필요합니다.");
       setLoginModalIsOpen(true);
     }
+  };
+
+  const resetTag = () => {
+    setFinalTag("");
   };
 
   const getLoginOrNot = () => {
@@ -46,21 +90,22 @@ function PostList() {
 
   useEffect(() => {
     getLoginOrNot();
+    onShowTag();
+    sendResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginModalIsOpen]);
+  }, [loginModalIsOpen, finalTag, typeClicked, gatheringTag]);
 
   return (
     <>
+      <Search />
       <List>
         <ul>
-          {data.map((item, idx) => {
+          {data.map((item) => {
             return (
               <>
                 <li
-                  key={idx}
-                  value={idx}
-                  className={idx === typeClick ? "active" : ""}
-                  onClick={filtering}
+                  className={item === typeClicked ? "active" : ""}
+                  onClick={typeFiltering}
                 >
                   {item}
                 </li>
@@ -68,10 +113,37 @@ function PostList() {
             );
           })}
         </ul>
+        <Detail>
+          {Object.values(filteredTag).map((item) =>
+            item !== "전체" ? (
+              <button
+                className={finalTag.includes(item) ? "active2" : ""}
+                onClick={chooseFinalTag}
+              >
+                #{item}
+              </button>
+            ) : (
+              <span></span>
+            )
+          )}
+          <br />
+          <p onClick={resetTag}>필터 초기화 X</p>
+        </Detail>
       </List>
+
       <Gather>
-        <Classification>모집중</Classification>
-        <Classification>모집완료</Classification>
+        <Classification
+          className={gatheringTag === "모집중" ? "active" : ""}
+          onClick={gathering}
+        >
+          모집중
+        </Classification>
+        <Classification
+          className={gatheringTag === "모집완료" ? "active" : ""}
+          onClick={gathering}
+        >
+          모집완료
+        </Classification>
         <WriteBtn>
           <p onClick={goCreatePost}>글쓰기</p>
           {loginModalIsOpen && (
@@ -92,22 +164,24 @@ const List = styled.div`
   min-width: 100%;
   max-width: 100%;
   text-align: center;
-  margin-bottom: 10vh;
+  margin-bottom: 5vh;
   ul {
     padding-inline-start: 0;
   }
   li {
-    display: inline;
-    margin: 2.5%;
+    display: inline-block;
+    margin: 1vh 2vw;
+    padding: 0 0 0.5vh 0;
     font-weight: 900;
-    font-size: 25px;
-    color: gray;
+    font-size: 2.4rem;
+    color: #939393;
     :hover {
       color: #385493;
       cursor: pointer;
     }
     &.active {
       color: #385493;
+      border-bottom: 0.4rem solid #385493;
     }
   }
 `;
@@ -127,8 +201,12 @@ const Classification = styled.button`
   color: gray;
   border: 3px solid #deeaf6;
   font-weight: bold;
-  margin: 0 0.5vw;
+  margin: 0 0 0 1vw;
   :hover {
+    cursor: pointer;
+    background-color: #deeaf6;
+  }
+  &.active {
     cursor: pointer;
     background-color: #deeaf6;
   }
@@ -139,7 +217,7 @@ const WriteBtn = styled.button`
   //width: 10%;
   //height: 5%;
   border: none;
-  margin: 0vh 4vw;
+  margin: 0 1vw;
   background-color: white;
   font-weight: bold;
   :hover {
@@ -150,7 +228,40 @@ const WriteBtn = styled.button`
     margin: 0;
     color: gray;
     :hover {
-      color: black;
+      color: #385493;
+    }
+  }
+`;
+
+const Detail = styled.div`
+  width: 76vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  button {
+    border: 0.3rem solid #c0c0c0;
+    background-color: white;
+    border-radius: 0.7rem;
+    margin: 1vh 0.5vw;
+    padding: 0.7vh 0.7vw;
+    :hover {
+      background-color: #e7e7e7;
+    }
+    &.active2 {
+      background-color: #e7e7e7;
+    }
+  }
+  p {
+    display: inline-block;
+    margin-left: 0.5vw;
+    font-size: 1.5rem;
+    font-weight: 550;
+    color: #939393;
+    //border: 0.3rem solid black;
+
+    :hover {
+      cursor: pointer;
+      color: gray;
     }
   }
 `;

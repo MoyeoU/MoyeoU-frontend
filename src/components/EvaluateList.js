@@ -33,7 +33,7 @@ function EvaluateList(props) {
           ></img>
         </Img>
         <Name>
-          <h3>{props.member}</h3>
+          <h2>{props.member}</h2>
         </Name>
         <Btn>
           <button onClick={goEvaluate}>
@@ -61,13 +61,14 @@ function EvaluateList(props) {
 
 const Div = styled.div`
   overflow: auto;
-  margin: 3vh auto;
+  margin: 5vh auto;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const Img = styled.div`
-  width: 20%;
+  width: 20vw;
   height: 100%;
   img {
     float: left;
@@ -78,29 +79,29 @@ const Img = styled.div`
 `;
 const Name = styled.div`
   float: left;
-  width: 60%;
+  width: 60vw;
   height: 100%;
-  h3 {
-    justify-content: center;
+  h2 {
+    //justify-content: center;
     color: black;
   }
 `;
 const Btn = styled.div`
   float: left;
-  width: 20%;
+  width: 20vw;
   height: 100%;
   //display: flex;
-  justify-content: flex-end;
+  //justify-content: center;
   button {
     float: left;
     width: 50%;
-    height: 3em;
+    height: 5vh;
     margin: 2% 20%;
     border: 1px solid #385493;
     background-color: #385493;
     color: white;
     font-weight: bold;
-    font-size: 80%;
+    font-size: 1rem;
     border-radius: 5px;
     :hover {
       cursor: pointer;

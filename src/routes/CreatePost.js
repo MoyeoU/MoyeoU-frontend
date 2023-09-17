@@ -28,7 +28,6 @@ function CreatePost() {
   }, [create]);
 
   const selectList = [
-    "전체",
     "팀프로젝트",
     "어학",
     "프로그래밍",
