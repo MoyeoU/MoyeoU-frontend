@@ -58,7 +58,7 @@ function EvaluateModal(props) {
               })}
             </Star>
             <Comment>
-              <input
+              <textarea
                 placeholder="평가 메시지를 입력하세요."
                 value={formValue.comment}
                 onChange={(e) =>
@@ -87,6 +87,7 @@ const Div = styled.div`
 const Name = styled.div`
   h2 {
     color: gray;
+    font-size: 2rem;
   }
   span {
     color: black;
@@ -107,8 +108,10 @@ const Comment = styled.div`
   margin: 2vh auto;
   text-align: center;
   overflow: auto;
-  input {
-    width: 80%;
+  textarea {
+    resize: none;
+    padding: 1vh 1vw;
+    width: 25vw;
     height: 20vh;
     border: 1px solid gray;
     border-radius: 1em;
@@ -117,13 +120,11 @@ const Comment = styled.div`
 
 const Btn = styled.div`
   button {
-    width: 40%;
-    height: 3em;
-    border: 1px solid #385493;
+    width: 8vw;
+    height: 5vh;
     background-color: #385493;
     color: white;
     font-weight: bold;
-    font-size: 80%;
     border-radius: 5px;
     :hover {
       cursor: pointer;

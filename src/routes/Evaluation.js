@@ -72,11 +72,11 @@ const Close = styled.div`
   text-align: center;
   button {
     width: 7vw;
-    height: 5vh;
+    height: 6vh;
     background-color: #385493;
     color: white;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     border-radius: 5px;
   }
 `;

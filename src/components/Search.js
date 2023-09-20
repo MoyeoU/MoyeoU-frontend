@@ -1,16 +1,42 @@
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
+import { CiCircleRemove } from "react-icons/ci";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { useState, useEffect } from "react";
 
 function Search() {
+  const [search, setSearch] = useState("");
+  const goSearch = (event) => {
+    setSearch(event.target.value);
+  };
+  const remove = () => {
+    setSearch("");
+  };
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
   return (
     <>
       <ParentDiv>
         <ChildDiv>
-          <button>
-            <BiSearch size={25} color="#939393" />
-          </button>
+          {search !== "" ? (
+            <AiFillCloseCircle
+              onClick={remove}
+              className="aifillclosecircle"
+              size={15}
+            />
+          ) : (
+            ""
+          )}
+          <BiSearch className="bisearch" size={25} />
         </ChildDiv>
-        <input type="text" placeholder="스터디 제목을 입력해주세요"></input>
+        <input
+          onChange={goSearch}
+          className="parent"
+          type="text"
+          placeholder="스터디 제목을 입력해주세요"
+          value={search}
+        ></input>
       </ParentDiv>
     </>
   );
@@ -24,6 +50,9 @@ const ParentDiv = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 6vh;
+
+  justify-content: space-between;
+  align-items: center;
   input {
     outline: none;
     width: 100%;
@@ -35,21 +64,46 @@ const ParentDiv = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
     :focus {
-      border: 0.3rem solid #385493;
+      border-color: #385493;
     }
     ::placeholder {
       color: #c0c0c0;
     }
   }
 `;
+
 const ChildDiv = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  text-align: right;
-  button {
-    //align-items: center;
-    background-color: #deeaf6;
+  .aifillclosecircle {
+    position: absolute;
+    right: 8%;
+    top: 110%;
+    float: right;
+    color: #939393;
+    :hover {
+      cursor: pointer;
+    }
+    :active {
+      color: #385493;
+      .parent {
+        border-bolor: #385493;
+      }
+    }
+  }
+  .bisearch {
+    position: absolute;
+    right: 0%;
+    top: 70%;
+    float: right;
+    color: #939393;
+    :hover {
+      cursor: pointer;
+    }
+    :active {
+      color: #385493;
+      .parent {
+        border-bolor: #385493;
+      }
+    }
   }
 `;
 
