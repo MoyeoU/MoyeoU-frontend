@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import member from "../img/member.jpg";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import data from "../data.json";
 import tagJson from "../tag.json";
 import React from "react";
+import commentLogo from "../img/commentLogo.jpg";
+import { useRef } from "react";
 
 function Edit() {
   const [id, setId] = useState(localStorage.getItem("id"));
@@ -13,7 +14,25 @@ function Edit() {
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
   const [selectTag, setselectTag] = useState("전체");
   const [isTagVisible, setIsTagVisible] = useState(data.user[0].tag);
+  const [imgFile, setImgFile] = useState("");
   const navigate = useNavigate();
+  const imgRef = useRef();
+
+  const saveImgFile = (e) => {
+    //const file = imgRef.current.files[0];
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    if (file === undefined) return;
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result || "");
+    };
+    e.target.value = "";
+  };
+  const removeImg = () => {
+    setImgFile("");
+  };
+  console.log(imgFile);
 
   const onSubmit = () => {
     if (id !== "" && intro !== "") {
@@ -68,7 +87,7 @@ function Edit() {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, intro, selectCategory, selectTag, isTagVisible]);
+  }, [id, intro, selectCategory, selectTag, isTagVisible, imgFile]);
 
   return (
     <>
@@ -78,17 +97,31 @@ function Edit() {
 
         <Content>
           <Img>
-            <img src={member} alt="member"></img>
+            <img src={imgFile ? imgFile : commentLogo} alt="member"></img>
+            <div>
+              <label className="profileImg-label" htmlFor="profileImg">
+                이미지 업로드
+              </label>
+              <input
+                className="profileImg-input"
+                type="file"
+                accept="image/*"
+                id="profileImg"
+                onChange={saveImgFile}
+                ref={imgRef}
+              />
+            </div>
+            <button onClick={removeImg}>삭제</button>
           </Img>
           <Detail>
             <table>
               <tbody>
                 <tr>
                   <td>
-                    <label htmlFor="id">닉네임</label>
+                    <label htmlFor="nickname">닉네임</label>
                   </td>
                   <td>
-                    <Name defaultValue={id} name="id" onChange={changeId} />
+                    <Name defaultValue={id} id="nickname" onChange={changeId} />
                   </td>
                 </tr>
 
@@ -99,7 +132,7 @@ function Edit() {
                   <td>
                     <Intro
                       defaultValue={intro}
-                      name="intro"
+                      id="intro"
                       onChange={changeIntro}
                     />
                   </td>
@@ -219,9 +252,21 @@ const Content = styled.div`
 `;
 const Img = styled.div`
   padding: 5vh 5vw;
+  text-align: center;
   img {
     width: 15vh;
     height: 15vh;
+  }
+  .profileImg-label {
+    margin: 2vh 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #385493;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .profileImg-input {
+    display: none;
   }
 `;
 const Detail = styled.div`
