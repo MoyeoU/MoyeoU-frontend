@@ -12,6 +12,9 @@ function EvaluateList(props) {
   const goEvaluate = () => {
     setEvaluateModalIsOpen(true);
   };
+  const alreadyDone = () => {
+    alert("이미 완료된 평가입니다.");
+  };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,20 +39,20 @@ function EvaluateList(props) {
           <h2>{props.member}</h2>
         </Name>
         <Btn>
-          <button onClick={goEvaluate}>
-            {submit ? "평가완료" : "평가하기"}
-          </button>
+          {submit ? (
+            <button onClick={alreadyDone}>평가완료</button>
+          ) : (
+            <button onClick={goEvaluate}>평가하기</button>
+          )}
+
           {evaluateModalIsOpen && (
             <EvaluateModal
               member={props.member}
+              setData={props.setData}
+              setSubmit={setSubmit}
               open={evaluateModalIsOpen}
               onClose={() => {
                 setEvaluateModalIsOpen(false);
-                setSubmit(true);
-                const count = localStorage.getItem("count");
-                localStorage.removeItem("count");
-                localStorage.setItem("count", Number(count) + 1);
-                console.log(localStorage.getItem("count"));
               }}
             />
           )}

@@ -4,12 +4,19 @@ import { useState, useEffect } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 
 function EvaluateModal(props) {
-  const onSubmit = (event) => {
-    const count = localStorage.getItem("count");
-    localStorage.removeItem("count");
-    localStorage.setItem("count", Number(count) + 1);
-    event.preventDefault();
-    console.log(localStorage.getItem("count"));
+  const submit = () => {
+    if (formValue.comment === "") {
+      alert("평가 메시지를 입력하세요.");
+    } else {
+      const newItem = {
+        member: props.member,
+        star: formValue.star,
+        comment: formValue.comment,
+      };
+      props.setData((data) => [...data, newItem]);
+      props.setSubmit(true);
+      props.onClose();
+    }
   };
 
   const [formValue, setFormValue] = useState({
@@ -26,52 +33,50 @@ function EvaluateModal(props) {
     setClicked(clickStates);
   };
   useEffect(() => {
-    sendReview();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked]);
 
-  const sendReview = () => {
-    let score = clicked.filter(Boolean).length;
-  };
   const ARRAY = [0, 1, 2, 3, 4];
-
+  console.log(clicked.filter(Boolean).length);
   return (
     <>
       <Modal onClose={props.onClose}>
         <Div>
-          <form onSubmit={props.onClose}>
-            <Name>
-              <h2>
-                <span>{props.member}</span> 님에 대한 평가
-              </h2>
-            </Name>
-            <Star>
-              {ARRAY.map((el, idx) => {
-                return (
-                  <FaStar
-                    key={idx}
-                    size="35"
-                    onClick={() => handleStarClick(el)}
-                    className={clicked[el] && "yellowStar"}
-                  />
-                );
-              })}
-            </Star>
-            <Comment>
-              <textarea
-                placeholder="평가 메시지를 입력하세요."
-                value={formValue.comment}
-                onChange={(e) =>
-                  setFormValue({ ...formValue, comment: e.target.value })
-                }
-                required
-              />
-              <br />
-            </Comment>
-            <Btn>
-              <button type="submit">등록</button>
-            </Btn>
-          </form>
+          <Name>
+            <h2>
+              <span>{props.member}</span> 님에 대한 평가
+            </h2>
+          </Name>
+          <Star>
+            {ARRAY.map((el, idx) => {
+              return (
+                <FaStar
+                  key={idx}
+                  size="35"
+                  onClick={() => handleStarClick(el)}
+                  className={clicked[el] && "yellowStar"}
+                />
+              );
+            })}
+          </Star>
+          <Comment>
+            <textarea
+              placeholder="평가 메시지를 입력하세요."
+              value={formValue.comment}
+              onChange={(e) =>
+                setFormValue({
+                  ...formValue,
+                  star: clicked.filter(Boolean).length,
+                  comment: e.target.value,
+                })
+              }
+              required
+            />
+            <br />
+          </Comment>
+          <Btn>
+            <button onClick={submit}>등록</button>
+          </Btn>
         </Div>
       </Modal>
     </>

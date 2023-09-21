@@ -5,24 +5,21 @@ import { useState } from "react";
 import { useEffect } from "react";
 import data from "../data.json";
 
-function Evaluation() {
+function Evaluation(props) {
   const MEMBERCNT = 3;
-  const [count, setCount] = useState(0);
+  const [evaluateMember, setEvaluateMember] = useState([]);
   const onClick = () => {
-    if (Number(localStorage.getItem("count")) === MEMBERCNT) {
+    if (evaluateMember.length === MEMBERCNT) {
       alert("평가가 완료되었습니다.");
-      localStorage.removeItem("count");
-      localStorage.setItem("count", 0);
       document.location.href = "/";
     } else {
       alert("평가를 모두 완료해주세요.");
     }
   };
   useEffect(() => {
-    setCount(localStorage.getItem("count"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
-
+  }, []);
+  console.log(evaluateMember);
   return (
     <>
       <Header />
@@ -32,12 +29,11 @@ function Evaluation() {
           <h2>함께한 스터디원을 평가해주세요.</h2>
         </Notice>
         <List>
-          <EvaluationList member={data.user[0].id} />
-          <EvaluationList member={data.user[1].id} />
-          <EvaluationList member={data.user[2].id} />
+          {Object.values(data.evaluate).map((ev) => (
+            <EvaluationList member={ev} key={ev} setData={setEvaluateMember} />
+          ))}
         </List>
         <Close>
-          {/* <h4>{count} / 3</h4> */}
           <button onClick={onClick}>완료</button>
         </Close>
       </Div>
