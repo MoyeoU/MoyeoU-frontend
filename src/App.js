@@ -31,7 +31,7 @@ function App() {
           <Route
             //path={`${process.env.PUBLIC_URL}/movie/:id`}
             //회원가입 경로
-            path="/signup"
+            path="/sign-up"
             element={<Signup />}
           ></Route>
           <Route

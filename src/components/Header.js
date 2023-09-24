@@ -36,7 +36,7 @@ function Header() {
     setLoginModalIsOpen(true);
   };
   const goSignup = () => {
-    navigate(`/signup`);
+    navigate(`/sign-up`);
   };
   const goChat = () => {
     navigate(`/chat`, { state: user });
