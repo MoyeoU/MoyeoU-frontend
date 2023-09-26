@@ -3,48 +3,82 @@ import image from "../../img/MoyeoU.jpg";
 import Modal from "./Modal";
 import { useState } from "react";
 import data from "../../data.json";
+import axios from "axios";
 
 function LoginModal({ onClose }) {
-  const [formValue, setFormValue] = useState({
-    id: "",
-    pw: "",
-  });
-  const onSubmit = (event) => {
-    event.preventDefault();
-    onClickLogin();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onSubmit();
+    }
   };
-  const onClickLogin = () => {
-    //db 연동
-    localStorage.clear();
-    localStorage.setItem("id", data.user[0].id);
-    document.location.href = "/";
+  const onSubmit = (event) => {
+    //event.preventDefault();
+    axios
+      .post("http://52.79.241.162:8080/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.accessToken}`;
+        axios.defaults.headers.common["RefreshToken"] =
+          response.data.refreshToken;
+        localStorage.clear();
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        localStorage.setItem("id", response.data.nickname);
+        console.log(response);
+        // if ((response.status = 200)) {
+        //   return navigate("/posts");
+        // }
+        //
+        //location 이동 하면 로그아웃 안먹힘,,, 주소 제대로 안돼있어서 그런가
+        //document.location.href = "/";
+      })
+      .catch((err) => {
+        //setMessage(err.response.data.message);
+        console.log(err);
+        alert(err.response.data.message);
+      });
   };
 
   return (
     <Modal onClose={onClose}>
       <Div>
         <img src={image} alt="logo" />
-        <form onSubmit={onSubmit}>
-          <input
-            placeholder="학교 이메일"
-            type="email"
-            value={formValue.id}
-            onChange={(e) => setFormValue({ ...formValue, id: e.target.value })}
-            required
-          />
-          <br />
-          <br />
-          <input
-            placeholder="비밀번호"
-            type="password"
-            value={formValue.pw}
-            onChange={(e) => setFormValue({ ...formValue, pw: e.target.value })}
-            required
-          />
-          <br />
-          <br />
-          <button type="submit">로그인</button>
-        </form>
+        <br />
+        {/* <form onSubmit={onSubmit}> */}
+        <input
+          placeholder="학교 이메일"
+          type="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          onKeyDown={handleKeyDown}
+          required
+        />
+        <br />
+        <br />
+        <input
+          placeholder="비밀번호"
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          onKeyDown={handleKeyDown}
+          required
+        />
+        <br />
+        <br />
+        <button type="submit" onClick={onSubmit}>
+          로그인
+        </button>
+        {/* </form> */}
       </Div>
     </Modal>
   );

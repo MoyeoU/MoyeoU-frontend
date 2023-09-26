@@ -1,18 +1,42 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Signup() {
+  const [email, setEmail] = useState("");
+  const [department, setDepartment] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+
   const onCancel = () => {
     document.location.href = "/";
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    onClickSignUp();
+
+    axios
+      .post("http://52.79.241.162:8080/sign-up", {
+        email: email,
+        password: password,
+        nickname: nickname,
+        department: department,
+      })
+      .then((response) => {
+        console.log(response);
+        alert("회원가입이 완료되었습니다.");
+        //document.location.href = "/";
+      })
+      .catch((err) => {
+        //setMessage(err.response.data.message)
+        console.log(err);
+        alert(err.response.data.message);
+      });
   };
-  const onClickSignUp = () => {
-    alert("회원가입이 완료되었습니다.");
-    document.location.href = "/";
-  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -23,73 +47,94 @@ function Signup() {
             <span>모여유</span>에 오신 것을 환영합니다!
           </h1>
         </H1Div>
-        <form onSubmit={onSubmit}>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <label htmlFor="id">이메일(학교)</label>
-                </td>
-                <td>
-                  <input
-                    name="id"
-                    id="id"
-                    type="email"
-                    placeholder="example@o.cnu.ac.kr"
-                    required
-                  />
-                </td>
-                <td>
-                  <button type="button" id="sendCode">
-                    인증번호 전송
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <input name="receivedCode" id="receivedCode" required />
-                </td>
-                <td>
-                  <button type="button" id="sendCode">
-                    인증
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label htmlFor="major">학과</label>
-                </td>
-                <td colSpan="2">
-                  <input name="major" id="major" required />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label htmlFor="nickname">닉네임</label>
-                </td>
-                <td colSpan="2">
-                  <input name="nickname" id="nickname" required />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label htmlFor="pw">비밀번호</label>
-                </td>
-                <td colSpan="2">
-                  <input name="pw" id="pw" required />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <hr />
-          <Btn>
-            <button type="button" onClick={onCancel}>
-              취소하기
-            </button>
-            <button type="submit">가입하기</button>
-          </Btn>
-        </form>
+        {/* <form onSubmit={onSubmit}> */}
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label htmlFor="email">이메일(학교)</label>
+              </td>
+              <td>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="example@o.cnu.ac.kr"
+                  required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </td>
+              <td>
+                <button type="button" id="sendCode">
+                  인증번호 전송
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <input id="receivedCode" required />
+              </td>
+              <td>
+                <button type="button" id="sendCode">
+                  인증
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="department">학과</label>
+              </td>
+              <td colSpan="2">
+                <input
+                  id="department"
+                  required
+                  onChange={(e) => {
+                    setDepartment(e.target.value);
+                  }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="nickname">닉네임</label>
+              </td>
+              <td colSpan="2">
+                <input
+                  id="nickname"
+                  required
+                  onChange={(e) => {
+                    setNickname(e.target.value);
+                  }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="password">비밀번호</label>
+              </td>
+              <td colSpan="2">
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+        <Btn>
+          <button type="button" onClick={onCancel}>
+            취소하기
+          </button>
+          <button onClick={onSubmit}>가입하기</button>
+        </Btn>
+        {/* </form> */}
       </Div>
     </>
   );
@@ -138,7 +183,7 @@ const Div = styled.div`
     border-radius: 5px;
     :hover {
       cursor: pointer;
-      background-color:#C0C0C0;
+      background-color: #c0c0c0;
       transition: 0.5s;
     }
   }
@@ -151,11 +196,13 @@ const Div = styled.div`
   label {
     font-weight: 600;
   }
-  #major, #nickname, #pw {
+  #department,
+  #nickname,
+  #pw {
     width: 30em;
   }
   hr {
-    margin-top : 5vh;
+    margin-top: 5vh;
   }
 `;
 
@@ -173,7 +220,7 @@ const Btn = styled.div`
     border-radius: 5px;
     :hover {
       cursor: pointer;
-      background-color:#003366;
+      background-color: #003366;
       transition: 0.5s;
     }
   }

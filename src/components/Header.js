@@ -8,6 +8,7 @@ import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
 import { BiChat, BiHeart } from "react-icons/bi";
 import NotificationModal from "../components/Modal/NotificationModal";
 import ChatModal from "../components/Modal/ChatModal";
+import axios from "axios";
 
 function Header() {
   //const userId = data.words.filter(word => (word.day === day));
@@ -27,9 +28,27 @@ function Header() {
     }
   };
   const goLogout = () => {
-    localStorage.removeItem("id");
-    setUser(""); //나중에는 쿠키 삭제
-    document.location.href = "/";
+    axios
+      .post(
+        `http://52.79.241.162:8080/logout?refreshToken=${localStorage.getItem(
+          "refreshToken"
+        )}`,
+        {
+          Header: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        localStorage.clear();
+        setUser("");
+        //document.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     //getLoginOrNot(); 새로고침?
   };
   const goLogin = () => {
