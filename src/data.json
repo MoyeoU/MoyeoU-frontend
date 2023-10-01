@@ -31,18 +31,26 @@
   ],
   "board": [
     {
-      "id": "post1",
+      "id": "post0",
       "title": "스프링 스터디원 구합니다",
       "complete": "N",
       "totalMember": "4",
       "presentMember": "2",
-      "tag": ["Spring", "MySQL"],
+      "tag": [
+        "Spring",
+        "MySQL",
+        "팀프로젝트",
+        "프로그래밍",
+        "프로그래밍",
+        "프로그래밍",
+        "프로그래밍"
+      ],
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "luvNY",
       "date": "2023-03-01"
     },
     {
-      "id": "post2",
+      "id": "post1",
       "title": "컴융 졸프(자유주제) 팀원 모집합니다.",
       "complete": "N",
       "totalMember": "3",
@@ -53,7 +61,7 @@
       "date": "2023-03-03"
     },
     {
-      "id": "post3",
+      "id": "post2",
       "title": "실전코딩 한자리 남았어요!",
       "complete": "N",
       "totalMember": "4",
@@ -64,7 +72,7 @@
       "date": "2023-03-08"
     },
     {
-      "id": "post4",
+      "id": "post3",
       "title": "경영의 이해 팀플 하실 분 모집해요",
       "complete": "N",
       "totalMember": "4",
@@ -75,7 +83,7 @@
       "date": "2023-03-14"
     },
     {
-      "id": "post5",
+      "id": "post4",
       "title": "자바스크립트 스터디원 구합니다",
       "complete": "Y",
       "totalMember": "4",
@@ -86,7 +94,7 @@
       "date": "2023-05-29"
     },
     {
-      "id": "post6",
+      "id": "post5",
       "title": "코테준비 같이해요",
       "complete": "N",
       "totalMember": "5",
@@ -97,7 +105,7 @@
       "date": "2023-04-12"
     },
     {
-      "id": "post7",
+      "id": "post6",
       "title": "토익 스터디원 모집합니다",
       "complete": "N",
       "totalMember": "5",
@@ -108,7 +116,7 @@
       "date": "2023-04-21"
     },
     {
-      "id": "post8",
+      "id": "post7",
       "title": "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ안녕하시엽니까",
       "complete": "N",
       "totalMember": "2",
@@ -119,12 +127,67 @@
       "date": "2023-04-22"
     },
     {
+      "id": "post8",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
       "id": "post9",
       "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
       "complete": "N",
       "totalMember": "2",
       "presentMember": "1",
-      "tag": ["TypeScript", ".."],
+      "tag": ["TypeScript"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
+      "id": "post10",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
+      "id": "post11",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", "Python", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
+      "id": "post12",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", "Python", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
+      "id": "post13",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", "Python", "기타"],
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "coong0",
       "date": "2023-05-02"

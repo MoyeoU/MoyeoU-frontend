@@ -8,6 +8,8 @@ import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
 import data from "../data.json";
 import Tag from "../components/Mypage/Tag";
+import axios from "axios";
+//import { response } from "express";
 
 function Mypage() {
   const [user, setUser] = useState("");
@@ -16,6 +18,41 @@ function Mypage() {
   const [firstTypeClick, setFirstTypeClick] = useState("활동 내역");
   const [secondTypeClick, setSecondTypeClick] = useState("활동 중");
   const navigate = useNavigate();
+  const [dataa, setDataa] = useState([]);
+  let starToNum = 0;
+  let hashtags = [];
+  let introduction = "";
+
+  const getUser = () => {
+    axios
+      .get(
+        `http://52.79.241.162:8080/members/me?accessToken=${localStorage.getItem(
+          "accessToken"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setDataa(response.data);
+        setUser(dataa.nickname);
+        if (dataa.point === null) {
+          starToNum = 0;
+        } else {
+          starToNum = Number(dataa.point);
+        }
+        hashtags = dataa.hashtags;
+        console.log(hashtags);
+        introduction = dataa.introduction;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //백이랑연결
+  };
 
   const firstFiltering = (event) => {
     setFirstTypeClick(event.target.innerText);
@@ -24,16 +61,8 @@ function Mypage() {
   const secondFiltering = (event) => {
     setSecondTypeClick(event.target.innerText);
   };
-
-  const sendState = () => {
-    console.log(firstTypeClick);
-    console.log(secondTypeClick);
-    //백이랑연결
-  };
-
   useEffect(() => {
-    setUser(localStorage.getItem("id"));
-    sendState();
+    getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, firstTypeClick, secondTypeClick]);
 
@@ -49,17 +78,16 @@ function Mypage() {
   const goChat = () => {
     navigate(`/chatRoom/${state}`, { state: state });
   };
-
   return (
     <>
       <Header />
       <Div>
         <Left>
           <img src={member} alt="member"></img>
-          <h3>{state}</h3>
-          <StarRate star={data.user[0].star} id="-1" />
+          <h3>{dataa.nickname}</h3>
+          <StarRate star={starToNum} id="-1" />
           <p>
-            {(data.user[0].star / 20).toFixed(1)} / 5.0{" "}
+            {(starToNum / 20).toFixed(1)} / 5.0{" "}
             <button onClick={viewComment}>{">"}</button>
             {commentModalIsOpen && (
               <CommentModal
@@ -75,12 +103,12 @@ function Mypage() {
           <br />
           <More>
             <p>소개</p>
-            <OneLiner>{data.user[0].intro}</OneLiner>
+            <OneLiner>{introduction}</OneLiner>
             <br />
             <hr />
             <br />
             <p>관심 태그</p>
-            <Tag {...data.user[0]} key={data.user[0].id} />
+            <Tag tag={hashtags} key={dataa.id} />
           </More>
           <Btn>
             {user === state ? (

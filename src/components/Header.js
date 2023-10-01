@@ -3,7 +3,6 @@ import logo from "../img/MoyeoU.jpg";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
-import data from "../data.json";
 import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
 import { BiChat, BiHeart } from "react-icons/bi";
 import NotificationModal from "../components/Modal/NotificationModal";
@@ -27,6 +26,10 @@ function Header() {
       setLogin(false);
     }
   };
+
+  const goHome = () => {
+    navigate(`/`);
+  };
   const goLogout = () => {
     axios
       .post(
@@ -34,7 +37,7 @@ function Header() {
           "refreshToken"
         )}`,
         {
-          Header: {
+          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
@@ -43,7 +46,7 @@ function Header() {
         console.log(response);
         localStorage.clear();
         setUser("");
-        //document.location.href = "/";
+        navigate(`/`);
       })
       .catch((err) => {
         console.log(err);
@@ -72,14 +75,14 @@ function Header() {
 
   return (
     <HeaderBar>
-      <Img>
-        <a href="/">
-          <img
-            style={{ width: "8rem", height: "4rem" }}
-            src={logo}
-            alt="logo"
-          ></img>
-        </a>
+      <Img onClick={goHome}>
+        {/* <a href={navigate=(`/`)}> */}
+        <img
+          style={{ width: "8rem", height: "4rem" }}
+          src={logo}
+          alt="logo"
+        ></img>
+        {/* </a> */}
       </Img>
       <RightDiv>
         {login ? (
@@ -132,6 +135,7 @@ function Header() {
             {loginModalIsOpen && (
               <LoginModal
                 open={loginModalIsOpen}
+                setLoginModalIsOpen={setLoginModalIsOpen}
                 onClose={() => {
                   setLoginModalIsOpen(false);
                 }}
@@ -151,6 +155,9 @@ const HeaderBar = styled.nav`
   height: 10vh;
 `;
 const Img = styled.div`
+  :hover {
+    cursor: pointer;
+  }
   margin: 0 7vw;
 `;
 const RightDiv = styled.div`

@@ -1,53 +1,119 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import data from "../data.json";
 import tagJson from "../tag.json";
 import React from "react";
 import commentLogo from "../img/commentLogo.jpg";
 import { useRef } from "react";
+import axios from "axios";
 
 function Edit() {
-  const [id, setId] = useState(localStorage.getItem("id"));
-  const [intro, setIntro] = useState(data.user[0].intro);
+  const [id, setId] = useState();
+  //const [id, setId] = useState(localStorage.getItem("id"));
+  const [intro, setIntro] = useState();
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
   const [selectTag, setselectTag] = useState("전체");
-  const [isTagVisible, setIsTagVisible] = useState(data.user[0].tag);
-  const [imgFile, setImgFile] = useState("");
+  const [isTagVisible, setIsTagVisible] = useState([]);
+  const [imgFile, setImgFile] = useState();
   const navigate = useNavigate();
   const imgRef = useRef();
+  const formData = new FormData();
+
+  const getUser = () => {
+    axios
+      .get(
+        `http://52.79.241.162:8080/members/me?accessToken=${localStorage.getItem(
+          "accessToken"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setId(response.data.nickname);
+        setIntro(response.data.introduction);
+        setIsTagVisible(response.data.hashtags);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //백이랑연결
+  };
+
+  const putUser = () => {
+    formData.append("nickname", JSON.stringify(id));
+    formData.append("introduction", JSON.stringify(intro));
+    if (isTagVisible.length === 0) {
+      formData.append("hashtags", JSON.stringify(""));
+    } else {
+      for (let i = 0; i < isTagVisible.length; i++) {
+        formData.append("hashtags", JSON.stringify(isTagVisible[i]));
+      }
+    }
+    // if (imgFile === undefined) {
+    //   formData.append("file", JSON.stringify(imgFile));
+    // } else {
+    formData.append("file", imgFile);
+    // }
+
+    // FormData의 key, value 확인
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
+    for (let value of formData.values()) {
+      console.log(value);
+    }
+    axios
+      .put(`http://52.79.241.162:8080/members/me`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        alert("수정이 완료되었습니다.");
+        localStorage.setItem("id", id);
+        //navigate(`/mypage/${id}`, { state: id });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const saveImgFile = (e) => {
-    //const file = imgRef.current.files[0];
+    e.preventDefault();
     const file = e.target.files[0];
     const reader = new FileReader();
     if (file === undefined) return;
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImgFile(reader.result || "");
+      //setImgFile(reader.result || "");
+      //보이는거 따로 저장
     };
+    setImgFile(file);
+    //setImgFile(formData);
+
     e.target.value = "";
   };
   const removeImg = () => {
     setImgFile("");
   };
-  console.log(imgFile);
 
+  //console.log(imgFile);
   const onSubmit = () => {
-    if (id !== "" && intro !== "") {
-      alert("수정이 완료되었습니다.");
-      localStorage.setItem("id", id);
-      navigate(`/mypage/${id}`, { state: id });
-      //document.location.href = `/mypage/${id}`;
+    if (id !== "") {
+      putUser();
       //api 연동, state(이미지, 닉네임, 한줄이름, isTagVisible)들 전달하기
-    } else if (id === "") {
+    } else {
       alert("닉네임을 작성해주세요");
-    } else if (intro === "") {
-      alert("소개글을 작성해주세요");
     }
   };
-
   const withdrawAccount = () => {
     const withdrawOrNot = window.confirm("탈퇴하시겠습니까?");
     if (withdrawOrNot) {
@@ -81,13 +147,14 @@ function Edit() {
   const removeTag = (event) => {
     const removeId = event.target.parentNode.id;
     setIsTagVisible(isTagVisible.filter((value, index) => value !== removeId));
-
     //event.target.parentNode.style.display = "inline-block";
   };
 
   useEffect(() => {
+    getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, intro, selectCategory, selectTag, isTagVisible, imgFile]);
+  }, []);
+  //id, intro, selectCategory, selectTag, isTagVisible, imgFile
 
   return (
     <>

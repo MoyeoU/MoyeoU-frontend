@@ -1,54 +1,90 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
+import Moyeou from "../img/MoyeoU.jpg";
 
-function Post({
-  id,
-  title,
-  complete,
-  totalMember,
-  presentMember,
-  tag,
-  type,
-  writer,
-}) {
+function Post({ info }) {
   const navigate = useNavigate();
-  const onClick = () => {
-    navigate(`/postView/${id}`);
+  const onClick = (e) => {
+    //console.log(e.currentTarget.id);
+    navigate(`/postView/${e.currentTarget.id}`);
   };
   const goMypage = (event) => {
     event.stopPropagation();
-    navigate(`/mypage/${writer}`, { state: writer });
+    let writerName = event.target.innerText.slice(
+      0,
+      event.target.innerText.length - 2
+    );
+    console.log(typeof writerName);
+    if (localStorage.getItem("id")) {
+      navigate(`/mypage/${writerName}`, { state: writerName });
+    } else {
+      alert("로그인이 필요합니다.");
+    }
   };
 
   return (
-    <PostLayout onClick={onClick} key={id}>
-      <CompleteBtn>{complete === "Y" ? `모집완료` : `모집중`}</CompleteBtn>
-      <Title>
-        <h2>{title.length <= 30 ? title : title.slice(0, 28) + "..."}</h2>
-      </Title>
-      <Person>
-        <PersonImg>
-          <BsPersonFill />
-        </PersonImg>
-        <span>
-          &nbsp;
-          {presentMember}&nbsp;/&nbsp;{totalMember}
-        </span>
-      </Person>
-
-      <br />
-      {tag.map((tags) => (
-        <TagBtn>{tags}</TagBtn>
-      ))}
-      <br />
-      <br />
-      <br />
-      <hr />
-      <Writer onClick={goMypage}>{writer} 님</Writer>
-    </PostLayout>
+    <Div>
+      {info !== undefined ? (
+        info.map((data, idx) => {
+          return (
+            <PostLayout
+              onClick={(e) => {
+                onClick(e);
+              }}
+              key={idx}
+              id={"post" + idx}
+            >
+              <CompleteBtn>
+                {data.complete === "Y" ? `모집완료` : `모집중`}
+              </CompleteBtn>
+              <Title>
+                <h2>
+                  {data.title.length <= 30
+                    ? data.title
+                    : data.title.slice(0, 28) + "..."}
+                </h2>
+              </Title>
+              <Person>
+                <PersonImg>
+                  <BsPersonFill />
+                </PersonImg>
+                <span>
+                  &nbsp;
+                  {data.presentMember}&nbsp;/&nbsp;{data.totalMember}
+                </span>
+              </Person>
+              <br />
+              {data.tag.length > 2 ? (
+                <>
+                  <TagBtn>{data.tag[0]}</TagBtn>
+                  <TagBtn>{data.tag[1]}</TagBtn>
+                  <TagBtn>..</TagBtn>
+                </>
+              ) : (
+                data.tag.map((tags) => <TagBtn>{tags}</TagBtn>)
+              )}
+              <br />
+              <br />
+              <br />
+              <hr />
+              <Writer onClick={goMypage}>{data.writer} 님</Writer>
+            </PostLayout>
+          );
+        })
+      ) : (
+        <div>
+          <img src={Moyeou} alt="loadingImg" />
+        </div>
+      )}
+    </Div>
   );
 }
+
+const Div = styled.div`
+  min-height: 60vh;
+  overflow: auto;
+`;
 const Person = styled.div`
   display: flex;
   align-items: center;

@@ -4,11 +4,13 @@ import Modal from "./Modal";
 import { useState } from "react";
 import data from "../../data.json";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function LoginModal({ onClose }) {
+function LoginModal({ onClose, setLoginModalIsOpen }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -37,8 +39,8 @@ function LoginModal({ onClose }) {
         //   return navigate("/posts");
         // }
         //
-        //location 이동 하면 로그아웃 안먹힘,,, 주소 제대로 안돼있어서 그런가
-        //document.location.href = "/";
+        setLoginModalIsOpen(false);
+        navigate(`/`);
       })
       .catch((err) => {
         //setMessage(err.response.data.message);

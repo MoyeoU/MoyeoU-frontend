@@ -51,11 +51,11 @@ function PostList() {
   };
   const sendResult = () => {
     if (finalTag === "") {
-      console.log(typeClicked);
+      //console.log(typeClicked);
     } else {
-      console.log(finalTag);
+      //console.log(finalTag);
     }
-    console.log(gatheringTag);
+    //console.log(gatheringTag);
     //연결,,
   };
   const gathering = (event) => {
