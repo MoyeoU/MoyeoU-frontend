@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import { json, useNavigate } from "react-router-dom";
-import data from "../data.json";
+//import data from "../data.json";
 import tagJson from "../tag.json";
 import React from "react";
 import commentLogo from "../img/commentLogo.jpg";
@@ -10,6 +10,7 @@ import { useRef } from "react";
 import axios from "axios";
 
 function Edit() {
+  const [data, setData] = useState([]);
   const [id, setId] = useState();
   //const [id, setId] = useState(localStorage.getItem("id"));
   const [intro, setIntro] = useState();
@@ -17,6 +18,7 @@ function Edit() {
   const [selectTag, setselectTag] = useState("전체");
   const [isTagVisible, setIsTagVisible] = useState([]);
   const [imgFile, setImgFile] = useState();
+  const [isImgVisible, setIsImgVisible] = useState();
   const navigate = useNavigate();
   const imgRef = useRef();
   const formData = new FormData();
@@ -35,9 +37,15 @@ function Edit() {
       )
       .then((response) => {
         console.log(response.data);
+        setData(response.data);
         setId(response.data.nickname);
-        setIntro(response.data.introduction);
-        setIsTagVisible(response.data.hashtags);
+        // setIntro(response.data.introduction);
+        // setIsTagVisible(response.data.hashtags);
+        // setImgFile(response.data.imagePath);
+        // console.log(id);
+        // console.log(intro);
+        // console.log(isTagVisible);
+        // console.log(imgFile);
       })
       .catch((error) => {
         console.log(error);
@@ -46,19 +54,20 @@ function Edit() {
   };
 
   const putUser = () => {
-    formData.append("nickname", JSON.stringify(id));
-    formData.append("introduction", JSON.stringify(intro));
-    if (isTagVisible.length === 0) {
-      formData.append("hashtags", JSON.stringify(""));
-    } else {
+    formData.append("nickname", id);
+    if (intro !== undefined) {
+      formData.append("introduction", intro);
+    }
+    //formData.append("introduction", intro);
+    if (isTagVisible.length !== 0) {
       for (let i = 0; i < isTagVisible.length; i++) {
-        formData.append("hashtags", JSON.stringify(isTagVisible[i]));
+        formData.append("hashtags", isTagVisible[i]);
       }
     }
     // if (imgFile === undefined) {
     //   formData.append("file", JSON.stringify(imgFile));
     // } else {
-    formData.append("file", imgFile);
+    if (imgFile !== undefined) formData.append("file", imgFile);
     // }
 
     // FormData의 key, value 확인
@@ -68,6 +77,7 @@ function Edit() {
     for (let value of formData.values()) {
       console.log(value);
     }
+
     axios
       .put(`http://52.79.241.162:8080/members/me`, formData, {
         headers: {
@@ -93,7 +103,7 @@ function Edit() {
     if (file === undefined) return;
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      //setImgFile(reader.result || "");
+      setIsImgVisible(reader.result || "");
       //보이는거 따로 저장
     };
     setImgFile(file);
@@ -102,7 +112,11 @@ function Edit() {
     e.target.value = "";
   };
   const removeImg = () => {
-    setImgFile("");
+    setImgFile();
+    console.log(data);
+    console.log(imgFile);
+    console.log(intro);
+    console.log(isTagVisible);
   };
 
   //console.log(imgFile);
@@ -128,6 +142,7 @@ function Edit() {
   };
   const changeIntro = (event) => {
     setIntro(event.target.value);
+    console.log(intro);
   };
 
   const changeCategory = (event) => {
@@ -164,7 +179,10 @@ function Edit() {
 
         <Content>
           <Img>
-            <img src={imgFile ? imgFile : commentLogo} alt="member"></img>
+            <img
+              src={isImgVisible ? isImgVisible : commentLogo}
+              alt="member"
+            ></img>
             <div>
               <label className="profileImg-label" htmlFor="profileImg">
                 이미지 업로드
@@ -188,7 +206,11 @@ function Edit() {
                     <label htmlFor="nickname">닉네임</label>
                   </td>
                   <td>
-                    <Name defaultValue={id} id="nickname" onChange={changeId} />
+                    <Name
+                      defaultValue={data.nickname}
+                      id="nickname"
+                      onChange={changeId}
+                    />
                   </td>
                 </tr>
 
@@ -198,7 +220,7 @@ function Edit() {
                   </td>
                   <td>
                     <Intro
-                      defaultValue={intro}
+                      defaultValue={data.introduction}
                       id="intro"
                       onChange={changeIntro}
                     />
@@ -271,11 +293,13 @@ function Edit() {
                 <tr>
                   <td></td>
                   <td>
-                    {Object.values(isTagVisible).map((item) => (
-                      <TagEdit id={item}>
-                        {item} &nbsp;<span onClick={removeTag}>X</span>
-                      </TagEdit>
-                    ))}
+                    {data.hashtags === undefined
+                      ? ""
+                      : Object.values(isTagVisible).map((item) => (
+                          <TagEdit id={item}>
+                            {item} &nbsp;<span onClick={removeTag}>X</span>
+                          </TagEdit>
+                        ))}
                   </td>
                 </tr>
               </tbody>

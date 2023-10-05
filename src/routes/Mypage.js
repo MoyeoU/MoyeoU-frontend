@@ -19,34 +19,23 @@ function Mypage() {
   const [secondTypeClick, setSecondTypeClick] = useState("활동 중");
   const navigate = useNavigate();
   const [dataa, setDataa] = useState([]);
-  let starToNum = 0;
-  let hashtags = [];
-  let introduction = "";
+  // let starToNum = 0;
+  // let hashtags = [];
+  // let introduction = "";
 
   const getUser = () => {
     axios
-      .get(
-        `http://52.79.241.162:8080/members/me?accessToken=${localStorage.getItem(
-          "accessToken"
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
+      .get(`http://52.79.241.162:8080/members/me`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         setDataa(response.data);
+        console.log(typeof dataa.hashtags);
         setUser(dataa.nickname);
-        if (dataa.point === null) {
-          starToNum = 0;
-        } else {
-          starToNum = Number(dataa.point);
-        }
-        hashtags = dataa.hashtags;
-        console.log(hashtags);
-        introduction = dataa.introduction;
+        //{dataa.point === null ? 0:Number(dataa.point)}
       })
       .catch((error) => {
         console.log(error);
@@ -85,10 +74,13 @@ function Mypage() {
         <Left>
           <img src={member} alt="member"></img>
           <h3>{dataa.nickname}</h3>
-          <StarRate star={starToNum} id="-1" />
+          <StarRate
+            star={dataa.point === null ? 0 : Number(dataa.point)}
+            id="-1"
+          />
           <p>
-            {(starToNum / 20).toFixed(1)} / 5.0{" "}
-            <button onClick={viewComment}>{">"}</button>
+            {(dataa.point === null ? 0 : Number(dataa.point) / 20).toFixed(1)} /
+            5.0 <button onClick={viewComment}>{">"}</button>
             {commentModalIsOpen && (
               <CommentModal
                 open={commentModalIsOpen}
@@ -103,12 +95,15 @@ function Mypage() {
           <br />
           <More>
             <p>소개</p>
-            <OneLiner>{introduction}</OneLiner>
+            <OneLiner>{dataa.introduction}</OneLiner>
             <br />
             <hr />
             <br />
             <p>관심 태그</p>
-            <Tag tag={hashtags} key={dataa.id} />
+            <Tag
+              tag={dataa.hashtags === undefined ? [] : dataa.hashtags}
+              key={dataa.id}
+            />
           </More>
           <Btn>
             {user === state ? (

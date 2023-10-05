@@ -70,6 +70,8 @@ function Pagenation({ totalPosts, limit, page, setPage }) {
 
 const PageSection = styled.div`
   height: 10vh;
+  text-align: center;
+  margin-top: 7vh;
 `;
 
 const ButtonWrap = styled.div``;
