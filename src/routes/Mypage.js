@@ -40,7 +40,6 @@ function Mypage() {
       .catch((error) => {
         console.log(error);
       });
-    //백이랑연결
   };
 
   const firstFiltering = (event) => {

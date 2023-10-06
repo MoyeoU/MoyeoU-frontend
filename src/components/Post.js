@@ -7,7 +7,11 @@ function Post({ info }) {
   const navigate = useNavigate();
   const onClick = (e) => {
     //console.log(e.currentTarget.id);
-    navigate(`/postView/${e.currentTarget.id}`);
+    if (localStorage.getItem("id")) {
+      navigate(`/postView/${e.currentTarget.id}`);
+    } else {
+      alert("로그인이 필요합니다.");
+    }
   };
   const goMypage = (event) => {
     event.stopPropagation();

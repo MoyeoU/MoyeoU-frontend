@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import { json, useNavigate } from "react-router-dom";
-//import data from "../data.json";
+import { useNavigate } from "react-router-dom";
 import tagJson from "../tag.json";
 import React from "react";
 import commentLogo from "../img/commentLogo.jpg";
@@ -12,12 +11,12 @@ import axios from "axios";
 function Edit() {
   const [data, setData] = useState([]);
   const [id, setId] = useState();
-  //const [id, setId] = useState(localStorage.getItem("id"));
   const [intro, setIntro] = useState();
-  const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("전체");
   const [isTagVisible, setIsTagVisible] = useState([]);
   const [imgFile, setImgFile] = useState();
+
+  const [selectCategory, setselectCategory] = useState("팀프로젝트");
+  const [selectTag, setselectTag] = useState("전체");
   const [isImgVisible, setIsImgVisible] = useState();
   const navigate = useNavigate();
   const imgRef = useRef();
@@ -39,18 +38,12 @@ function Edit() {
         console.log(response.data);
         setData(response.data);
         setId(response.data.nickname);
-        // setIntro(response.data.introduction);
-        // setIsTagVisible(response.data.hashtags);
-        // setImgFile(response.data.imagePath);
-        // console.log(id);
-        // console.log(intro);
-        // console.log(isTagVisible);
-        // console.log(imgFile);
+        setIntro(response.data.introduction);
+        setIsTagVisible(response.data.hashtags);
       })
       .catch((error) => {
         console.log(error);
       });
-    //백이랑연결
   };
 
   const putUser = () => {
@@ -113,17 +106,12 @@ function Edit() {
   };
   const removeImg = () => {
     setImgFile();
-    console.log(data);
-    console.log(imgFile);
-    console.log(intro);
-    console.log(isTagVisible);
   };
 
   //console.log(imgFile);
   const onSubmit = () => {
     if (id !== "") {
       putUser();
-      //api 연동, state(이미지, 닉네임, 한줄이름, isTagVisible)들 전달하기
     } else {
       alert("닉네임을 작성해주세요");
     }
@@ -170,7 +158,7 @@ function Edit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //id, intro, selectCategory, selectTag, isTagVisible, imgFile
-
+  console.log(isTagVisible);
   return (
     <>
       <Header />
