@@ -116,7 +116,13 @@ function Header() {
 
         {login ? (
           <Btn>
-            <p onClick={() => navigate(`/mypage/${user}`, { state: user })}>
+            <p
+              onClick={() =>
+                navigate(`/mypage/${user}`, {
+                  state: { state: user, memberId: 0 },
+                })
+              }
+            >
               {user} 님
             </p>
           </Btn>

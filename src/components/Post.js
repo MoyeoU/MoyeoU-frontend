@@ -6,9 +6,11 @@ import Moyeou from "../img/MoyeoU.jpg";
 function Post({ info }) {
   const navigate = useNavigate();
   const onClick = (e) => {
-    //console.log(e.currentTarget.id);
     if (localStorage.getItem("id")) {
-      navigate(`/postView/${e.currentTarget.id}`);
+      navigate(`/postView/${e.currentTarget.id}`, {
+        state: e.currentTarget.id,
+      });
+      //state가 postId가 되어야 함
     } else {
       alert("로그인이 필요합니다.");
     }
@@ -37,7 +39,7 @@ function Post({ info }) {
                 onClick(e);
               }}
               key={idx}
-              id={"post" + idx}
+              id={idx + 1}
             >
               <CompleteBtn>
                 {data.complete === "Y" ? `모집완료` : `모집중`}

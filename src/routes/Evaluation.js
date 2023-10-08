@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import EvaluationList from "../components/EvaluateList";
+import EvaluateList from "../components/EvaluateList";
 import { useState } from "react";
 import { useEffect } from "react";
 import data from "../data.json";
@@ -30,7 +30,7 @@ function Evaluation(props) {
         </Notice>
         <List>
           {Object.values(data.evaluate).map((ev) => (
-            <EvaluationList member={ev} key={ev} setData={setEvaluateMember} />
+            <EvaluateList member={ev} key={ev} setData={setEvaluateMember} />
           ))}
         </List>
         <Close>

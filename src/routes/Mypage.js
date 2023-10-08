@@ -12,34 +12,57 @@ import axios from "axios";
 //import { response } from "express";
 
 function Mypage() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(localStorage.getItem("id"));
   const { state } = useLocation();
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
   const [firstTypeClick, setFirstTypeClick] = useState("활동 내역");
   const [secondTypeClick, setSecondTypeClick] = useState("활동 중");
   const navigate = useNavigate();
-  const [dataa, setDataa] = useState([]);
+  const [dataa, setDataa] = useState("");
   // let starToNum = 0;
   // let hashtags = [];
   // let introduction = "";
 
   const getUser = () => {
-    axios
-      .get(`http://52.79.241.162:8080/members/me`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setDataa(response.data);
-        console.log(typeof dataa.hashtags);
-        setUser(dataa.nickname);
-        //{dataa.point === null ? 0:Number(dataa.point)}
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(user);
+    console.log(state);
+    console.log(state.state);
+    if (user === state.state) {
+      axios
+        .get(`http://52.79.241.162:8080/members/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setDataa(response.data);
+          //console.log(typeof dataa.hashtags);
+          //setUser(dataa.nickname);
+          //{dataa.point === null ? 0:Number(dataa.point)}
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      //member 가져오기
+      axios
+        .get(`http://52.79.241.162:8080/members/${state.memberId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setDataa(response.data);
+          //console.log(typeof dataa.hashtags);
+          //setUser(dataa.nickname);
+          //{dataa.point === null ? 0:Number(dataa.point)}
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const firstFiltering = (event) => {
@@ -52,7 +75,7 @@ function Mypage() {
   useEffect(() => {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, firstTypeClick, secondTypeClick]);
+  }, [firstTypeClick, secondTypeClick]);
 
   const viewComment = () => {
     setCommentModalIsOpen(true);
@@ -64,96 +87,100 @@ function Mypage() {
   };
 
   const goChat = () => {
-    navigate(`/chatRoom/${state}`, { state: state });
+    navigate(`/chatRoom/${state.state}`, { state: state.state });
   };
   return (
     <>
       <Header />
-      <Div>
-        <Left>
-          <img src={member} alt="member"></img>
-          <h3>{dataa.nickname}</h3>
-          <StarRate
-            star={dataa.point === null ? 0 : Number(dataa.point)}
-            id="-1"
-          />
-          <p>
-            {(dataa.point === null ? 0 : Number(dataa.point) / 20).toFixed(1)} /
-            5.0 <button onClick={viewComment}>{">"}</button>
-            {commentModalIsOpen && (
-              <CommentModal
-                open={commentModalIsOpen}
-                onClose={() => {
-                  setCommentModalIsOpen(false);
-                }}
-              />
-            )}
-          </p>
-          <br />
-          <hr />
-          <br />
-          <More>
-            <p>소개</p>
-            <OneLiner>{dataa.introduction}</OneLiner>
+      {dataa === "" ? (
+        <Div>로딩중</Div>
+      ) : (
+        <Div>
+          <Left>
+            <img src={member} alt="member"></img>
+            <h3>{dataa.nickname}</h3>
+            <StarRate
+              star={dataa.point === null ? 0 : Number(dataa.point)}
+              id="-1"
+            />
+            <p>
+              {(dataa.point === null ? 0 : Number(dataa.point) / 20).toFixed(1)}{" "}
+              / 5.0 <button onClick={viewComment}>{">"}</button>
+              {commentModalIsOpen && (
+                <CommentModal
+                  open={commentModalIsOpen}
+                  onClose={() => {
+                    setCommentModalIsOpen(false);
+                  }}
+                />
+              )}
+            </p>
             <br />
             <hr />
             <br />
-            <p>관심 태그</p>
-            <Tag
-              tag={dataa.hashtags === undefined ? [] : dataa.hashtags}
-              key={dataa.id}
-            />
-          </More>
-          <Btn>
-            {user === state ? (
-              <button onClick={goEdit}>수정하기</button>
-            ) : (
-              <button onClick={goChat}>채팅하기</button>
-            )}
-          </Btn>
-        </Left>
-        <Middle> </Middle>
-        <Right>
-          <Filtering>
-            <MineOrNot>
-              <h2
-                className={firstTypeClick === "활동 내역" ? "active" : ""}
-                onClick={firstFiltering}
-              >
-                활동 내역
-              </h2>
-              <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
-              <h2
-                className={firstTypeClick === "내가 쓴 글" ? "active" : ""}
-                onClick={firstFiltering}
-              >
-                내가 쓴 글
-              </h2>
+            <More>
+              <p>소개</p>
+              <OneLiner>{dataa.introduction}</OneLiner>
               <br />
-            </MineOrNot>
-            <NowOrNot>
-              <h3
-                className={secondTypeClick === "활동 중" ? "active" : ""}
-                onClick={secondFiltering}
-              >
-                활동 중
-              </h3>
-              <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
-              <h3
-                className={secondTypeClick === "활동 완료" ? "active" : ""}
-                onClick={secondFiltering}
-              >
-                활동 완료
-              </h3>
-            </NowOrNot>
-          </Filtering>
-          <HistoryDiv>
-            {Object.values(data.board).map((posts) => (
-              <StudyHistory {...posts} key={posts.id} />
-            ))}
-          </HistoryDiv>
-        </Right>
-      </Div>
+              <hr />
+              <br />
+              <p>관심 태그</p>
+              <Tag
+                tag={dataa.hashtags === undefined ? [] : dataa.hashtags}
+                key={dataa.id}
+              />
+            </More>
+            <Btn>
+              {user === state.state ? (
+                <button onClick={goEdit}>수정하기</button>
+              ) : (
+                <button onClick={goChat}>채팅하기</button>
+              )}
+            </Btn>
+          </Left>
+          <Middle> </Middle>
+          <Right>
+            <Filtering>
+              <MineOrNot>
+                <h2
+                  className={firstTypeClick === "활동 내역" ? "active" : ""}
+                  onClick={firstFiltering}
+                >
+                  활동 내역
+                </h2>
+                <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+                <h2
+                  className={firstTypeClick === "내가 쓴 글" ? "active" : ""}
+                  onClick={firstFiltering}
+                >
+                  내가 쓴 글
+                </h2>
+                <br />
+              </MineOrNot>
+              <NowOrNot>
+                <h3
+                  className={secondTypeClick === "활동 중" ? "active" : ""}
+                  onClick={secondFiltering}
+                >
+                  활동 중
+                </h3>
+                <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+                <h3
+                  className={secondTypeClick === "활동 완료" ? "active" : ""}
+                  onClick={secondFiltering}
+                >
+                  활동 완료
+                </h3>
+              </NowOrNot>
+            </Filtering>
+            <HistoryDiv>
+              {Object.values(data.board).map((posts) => (
+                <StudyHistory {...posts} key={posts.id} />
+              ))}
+            </HistoryDiv>
+          </Right>
+        </Div>
+      )}
     </>
   );
 }
