@@ -8,10 +8,14 @@ import commentLogo from "../img/commentLogo.jpg";
 import send from "../img/send.jpg";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PostView() {
-  const postId = 1; //임시번호
+  const { state } = useLocation();
+  const postId = state; //임시번호
   const [data, setData] = useState("");
+  const navigate = useNavigate();
+  const [comments, setComments] = useState("");
 
   const getPost = async () => {
     await axios
@@ -28,11 +32,89 @@ function PostView() {
         console.log(error);
       });
   };
+
+  const modifyOrApply = () => {
+    if (data.isHost) {
+      //modify 화면 이동
+    } else {
+      //apply 화면 이동
+    }
+  };
+
+  const removePost = () => {
+    const removeOrNot = window.confirm("게시물을 삭제하시겠습니까?");
+    if (removeOrNot) {
+      //삭제 api
+      axios
+        .delete(`http://52.79.241.162:8080/posts/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          alert("삭제가 완료되었습니다.");
+          navigate(`/`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const uploadComment = () => {
+    if (comments !== "") {
+      axios
+        .post(`http://52.79.241.162:8080/posts/${postId}/comments`, {
+          content: comments,
+
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          alert("댓글 작성이 완료되었습니다.");
+          setComments("");
+          getPost();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const modifyComment = () => {
+    //수정..
+  };
+
+  const removeComment = (commentId) => {
+    console.log(commentId);
+    axios
+      .delete(
+        `http://52.79.241.162:8080/posts/${postId}/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        alert("댓글이 삭제되었습니다.");
+        getPost();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getPost();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //댓글 업로드하면 리렌더링
+
   return (
     <>
       <Header />
@@ -60,9 +142,21 @@ function PostView() {
                       alt="userProfileImage"
                     ></img>
                   </a>
-                  <div id="userName">{data.host.nickname}</div>
+                  <div
+                    id="userName"
+                    onClick={() =>
+                      navigate(`/mypage/${data.host.nickname}`, {
+                        state: {
+                          state: data.host.nickname,
+                          memberId: data.host.id,
+                        },
+                      })
+                    }
+                  >
+                    {data.host.nickname}
+                  </div>
                 </div>
-                <div id="studyPost_date">2023.03.01</div>
+                <div id="studyPost_date">{data.createdAt}</div>
                 <div id="studyPost_commentNum">
                   <img
                     className="commentImg"
@@ -108,9 +202,24 @@ function PostView() {
             </section>
             <div id="studyPost_content">{data.content}</div>
             <div id="studyPost_applyBox">
-              <button className="studyApplyButton" name="apply">
-                {data.ishost ? "삭제하기" : "신청하기"}
+              <button
+                className="studyApplyButton"
+                name="apply"
+                onClick={modifyOrApply}
+              >
+                {data.isHost ? "수정하기" : "신청하기"}
               </button>
+              {data.isHost ? (
+                <button
+                  className="studyApplyButton"
+                  name="apply"
+                  onClick={removePost}
+                >
+                  삭제하기
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
             <div id="studyPost_commentWrap">
               <div id="studyPost_comment_title">댓글</div>
@@ -118,50 +227,53 @@ function PostView() {
                 <textarea
                   id="commentInput"
                   placeholder="댓글을 입력해주세요."
+                  value={comments}
+                  onChange={(event) => {
+                    setComments(event.target.value);
+                  }}
                 ></textarea>
-                <button id="sendButton">
+                <button id="sendButton" onClick={uploadComment}>
                   <img className="sendButtonimg" src={send} alt="comment"></img>
                 </button>
               </div>
               <ul id="commentList">
-                <li className="comment_item">
-                  <section id="comment_item_header">
-                    <section id="comment_userInfo">
-                      <a href="./articledetail.html">
-                        <img
-                          className="commentLogo"
-                          src={commentLogo}
-                          alt="commentLogo"
-                        ></img>
-                      </a>
-                      <div id="comment_userName">sEoYoungoes</div>
+                {data.comments.map((comment) => (
+                  <li className="comment_item">
+                    <section id="comment_item_header">
+                      <section id="comment_userInfo">
+                        <a href="./articledetail.html">
+                          <img
+                            className="commentLogo"
+                            src={commentLogo}
+                            alt="commentLogo"
+                          ></img>
+                        </a>
+                        <div id="comment_userName">{comment.nickname}</div>
+                      </section>
+                      <div id="comment_dateAndTime">
+                        {comment.time.substring(0, 10)}{" "}
+                        {comment.time.substring(11, 16)}
+                      </div>
                     </section>
-                    <div id="comment_dateAndTime">2023-03-02 오후 03:56</div>
-                  </section>
-                  <section id="comment_content">
-                    <p id="comment_content_ex1">
-                      스프링 기본지식 없어도 신청 가능한가요?
-                    </p>
-                  </section>
-                </li>
-                <li className="comment_item">
-                  <section id="comment_item_header">
-                    <section id="comment_userInfo">
-                      <a href="./articledetail.html">
-                        <img
-                          className="commentLogo"
-                          src={commentLogo}
-                          alt="commentLogo"
-                        ></img>
-                      </a>
-                      <div id="comment_userName">zhzzang</div>
+                    <section id="comment_content">
+                      <span id="comment_content_ex1">{comment.content}</span>
+                      {comment.isAuthor ? (
+                        <>
+                          <DeleteCommentButton onClick={modifyComment}>
+                            수정
+                          </DeleteCommentButton>
+                          <DeleteCommentButton
+                            onClick={() => removeComment(comment.commentId)}
+                          >
+                            삭제
+                          </DeleteCommentButton>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </section>
-                    <div id="comment_dateAndTime">2023-03-02 오후 03:56</div>
-                  </section>
-                  <section id="comment_content">
-                    <p id="comment_content_ex1">온라인은 안하나요? </p>
-                  </section>
-                </li>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -175,6 +287,11 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
+`;
+
+const DeleteCommentButton = styled.button`
+  float: right;
+  margin: 0 0.5vw;
 `;
 
 export default PostView;

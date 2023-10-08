@@ -9,9 +9,9 @@ import { useRef } from "react";
 import axios from "axios";
 
 function Edit() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState("");
   const [id, setId] = useState();
-  const [intro, setIntro] = useState();
+  const [intro, setIntro] = useState("");
   const [isTagVisible, setIsTagVisible] = useState([]);
   const [imgFile, setImgFile] = useState();
 
@@ -36,10 +36,12 @@ function Edit() {
       )
       .then((response) => {
         console.log(response.data);
-        setData(response.data);
         setId(response.data.nickname);
         setIntro(response.data.introduction);
         setIsTagVisible(response.data.hashtags);
+        setImgFile(response.data.imagePath);
+        setData(response.data);
+        console.log(imgFile);
       })
       .catch((error) => {
         console.log(error);
@@ -48,20 +50,16 @@ function Edit() {
 
   const putUser = () => {
     formData.append("nickname", id);
-    if (intro !== undefined) {
+
+    if (intro !== data.introduction) {
       formData.append("introduction", intro);
     }
-    //formData.append("introduction", intro);
-    if (isTagVisible.length !== 0) {
+    if (isTagVisible.length !== data.hashtags) {
       for (let i = 0; i < isTagVisible.length; i++) {
         formData.append("hashtags", isTagVisible[i]);
       }
     }
-    // if (imgFile === undefined) {
-    //   formData.append("file", JSON.stringify(imgFile));
-    // } else {
-    if (imgFile !== undefined) formData.append("file", imgFile);
-    // }
+    if (imgFile !== data.imagePath) formData.append("file", imgFile);
 
     // FormData의 key, value 확인
     for (let key of formData.keys()) {
@@ -82,7 +80,7 @@ function Edit() {
         console.log(response.data);
         alert("수정이 완료되었습니다.");
         localStorage.setItem("id", id);
-        //navigate(`/mypage/${id}`, { state: id });
+        //navigate(`/mypage/${id}`, { state: {state:id, memberId:0} });
       })
       .catch((error) => {
         console.log(error);
@@ -108,7 +106,7 @@ function Edit() {
     setImgFile();
   };
 
-  //console.log(imgFile);
+  console.log(imgFile);
   const onSubmit = () => {
     if (id !== "") {
       putUser();
@@ -130,7 +128,6 @@ function Edit() {
   };
   const changeIntro = (event) => {
     setIntro(event.target.value);
-    console.log(intro);
   };
 
   const changeCategory = (event) => {
@@ -158,151 +155,155 @@ function Edit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //id, intro, selectCategory, selectTag, isTagVisible, imgFile
-  console.log(isTagVisible);
+
   return (
     <>
       <Header />
-      <Div>
-        <h1>내 정보 수정하기</h1>
+      {data === "" ? (
+        <Div>로딩중..</Div>
+      ) : (
+        <Div>
+          <h1>내 정보 수정하기</h1>
 
-        <Content>
-          <Img>
-            <img
-              src={isImgVisible ? isImgVisible : commentLogo}
-              alt="member"
-            ></img>
-            <div>
-              <label className="profileImg-label" htmlFor="profileImg">
-                이미지 업로드
-              </label>
-              <input
-                className="profileImg-input"
-                type="file"
-                accept="image/*"
-                id="profileImg"
-                onChange={saveImgFile}
-                ref={imgRef}
-              />
-            </div>
-            <button onClick={removeImg}>삭제</button>
-          </Img>
-          <Detail>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <label htmlFor="nickname">닉네임</label>
-                  </td>
-                  <td>
-                    <Name
-                      defaultValue={data.nickname}
-                      id="nickname"
-                      onChange={changeId}
-                    />
-                  </td>
-                </tr>
+          <Content>
+            <Img>
+              <img
+                src={isImgVisible ? isImgVisible : commentLogo}
+                alt="member"
+              ></img>
+              <div>
+                <label className="profileImg-label" htmlFor="profileImg">
+                  이미지 업로드
+                </label>
+                <input
+                  className="profileImg-input"
+                  type="file"
+                  accept="image/*"
+                  id="profileImg"
+                  onChange={saveImgFile}
+                  ref={imgRef}
+                />
+              </div>
+              <button onClick={removeImg}>삭제</button>
+            </Img>
+            <Detail>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label htmlFor="nickname">닉네임</label>
+                    </td>
+                    <td>
+                      <Name
+                        defaultValue={data.nickname}
+                        id="nickname"
+                        onChange={changeId}
+                      />
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td>
-                    <label htmlFor="intro">소개글</label>
-                  </td>
-                  <td>
-                    <Intro
-                      defaultValue={data.introduction}
-                      id="intro"
-                      onChange={changeIntro}
-                    />
-                  </td>
-                </tr>
+                  <tr>
+                    <td>
+                      <label htmlFor="intro">소개글</label>
+                    </td>
+                    <td>
+                      <Intro
+                        defaultValue={data.introduction}
+                        id="intro"
+                        onChange={changeIntro}
+                      />
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td>
-                    <label htmlFor="tag">관심태그</label>
-                  </td>
-                  <td>
-                    <TagSelect name="tag" id="tag" onChange={changeCategory}>
-                      {tagJson.category.map((item) => (
-                        <option value={item} key={item}>
-                          {item}
-                        </option>
-                      ))}
-                    </TagSelect>
-
-                    <TagSelect
-                      name="secondTag"
-                      id="secondTag"
-                      onChange={changeTag}
-                    >
-                      {selectCategory === "어학" ? (
-                        tagJson.tag2.map((item) => (
+                  <tr>
+                    <td>
+                      <label htmlFor="tag">관심태그</label>
+                    </td>
+                    <td>
+                      <TagSelect name="tag" id="tag" onChange={changeCategory}>
+                        {tagJson.category.map((item) => (
                           <option value={item} key={item}>
                             {item}
                           </option>
-                        ))
-                      ) : selectCategory === "프로그래밍" ? (
-                        tagJson.tag3.map((item) => (
-                          <option value={item} key={item}>
-                            {item}
-                          </option>
-                        ))
-                      ) : selectCategory === "자격증" ? (
-                        tagJson.tag4.map((item) => (
-                          <option value={item} key={item}>
-                            {item}
-                          </option>
-                        ))
-                      ) : selectCategory === "취미/교양" ? (
-                        tagJson.tag5.map((item) => (
-                          <option value={item} key={item}>
-                            {item}
-                          </option>
-                        ))
-                      ) : selectCategory === "고시/공무원" ? (
-                        tagJson.tag6.map((item) => (
-                          <option value={item} key={item}>
-                            {item}
-                          </option>
-                        ))
-                      ) : selectCategory === "기타" ? (
-                        <option>기타</option>
-                      ) : (
-                        tagJson.tag1.map((item) => (
-                          <option value={item} key={item}>
-                            {item}
-                          </option>
-                        ))
-                      )}
-                    </TagSelect>
-                    <button className="addBtn" onClick={addTagBtn}>
-                      추가
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    {data.hashtags === undefined
-                      ? ""
-                      : Object.values(isTagVisible).map((item) => (
-                          <TagEdit id={item}>
-                            {item} &nbsp;<span onClick={removeTag}>X</span>
-                          </TagEdit>
                         ))}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <Btn>
-              <button type="button" onClick={withdrawAccount}>
-                탈퇴하기
-              </button>
-              <button type="submit" onClick={onSubmit}>
-                완료
-              </button>
-            </Btn>
-          </Detail>
-        </Content>
-      </Div>
+                      </TagSelect>
+
+                      <TagSelect
+                        name="secondTag"
+                        id="secondTag"
+                        onChange={changeTag}
+                      >
+                        {selectCategory === "어학" ? (
+                          tagJson.tag2.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        ) : selectCategory === "프로그래밍" ? (
+                          tagJson.tag3.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        ) : selectCategory === "자격증" ? (
+                          tagJson.tag4.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        ) : selectCategory === "취미/교양" ? (
+                          tagJson.tag5.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        ) : selectCategory === "고시/공무원" ? (
+                          tagJson.tag6.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        ) : selectCategory === "기타" ? (
+                          <option>기타</option>
+                        ) : (
+                          tagJson.tag1.map((item) => (
+                            <option value={item} key={item}>
+                              {item}
+                            </option>
+                          ))
+                        )}
+                      </TagSelect>
+                      <button className="addBtn" onClick={addTagBtn}>
+                        추가
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      {data.hashtags === undefined
+                        ? ""
+                        : Object.values(isTagVisible).map((item) => (
+                            <TagEdit id={item}>
+                              {item} &nbsp;<span onClick={removeTag}>X</span>
+                            </TagEdit>
+                          ))}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <Btn>
+                <button type="button" onClick={withdrawAccount}>
+                  탈퇴하기
+                </button>
+                <button type="submit" onClick={onSubmit}>
+                  완료
+                </button>
+              </Btn>
+            </Detail>
+          </Content>
+        </Div>
+      )}
     </>
   );
 }
