@@ -9,6 +9,7 @@ import send from "../img/send.jpg";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import PostCommentList from "../components/PostCommentList";
 
 function PostView() {
   const { state } = useLocation();
@@ -84,30 +85,32 @@ function PostView() {
     }
   };
 
-  const modifyComment = () => {
-    //수정..
-  };
+  // const modifyComment = () => {
+  //   //수정..
+  // };
 
-  const removeComment = (commentId) => {
-    console.log(commentId);
-    axios
-      .delete(
-        `http://52.79.241.162:8080/posts/${postId}/comments/${commentId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-        alert("댓글이 삭제되었습니다.");
-        getPost();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const removeComment = (commentId) => {
+  //   const removeCommentOrNot = window.confirm("게시물을 삭제하시겠습니까?");
+  //   if (removeCommentOrNot) {
+  //     axios
+  //       .delete(
+  //         `http://52.79.241.162:8080/posts/${postId}/comments/${commentId}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         alert("댓글이 삭제되었습니다.");
+  //         getPost();
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   useEffect(() => {
     getPost();
@@ -238,41 +241,47 @@ function PostView() {
               </div>
               <ul id="commentList">
                 {data.comments.map((comment) => (
-                  <li className="comment_item">
-                    <section id="comment_item_header">
-                      <section id="comment_userInfo">
-                        <a href="./articledetail.html">
-                          <img
-                            className="commentLogo"
-                            src={commentLogo}
-                            alt="commentLogo"
-                          ></img>
-                        </a>
-                        <div id="comment_userName">{comment.nickname}</div>
-                      </section>
-                      <div id="comment_dateAndTime">
-                        {comment.time.substring(0, 10)}{" "}
-                        {comment.time.substring(11, 16)}
-                      </div>
-                    </section>
-                    <section id="comment_content">
-                      <span id="comment_content_ex1">{comment.content}</span>
-                      {comment.isAuthor ? (
-                        <>
-                          <DeleteCommentButton onClick={modifyComment}>
-                            수정
-                          </DeleteCommentButton>
-                          <DeleteCommentButton
-                            onClick={() => removeComment(comment.commentId)}
-                          >
-                            삭제
-                          </DeleteCommentButton>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </section>
-                  </li>
+                  // <li className="comment_item">
+                  //   <section id="comment_item_header">
+                  //     <section id="comment_userInfo">
+                  //       <a href="./articledetail.html">
+                  //         <img
+                  //           className="commentLogo"
+                  //           src={commentLogo}
+                  //           alt="commentLogo"
+                  //         ></img>
+                  //       </a>
+                  //       <div id="comment_userName">{comment.nickname}</div>
+                  //     </section>
+                  //     <div id="comment_dateAndTime">
+                  //       {comment.time.substring(0, 10)}{" "}
+                  //       {comment.time.substring(11, 16)}
+                  //     </div>
+                  //   </section>
+                  //   <section id="comment_content">
+                  //     <span id="comment_content_ex1">{comment.content}</span>
+                  //     {comment.isAuthor ? (
+                  //       <>
+                  //         <DeleteCommentButton onClick={modifyComment}>
+                  //           수정
+                  //         </DeleteCommentButton>
+                  //         <DeleteCommentButton
+                  //           onClick={() => removeComment(comment.commentId)}
+                  //         >
+                  //           삭제
+                  //         </DeleteCommentButton>
+                  //       </>
+                  //     ) : (
+                  //       <></>
+                  //     )}
+                  //   </section>
+                  // </li>
+                  <PostCommentList
+                    comment={comment}
+                    key={comment.commentId}
+                    getPost={getPost}
+                    postId={postId}
+                  />
                 ))}
               </ul>
             </div>
@@ -289,9 +298,9 @@ const Div = styled.div`
   overflow: auto;
 `;
 
-const DeleteCommentButton = styled.button`
-  float: right;
-  margin: 0 0.5vw;
-`;
+// const DeleteCommentButton = styled.button`
+//   float: right;
+//   margin: 0 0.5vw;
+// `;
 
 export default PostView;
