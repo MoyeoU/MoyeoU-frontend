@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCommentList from "../components/PostCommentList";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
 
 function PostView() {
   const { state } = useLocation();
@@ -17,6 +19,7 @@ function PostView() {
   const [data, setData] = useState("");
   const navigate = useNavigate();
   const [comments, setComments] = useState("");
+  let contentCode = data.content;
 
   const getPost = async () => {
     await axios
@@ -38,7 +41,19 @@ function PostView() {
     if (data.isHost) {
       //modify 화면 이동
     } else {
-      //apply 화면 이동
+      axios
+        .get(`http://52.79.241.162:8080/posts/${postId}/form`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          //form화면 이동
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -176,7 +191,10 @@ function PostView() {
                 </ul>
               </section>
             </section>
-            <div id="studyPost_content">{data.content}</div>
+            <div
+              id="studyPost_content"
+              dangerouslySetInnerHTML={{ __html: contentCode }}
+            ></div>
             <div id="studyPost_applyBox">
               <button
                 className="studyApplyButton"

@@ -22,14 +22,15 @@ const Container = styled.div`
 //   border: 2px solid gray;
 // `;
 
-const TextEditor = () => {
+const TextEditor = (props) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   //const [htmlString, setHtmlString] = useState("");
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
-    // const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
-    // setHtmlString(html);
+    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
+    //setHtmlString(html);
+    props.setContent(html);
   };
 
   const uploadCallback = () => {

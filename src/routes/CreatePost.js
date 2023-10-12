@@ -4,34 +4,83 @@ import TextEditor from "../components/TextEditor";
 import { useEffect, useState } from "react";
 import React from "react";
 import Select from "react-dropdown-select";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 function CreatePost() {
-  const onSubmit = (e) => {
-    e.preventDefault();
-    onClickWrite();
+  const [selectedCategory, setSelectedCategory] = useState([]); //선택한 카테고리 리스트
+  const [hashtags, setHashtags] = useState([]); //해시태그 리스트
+  const [itemsValue, setItemsValue] = useState("");
+
+  const [selectedHashtag, setSelectedHashtag] = useState([]); //카테고리에 맞는 해시태그 리스트
+  const [title, setTitle] = useState("");
+  const [headCount, setHeadCount] = useState("");
+  const [operationWay, setOperationWay] = useState("");
+  const [expectedDate, setExpectedDate] = useState("");
+  const [estimatedDuration, setEstimatedDuration] = useState("");
+  const [content, setContent] = useState("");
+  const [items, setItems] = useState([]); //신청폼
+
+  const navigate = useNavigate();
+
+  const onSubmit = () => {
+    let totalHashTags = [];
+    for (let i = 0; i < selectedHashtag.length; i++) {
+      totalHashTags.push(selectedHashtag[i].name);
+    }
+    console.log(title);
+    console.log(operationWay);
+    console.log(headCount);
+    console.log(expectedDate);
+    console.log(estimatedDuration);
+    console.log(totalHashTags);
+    console.log(content);
+    console.log(items);
+    axios
+      .post(
+        "http://52.79.241.162:8080/posts",
+        {
+          title: title,
+          headCount: Number(headCount),
+          operationWay: operationWay,
+          expectedDate: expectedDate,
+          estimatedDuration: estimatedDuration,
+          hashtags: totalHashTags,
+          content: content,
+          items: items,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        alert("게시글 작성이 완료되었습니다.");
+        //document.location.href = "/writer";
+        //document.location.href = "../article.articledetail.html";
+        //navigate(`/`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const onClickWrite = () => {
-    alert("게시글 작성이 완료되었습니다.");
-    document.location.href = "/writer";
-    //document.location.href = "../article.articledetail.html";
-  };
   const goMain = () => {
     alert("게시글 작성이 취소되었습니다.");
-    document.location.href = "/";
+    navigate(`/`);
   };
-  const [create, setCreate] = useState([1]);
-  const onCreate = () => {
-    setCreate((create) => ["2", ...create]);
+  // const [create, setCreate] = useState([1]);
+  const onCreateForm = () => {
+    setItems((v) => [itemsValue, ...v]);
+    setItemsValue("");
+    //console.log(items);
   };
-
-  const [selectedCategory, setSelectedCategory] = useState([]); //선택한 카테고리 리스트
-  const [selectedHashtag, setSelectedHashtag] = useState([]); //카테고리에 맞는 해시태그 리스트
-  const [hashtags, setHashtags] = useState([]); //해시태그 리스트
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [create]);
+  }, []);
 
   const categoryOptions = [
     { id: "팀프로젝트", name: "팀프로젝트" },
@@ -130,120 +179,145 @@ function CreatePost() {
 
   const changeHashtag = (e) => {
     setSelectedHashtag(e); //선택한 해시태그 값 set
-    console.log(selectedHashtag);
+    //console.log(selectedHashtag);
   };
 
   return (
     <div>
       <Header />
       <CreateDiv>
-        <form onSubmit={onSubmit}>
-          <Div>
-            <Ul>
-              <TitleInput placeholder="제목을 입력해주세요." required />
-            </Ul>
-            <Ul>
-              <Li>
-                <P>모집 인원</P>
-                <TextInput name="headCount" id="headCount" required />
-              </Li>
-              <Li>
-                <P>운영 방식</P>
-                <TextInput name="method" id="method" required />
-              </Li>
-            </Ul>
-            <Ul>
-              <Li>
-                <P>시작 예정일</P>
-                <TextInput
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  required
-                />
-              </Li>
-              <Li>
-                <P>예상 기간</P>
-                <TextInput name="duringTime" id="duringTime" required />
-              </Li>
-            </Ul>
-            <Ul>
-              <Li>
-                <P>카테고리</P>
-                <Select
-                  style={{
-                    //css 수정필요
-                    width: 395,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                  name="category"
-                  id="category"
-                  options={categoryOptions}
-                  multiple={false}
-                  labelField="id"
-                  valueField="name"
-                  onChange={changeCategory}
-                  styles={{}}
-                  required
-                ></Select>
-              </Li>
-              <Li>
-                <P>해시태그</P>
-                {/* <TextInput name="hashtag" id="hashtag" required /> */}
-                <Select
-                  style={{
-                    //css 수정필요
-                    width: 395,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                  name="hashtag"
-                  id="hashtag"
-                  options={hashtags}
-                  labelField="id"
-                  valueField="name"
-                  multi
-                  onChange={changeHashtag}
-                  required
-                ></Select>
-              </Li>
-            </Ul>
-          </Div>
-          <Div>
-            <Ul>
-              <li>
-                <P>스터디에 대해 설명해주세요.</P>
-                <TextEditor required />
-              </li>
-            </Ul>
-          </Div>
-          <Div>
-            <Ul>
-              <li>
-                <P>
-                  신청 양식을 만들어주세요.
-                  {/* <button type="button" onClick={onCreate}>
-                    +
-                  </button> */}
-                </P>
-                {/* <TextInput name="applyForm" id="applyForm" /> 
+        <Div>
+          <Ul>
+            <TitleInput
+              placeholder="제목을 입력해주세요."
+              required
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+          </Ul>
+          <Ul>
+            <Li>
+              <P>모집 인원</P>
+              <TextInput
+                type="number"
+                required
+                onChange={(e) => {
+                  setHeadCount(e.target.value);
+                }}
+              />
+            </Li>
+            <Li>
+              <P>운영 방식</P>
+              <TextInput
+                required
+                onChange={(e) => {
+                  setOperationWay(e.target.value);
+                }}
+              />
+            </Li>
+          </Ul>
+          <Ul>
+            <Li>
+              <P>시작 예정일</P>
+              <TextInput
+                type="date"
+                required
+                onChange={(e) => {
+                  setExpectedDate(e.target.value);
+                }}
+              />
+            </Li>
+            <Li>
+              <P>예상 기간</P>
+              <TextInput
+                required
+                onChange={(e) => {
+                  setEstimatedDuration(e.target.value);
+                }}
+              />
+            </Li>
+          </Ul>
+          <Ul>
+            <Li>
+              <P>카테고리</P>
+              <Select
+                style={{
+                  //css 수정필요
+                  width: 395,
+                  height: 40,
+                  fontSize: 15,
+                }}
+                options={categoryOptions}
+                multiple={false}
+                labelField="id"
+                valueField="name"
+                onChange={changeCategory}
+                styles={{}}
+                required
+              ></Select>
+            </Li>
+            <Li>
+              <P>해시태그</P>
+              {/* <TextInput name="hashtag" id="hashtag" required /> */}
+              <Select
+                style={{
+                  //css 수정필요
+                  width: 395,
+                  height: 40,
+                  fontSize: 15,
+                }}
+                options={hashtags}
+                labelField="id"
+                valueField="name"
+                multi
+                onChange={changeHashtag}
+                required
+              ></Select>
+            </Li>
+          </Ul>
+        </Div>
+        <Div>
+          <Ul>
+            <li>
+              <P>스터디에 대해 설명해주세요.</P>
+              <TextEditor required setContent={setContent} />
+            </li>
+          </Ul>
+        </Div>
+        <Div>
+          <Ul>
+            <li>
+              <P>
+                신청 양식을 만들어주세요.
+                <button type="button" onClick={onCreateForm}>
+                  등록
+                </button>
+              </P>
+              <TextInput
+                onChange={(e) => {
+                  setItemsValue(e.target.value);
+                }}
+              />
+              {items.map((v) => (
+                <p key={v}>{v}</p>
+              ))}
+              {/* <TextInput name="applyForm" id="applyForm" /> 
                 {create.map((number) => {
                   console.log(number);
                   <ApplyForm />;
                 })}*/}
-              </li>
-            </Ul>
-          </Div>
-          <Div>
-            <Btn>
-              <button type="button" onClick={goMain}>
-                취소하기
-              </button>
-              <button type="submit">등록하기</button>
-            </Btn>
-          </Div>
-        </form>
+            </li>
+          </Ul>
+        </Div>
+        <Div>
+          <Btn>
+            <button type="button" onClick={goMain}>
+              취소하기
+            </button>
+            <button onClick={onSubmit}>등록하기</button>
+          </Btn>
+        </Div>
       </CreateDiv>
     </div>
   );
