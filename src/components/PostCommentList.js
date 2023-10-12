@@ -41,7 +41,6 @@ function PostCommentList({ comment, getPost, postId }) {
         console.log(error);
       });
   };
-  console.log(modifyContent);
   const removeComment = (commentId) => {
     const removeCommentOrNot = window.confirm("댓글을 삭제하시겠습니까?");
     if (removeCommentOrNot) {
@@ -64,7 +63,6 @@ function PostCommentList({ comment, getPost, postId }) {
         });
     }
   };
-  console.log(modifyContent);
   return (
     <>
       <li className="comment_item">

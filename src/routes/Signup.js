@@ -2,15 +2,17 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const onCancel = () => {
-    document.location.href = "/";
+    navigate(`/`);
   };
   const onSubmit = (event) => {
     event.preventDefault();
@@ -25,6 +27,7 @@ function Signup() {
       .then((response) => {
         console.log(response);
         alert("회원가입이 완료되었습니다.");
+        navigate(`/`);
         //document.location.href = "/";
       })
       .catch((err) => {
