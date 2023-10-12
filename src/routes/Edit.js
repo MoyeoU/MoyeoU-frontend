@@ -117,9 +117,21 @@ function Edit() {
   const withdrawAccount = () => {
     const withdrawOrNot = window.confirm("탈퇴하시겠습니까?");
     if (withdrawOrNot) {
-      alert("탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.");
-      localStorage.removeItem("id");
-      document.location.href = "/";
+      axios
+        .delete(`http://52.79.241.162:8080/members/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          alert("탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.");
+          localStorage.clear();
+          navigate(`/`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
