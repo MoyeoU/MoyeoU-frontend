@@ -4,21 +4,56 @@ import useOutSideClick from "../../hooks/useOutSideClick";
 import ModalContainer from "./ModalContainer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import data from "../../data.json";
+import jsonData from "../../data.json";
+import axios from "axios";
 
 function Modal({ onClose }) {
   const modalRef = useRef(null);
   const navigate = useNavigate();
+  const [data, setData] = useState("");
+  const getNotification = () => {
+    axios
+      .get("http://52.79.241.162:8080/notifications", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleClose = () => {
     onClose?.();
   };
   const [user, setUser] = useState("");
   const onClick = () => {
-    localStorage.removeItem("count");
-    localStorage.setItem("count", 0);
+    //타입 비교 후 컴포넌트 할당
+    //밑에 api는 각각의 컴포넌트 안에서 요청하기
+    // axios
+    //   .post(
+    //     `http://52.79.241.162:8080/posts/${data[3].postId}/participations/${data[3].participationId}/accept`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    //navigate는 평가하라는 알림 컴포넌트에서만
     navigate(`/evaluateMember`, { state: user });
   };
   useEffect(() => {
+    getNotification();
     setUser(localStorage.getItem("id"));
     const $body = document.querySelector("body");
     const overflow = $body.style.overflow;
@@ -38,16 +73,14 @@ function Modal({ onClose }) {
             X
           </p>
         </CloseButton>
-        {/* <Div> */}
-        {Object.values(data.note).map((item) => (
-          <Contents>
-            <span>{item.notify}</span>
-            <button onClick={onClick}>{item.btn}</button>
-          </Contents>
-        ))}
-
-        {/* onClick={() => navigate(`/evaluateMember`, { state: user })} */}
-        {/* </Div> */}
+        {data === ""
+          ? ""
+          : Object.values(jsonData.note).map((item) => (
+              <Contents>
+                <span>{item.notify}</span>
+                <button onClick={onClick}>{item.btn}</button>
+              </Contents>
+            ))}
       </ModalWrap>
     </ModalContainer>
   );
