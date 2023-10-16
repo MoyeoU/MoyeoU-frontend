@@ -10,6 +10,8 @@ import Edit from "./routes/Edit";
 import ChatRoom from "./routes/ChatRoom";
 import Chat from "./routes/Chat";
 import ScrollToTop from "./components/ScrollToTop";
+import ApplyForm from "./routes/ApplyForm";
+import EditPost from "./routes/EditPost";
 
 function App() {
   return (
@@ -75,6 +77,18 @@ function App() {
             //edit 경로
             path="/chat"
             element={<Chat />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/applyForm"
+            element={<ApplyForm />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/EditPost"
+            element={<EditPost />}
           ></Route>
         </Routes>
       </Router>

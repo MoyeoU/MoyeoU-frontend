@@ -41,19 +41,9 @@ function PostView() {
     if (data.isHost) {
       //modify 화면 이동
     } else {
-      axios
-        .get(`http://52.79.241.162:8080/posts/${postId}/form`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          //form화면 이동
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      navigate(`/applyForm`, {
+        state: postId,
+      });
     }
   };
 

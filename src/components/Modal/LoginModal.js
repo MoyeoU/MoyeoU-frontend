@@ -39,7 +39,7 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
         //   return navigate("/posts");
         // }
         //
-        setLoginModalIsOpen(false);
+        setLoginModalIsOpen((e) => !e);
         navigate(`/`);
       })
       .catch((err) => {
