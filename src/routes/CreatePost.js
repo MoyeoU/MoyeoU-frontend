@@ -182,6 +182,14 @@ function CreatePost() {
     //console.log(selectedHashtag);
   };
 
+  const removeItems = (e) => {
+    //setItems에서 제거
+    setItems(
+      items.filter((element) => element !== e.target.previousSibling.innerText)
+    );
+    //console.log(e.target.previousSibling.innerText);
+  };
+
   return (
     <div>
       <Header />
@@ -290,17 +298,19 @@ function CreatePost() {
             <li>
               <P>
                 신청 양식을 만들어주세요.
-                <button type="button" onClick={onCreateForm}>
-                  등록
-                </button>
+                <ItemButton onClick={onCreateForm}>등록</ItemButton>
               </P>
               <TextInput
+                value={itemsValue}
                 onChange={(e) => {
                   setItemsValue(e.target.value);
                 }}
               />
               {items.map((v) => (
-                <p key={v}>{v}</p>
+                <ItemDiv>
+                  <p key={v}>{v}</p>
+                  <button onClick={removeItems}>삭제</button>
+                </ItemDiv>
               ))}
               {/* <TextInput name="applyForm" id="applyForm" /> 
                 {create.map((number) => {
@@ -349,6 +359,10 @@ const TitleInput = styled.input`
   ::placeholder {
     color: lightgray;
   }
+`;
+
+const ItemButton = styled.button`
+  size: 0.2rem;
 `;
 
 // const Select = styled.select`
@@ -417,6 +431,12 @@ const Btn = styled.div`
     :hover {
       cursor: pointer;
     }
+  }
+`;
+
+const ItemDiv = styled.div`
+  p {
+    display: inline;
   }
 `;
 
