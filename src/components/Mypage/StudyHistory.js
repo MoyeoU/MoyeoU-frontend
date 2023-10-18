@@ -1,26 +1,26 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function StudyHistory({ id, title, complete, tag, date }) {
+function StudyHistory(props) {
   const navigate = useNavigate();
   const onClick = () => {
-    navigate(`/postView/${id}`);
+    navigate(`/postView/${props.posts.postId}`, { state: props.posts.postId });
   };
   return (
     <>
       <Div onClick={onClick}>
         <CompleteBtn>
-          <p>{complete === "Y" ? `모집완료` : `모집중`}</p>
+          <p>{props.posts.status === "PROGRESS" ? `모집중` : `모집완료`}</p>
         </CompleteBtn>
         <TitleDiv>
-          <h3>{title}</h3>
+          <h3>{props.posts.title}</h3>
         </TitleDiv>
 
         <TagBtn>
-          {tag.map((tags) => (
+          {props.posts.hashtags.map((tags) => (
             <p>{tags}</p>
           ))}
-          <span>{date}</span>
+          <span>{props.posts.date}</span>
         </TagBtn>
       </Div>
     </>

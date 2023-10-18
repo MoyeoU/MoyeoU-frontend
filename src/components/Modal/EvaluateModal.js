@@ -2,19 +2,39 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import axios from "axios";
 
 function EvaluateModal(props) {
   const submit = () => {
     if (formValue.comment === "") {
       alert("평가 메시지를 입력하세요.");
     } else {
-      const newItem = {
-        member: props.member,
-        star: formValue.star,
-        comment: formValue.comment,
-      };
-      props.setData((data) => [...data, newItem]);
-      props.setSubmit(true);
+      axios
+        .post(
+          `http://52.79.241.162:8080/posts/${props.postId}/evaluations/${props.data.id}`,
+          {
+            point: Number(formValue.star) * 20,
+            content: formValue.comment,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          props.getMember();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // const newItem = {
+      //   member: props.data.member.nickname,
+      //   star: formValue.star,
+      //   comment: formValue.comment,
+      // };
+      //props.setSubmit(true);
       props.onClose();
     }
   };
@@ -34,8 +54,8 @@ function EvaluateModal(props) {
   };
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clicked]);
-
+  }, []);
+  console.log(formValue);
   const ARRAY = [0, 1, 2, 3, 4];
   console.log(clicked.filter(Boolean).length);
   return (
@@ -44,7 +64,7 @@ function EvaluateModal(props) {
         <Div>
           <Name>
             <h2>
-              <span>{props.member}</span> 님에 대한 평가
+              <span>{props.data.member.nickname}</span> 님에 대한 평가
             </h2>
           </Name>
           <Star>

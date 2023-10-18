@@ -28,14 +28,6 @@ function CreatePost() {
     for (let i = 0; i < selectedHashtag.length; i++) {
       totalHashTags.push(selectedHashtag[i].name);
     }
-    console.log(title);
-    console.log(operationWay);
-    console.log(headCount);
-    console.log(expectedDate);
-    console.log(estimatedDuration);
-    console.log(totalHashTags);
-    console.log(content);
-    console.log(items);
     axios
       .post(
         "http://52.79.241.162:8080/posts",
@@ -60,7 +52,8 @@ function CreatePost() {
         alert("게시글 작성이 완료되었습니다.");
         //document.location.href = "/writer";
         //document.location.href = "../article.articledetail.html";
-        //navigate(`/`);
+        navigate(`/`);
+        //원래는 작성된 게시글로 이동..
       })
       .catch((err) => {
         console.log(err);
@@ -71,7 +64,6 @@ function CreatePost() {
     alert("게시글 작성이 취소되었습니다.");
     navigate(`/`);
   };
-  // const [create, setCreate] = useState([1]);
   const onCreateForm = () => {
     setItems((v) => [itemsValue, ...v]);
     setItemsValue("");
@@ -179,7 +171,7 @@ function CreatePost() {
 
   const changeHashtag = (e) => {
     setSelectedHashtag(e); //선택한 해시태그 값 set
-    //console.log(selectedHashtag);
+    console.log(selectedHashtag);
   };
 
   const removeItems = (e) => {
@@ -289,7 +281,7 @@ function CreatePost() {
           <Ul>
             <li>
               <P>스터디에 대해 설명해주세요.</P>
-              <TextEditor required setContent={setContent} />
+              <TextEditor required content={content} setContent={setContent} />
             </li>
           </Ul>
         </Div>
@@ -312,11 +304,6 @@ function CreatePost() {
                   <button onClick={removeItems}>삭제</button>
                 </ItemDiv>
               ))}
-              {/* <TextInput name="applyForm" id="applyForm" /> 
-                {create.map((number) => {
-                  console.log(number);
-                  <ApplyForm />;
-                })}*/}
             </li>
           </Ul>
         </Div>

@@ -85,20 +85,20 @@ function Header() {
         {/* </a> */}
       </Img>
       <RightDiv>
-        {login ? (
+        {/*{login ? (
           //채팅
           <Btn>
             <BiChat size="25" onClick={goChat} />
-            {/* {chatModalIsOpen && (
+             {chatModalIsOpen && (
               <ChatModal
                 open={chatModalIsOpen}
                 onClose={() => {
                   setChatModalIsOpen(false);
                 }}
               />
-            )} */}
+            )} 
           </Btn>
-        ) : null}
+        ) : null}*/}
         {login ? (
           //알림
           <Btn>
