@@ -4,19 +4,40 @@ import useOutSideClick from "../../hooks/useOutSideClick";
 import ModalContainer from "./ModalContainer";
 import data from "../../data.json";
 import StarRate from "../Mypage/StarRate";
+import axios from "axios";
+import { useState } from "react";
 
-function Modal({ onClose }) {
+function Modal({ onClose, memberId }) {
   const modalRef = useRef(null);
+  const [data, setData] = useState("");
   const handleClose = () => {
     onClose?.();
   };
+  const getStar = () => {
+    axios
+      .get(`http://52.79.241.162:8080/members/${memberId}/evaluations`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
+    getStar();
     const $body = document.querySelector("body");
     const overflow = $body.style.overflow;
     $body.style.overflow = "hidden";
     return () => {
       $body.style.overflow = overflow;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useOutSideClick(modalRef, handleClose);
 
@@ -26,15 +47,20 @@ function Modal({ onClose }) {
         <CloseButton onClick={handleClose}>
           <p className="fa-solid fa-xmark">X</p>
         </CloseButton>
-        <Contents>
-          {data.comm.map((props, idx) => (
-            <Div id={props.comments}>
-              <StarRate star={props.star} id={idx} />
-              <span>{props.comments}</span>
-              <hr />
-            </Div>
-          ))}
-        </Contents>
+
+        {data === "" ? (
+          ""
+        ) : (
+          <Contents>
+            {data.map((props, idx) => (
+              <Div id={props.content}>
+                <StarRate star={props.point} id={idx} />
+                <span>{props.content}</span>
+                <hr />
+              </Div>
+            ))}
+          </Contents>
+        )}
       </ModalWrap>
     </ModalContainer>
   );

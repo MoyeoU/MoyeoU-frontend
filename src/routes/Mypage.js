@@ -112,6 +112,7 @@ function Mypage() {
                   onClose={() => {
                     setCommentModalIsOpen(false);
                   }}
+                  memberId={dataa.id}
                 />
               )}
             </p>
@@ -174,8 +175,8 @@ function Mypage() {
               </NowOrNot>
             </Filtering>
             <HistoryDiv>
-              {Object.values(data.board).map((posts) => (
-                <StudyHistory {...posts} key={posts.id} />
+              {dataa.activityList.map((posts) => (
+                <StudyHistory posts={posts} key={posts.postId} />
               ))}
             </HistoryDiv>
           </Right>

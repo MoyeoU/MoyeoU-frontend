@@ -10,8 +10,9 @@ import axios from "axios";
 function Modal({ onClose }) {
   const modalRef = useRef(null);
   const navigate = useNavigate();
-  const [data, setData] = useState("");
+  const [data, setData] = useState(""); //불러온 알림 내용 저장
   const getNotification = () => {
+    //알림내용 불러오기
     axios
       .get("http://52.79.241.162:8080/notifications", {
         headers: {
@@ -30,13 +31,16 @@ function Modal({ onClose }) {
   const handleClose = () => {
     onClose?.();
   };
-  const [user, setUser] = useState("");
   const onClick = () => {
     //타입 비교 후 컴포넌트 할당
     //밑에 api는 각각의 컴포넌트 안에서 요청하기
+    //
+    //${postId} 같은 것들은 response.data 안의 객체별 내용들로 넣으면 됨
+    //
+    //수락 api
     // axios
     //   .post(
-    //     `http://52.79.241.162:8080/posts/${data[3].postId}/participations/${data[3].participationId}/accept`,
+    //     `http://52.79.241.162:8080/posts/${postId}/participations/${participationId}/accept`,
     //     {
     //       headers: {
     //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -49,12 +53,30 @@ function Modal({ onClose }) {
     //   .catch((error) => {
     //     console.log(error);
     //   });
+    //
+    //거절 api
+    // axios
+    //   .post(
+    //     `http://52.79.241.162:8080/posts/${postId}/participations/${participationId}/reject`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    //
     //navigate는 평가하라는 알림 컴포넌트에서만
-    navigate(`/evaluateMember`, { state: user });
+    //postId는 response.data 안의 객체별 게시글 id
+    //navigate(`/evaluateMember`, { state: postId });
   };
   useEffect(() => {
     getNotification();
-    setUser(localStorage.getItem("id"));
     const $body = document.querySelector("body");
     const overflow = $body.style.overflow;
     $body.style.overflow = "hidden";

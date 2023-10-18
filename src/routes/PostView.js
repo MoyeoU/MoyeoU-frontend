@@ -40,11 +40,56 @@ function PostView() {
   const modifyOrApply = () => {
     if (data.isHost) {
       //modify 화면 이동
+      if (data.status !== "PROGRESS") {
+        alert("스터디원 모집이 종료되어 수정할 수 없습니다.");
+      } else {
+        navigate(`/editPost`, { state: postId });
+      }
     } else {
-      navigate(`/applyForm`, {
-        state: postId,
-      });
+      if (data.status === "COMPLETED") {
+        alert("모집이 완료되었습니다.");
+      } else {
+        navigate(`/applyForm`, {
+          state: postId,
+        });
+      }
     }
+  };
+
+  const completeProgress = () => {
+    //모집 완료 버튼 누르는
+    axios
+      .post(`http://52.79.241.162:8080/posts/${postId}/complete`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        alert("스터디원 모집이 완료되었습니다.");
+        getPost();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const completeStudy = () => {
+    //스터디완료 버튼 누르는
+    axios
+      .post(`http://52.79.241.162:8080/posts/${postId}/end`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        alert("스터디가 종료되었습니다.");
+        getPost();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const removePost = () => {
@@ -186,21 +231,32 @@ function PostView() {
               dangerouslySetInnerHTML={{ __html: contentCode }}
             ></div>
             <div id="studyPost_applyBox">
-              <button
-                className="studyApplyButton"
-                name="apply"
-                onClick={modifyOrApply}
-              >
+              <button className="studyApplyButton" onClick={modifyOrApply}>
                 {data.isHost ? "수정하기" : "신청하기"}
               </button>
               {data.isHost ? (
-                <button
-                  className="studyApplyButton"
-                  name="apply"
-                  onClick={removePost}
-                >
-                  삭제하기
-                </button>
+                <>
+                  <button className="studyApplyButton" onClick={removePost}>
+                    삭제하기
+                  </button>
+                  {data.status === "PROGRESS" ? (
+                    <button
+                      className="studyApplyButton"
+                      onClick={completeProgress}
+                    >
+                      모집완료하기
+                    </button>
+                  ) : data.status === "COMPLETED" ? (
+                    <button
+                      className="studyApplyButton"
+                      onClick={completeStudy}
+                    >
+                      스터디 종료하기
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+                </>
               ) : (
                 <></>
               )}

@@ -3,40 +3,75 @@ import Header from "../components/Header";
 import EvaluateList from "../components/EvaluateList";
 import { useState } from "react";
 import { useEffect } from "react";
-import data from "../data.json";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Evaluation(props) {
-  const MEMBERCNT = 3;
-  const [evaluateMember, setEvaluateMember] = useState([]);
+  const { state } = useLocation();
+  const postId = state;
+  const [data, setData] = useState("");
+  const navigate = useNavigate();
+  const getMember = () => {
+    axios
+      .get(`http://52.79.241.162:8080/posts/${postId}/evaluations`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const onClick = () => {
-    if (evaluateMember.length === MEMBERCNT) {
+    let cnt = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].evaluated === true) {
+        cnt += 1;
+      }
+    }
+    if (cnt === data.length) {
       alert("평가가 완료되었습니다.");
-      document.location.href = "/";
+      //document.location.href = "/";
+      navigate(`/`);
     } else {
       alert("평가를 모두 완료해주세요.");
     }
   };
   useEffect(() => {
+    getMember();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(evaluateMember);
   return (
     <>
       <Header />
-      <Div>
-        <Notice>
-          <h1>토익 스터디 모임이 종료되었습니다.</h1>
-          <h2>함께한 스터디원을 평가해주세요.</h2>
-        </Notice>
-        <List>
-          {Object.values(data.evaluate).map((ev) => (
-            <EvaluateList member={ev} key={ev} setData={setEvaluateMember} />
-          ))}
-        </List>
-        <Close>
-          <button onClick={onClick}>완료</button>
-        </Close>
-      </Div>
+      {data === "" ? (
+        <Div>로딩중</Div>
+      ) : (
+        <Div>
+          <Notice>
+            <h1>토익 스터디 모임이 종료되었습니다.</h1>
+            <h2>함께한 스터디원을 평가해주세요.</h2>
+          </Notice>
+          <List>
+            {data.map((ev) => (
+              <EvaluateList
+                getMember={getMember}
+                postId={postId}
+                data={ev}
+                key={ev.id}
+              />
+            ))}
+          </List>
+          <Close>
+            <button onClick={onClick}>완료</button>
+          </Close>
+        </Div>
+      )}
     </>
   );
 }

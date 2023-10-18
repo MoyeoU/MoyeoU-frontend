@@ -68,7 +68,7 @@ function ApplyForm() {
       .then((response) => {
         console.log(response);
         alert("신청이 완료되었습니다.");
-        navigate(`/postView/${state}`);
+        navigate(`/postView/${state}`, { state: state });
       })
       .catch((err) => {
         console.log(err);

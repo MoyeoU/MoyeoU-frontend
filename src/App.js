@@ -87,7 +87,7 @@ function App() {
           <Route
             //path={`${process.env.PUBLIC_URL}/movie/:id`}
             //edit 경로
-            path="/EditPost"
+            path="/editPost"
             element={<EditPost />}
           ></Route>
         </Routes>

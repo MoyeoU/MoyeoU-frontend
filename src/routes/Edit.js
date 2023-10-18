@@ -80,7 +80,7 @@ function Edit() {
         console.log(response.data);
         alert("수정이 완료되었습니다.");
         localStorage.setItem("id", id);
-        //navigate(`/mypage/${id}`, { state: {state:id, memberId:0} });
+        navigate(`/mypage/${id}`, { state: { state: id, memberId: 0 } });
       })
       .catch((error) => {
         console.log(error);
