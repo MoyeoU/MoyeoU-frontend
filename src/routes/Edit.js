@@ -16,7 +16,7 @@ function Edit() {
   const [imgFile, setImgFile] = useState();
 
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("전체");
+  const [selectTag, setselectTag] = useState("");
   const [isImgVisible, setIsImgVisible] = useState();
   const navigate = useNavigate();
   const imgRef = useRef();
@@ -106,7 +106,7 @@ function Edit() {
     setImgFile();
   };
 
-  console.log(imgFile);
+  //console.log(imgFile);
   const onSubmit = () => {
     if (id !== "") {
       putUser();
@@ -144,14 +144,14 @@ function Edit() {
 
   const changeCategory = (event) => {
     setselectCategory(event.target.value);
-    setselectTag("전체");
+    setselectTag("");
   };
   const changeTag = (event) => {
     setselectTag(event.target.value);
   };
   const addTagBtn = () => {
-    if (selectTag === "전체") {
-      setIsTagVisible((prevList) => [...prevList, selectCategory]);
+    if (selectTag === "") {
+      alert("해시태그를 선택해주세요");
     } else {
       setIsTagVisible((prevList) => [...prevList, selectTag]);
     }
@@ -166,7 +166,6 @@ function Edit() {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //id, intro, selectCategory, selectTag, isTagVisible, imgFile
 
   return (
     <>
