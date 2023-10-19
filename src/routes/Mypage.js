@@ -6,27 +6,19 @@ import StudyHistory from "../components/Mypage/StudyHistory";
 import member from "../img/member.jpg";
 import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
-import data from "../data.json";
 import Tag from "../components/Mypage/Tag";
 import axios from "axios";
-//import { response } from "express";
 
 function Mypage() {
   const [user, setUser] = useState(localStorage.getItem("id"));
   const { state } = useLocation();
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
-  const [firstTypeClick, setFirstTypeClick] = useState("활동 내역");
-  const [secondTypeClick, setSecondTypeClick] = useState("활동 중");
+  const [firstTypeClick, setFirstTypeClick] = useState(false);
+  const [secondTypeClick, setSecondTypeClick] = useState("COMPLETED");
   const navigate = useNavigate();
   const [dataa, setDataa] = useState("");
-  // let starToNum = 0;
-  // let hashtags = [];
-  // let introduction = "";
 
   const getUser = () => {
-    console.log(user);
-    console.log(state);
-    console.log(state.state);
     if (user === state.state) {
       axios
         .get(`http://52.79.241.162:8080/members/me`, {
@@ -37,9 +29,6 @@ function Mypage() {
         .then((response) => {
           console.log(response.data);
           setDataa(response.data);
-          //console.log(typeof dataa.hashtags);
-          //setUser(dataa.nickname);
-          //{dataa.point === null ? 0:Number(dataa.point)}
         })
         .catch((error) => {
           console.log(error);
@@ -55,9 +44,6 @@ function Mypage() {
         .then((response) => {
           console.log(response.data);
           setDataa(response.data);
-          //console.log(typeof dataa.hashtags);
-          //setUser(dataa.nickname);
-          //{dataa.point === null ? 0:Number(dataa.point)}
         })
         .catch((error) => {
           console.log(error);
@@ -66,16 +52,26 @@ function Mypage() {
   };
 
   const firstFiltering = (event) => {
-    setFirstTypeClick(event.target.innerText);
+    let text = event.target.innerText;
+    if (text === "활동 내역") {
+      setFirstTypeClick(false);
+    } else {
+      setFirstTypeClick(true);
+    }
   };
 
   const secondFiltering = (event) => {
-    setSecondTypeClick(event.target.innerText);
+    let text = event.target.innerText;
+    if (text === "활동 중") {
+      setSecondTypeClick("COMPLETED");
+    } else {
+      setSecondTypeClick("END");
+    }
   };
   useEffect(() => {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstTypeClick, secondTypeClick]);
+  }, []);
 
   const viewComment = () => {
     setCommentModalIsOpen(true);
@@ -144,14 +140,14 @@ function Mypage() {
             <Filtering>
               <MineOrNot>
                 <h2
-                  className={firstTypeClick === "활동 내역" ? "active" : ""}
+                  className={firstTypeClick === false ? "active" : ""}
                   onClick={firstFiltering}
                 >
                   활동 내역
                 </h2>
                 <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
                 <h2
-                  className={firstTypeClick === "내가 쓴 글" ? "active" : ""}
+                  className={firstTypeClick === true ? "active" : ""}
                   onClick={firstFiltering}
                 >
                   내가 쓴 글
@@ -160,14 +156,14 @@ function Mypage() {
               </MineOrNot>
               <NowOrNot>
                 <h3
-                  className={secondTypeClick === "활동 중" ? "active" : ""}
+                  className={secondTypeClick === "COMPLETED" ? "active" : ""}
                   onClick={secondFiltering}
                 >
                   활동 중
                 </h3>
                 <span>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
                 <h3
-                  className={secondTypeClick === "활동 완료" ? "active" : ""}
+                  className={secondTypeClick === "END" ? "active" : ""}
                   onClick={secondFiltering}
                 >
                   활동 완료
@@ -176,7 +172,12 @@ function Mypage() {
             </Filtering>
             <HistoryDiv>
               {dataa.activityList.map((posts) => (
-                <StudyHistory posts={posts} key={posts.postId} />
+                <StudyHistory
+                  posts={posts}
+                  key={posts.postId}
+                  firstTypeClick={firstTypeClick}
+                  secondTypeClick={secondTypeClick}
+                />
               ))}
             </HistoryDiv>
           </Right>

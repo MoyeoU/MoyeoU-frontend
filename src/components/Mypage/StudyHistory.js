@@ -1,28 +1,66 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 function StudyHistory(props) {
   const navigate = useNavigate();
   const onClick = () => {
     navigate(`/postView/${props.posts.postId}`, { state: props.posts.postId });
   };
+
+  const getHistory = () => {};
+
+  useEffect(() => {
+    getHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(props);
   return (
     <>
-      <Div onClick={onClick}>
-        <CompleteBtn>
-          <p>{props.posts.status === "PROGRESS" ? `모집중` : `모집완료`}</p>
-        </CompleteBtn>
-        <TitleDiv>
-          <h3>{props.posts.title}</h3>
-        </TitleDiv>
+      {props.firstTypeClick === false ? (
+        props.secondTypeClick === props.posts.status ? (
+          <Div onClick={onClick}>
+            <CompleteBtn>
+              <p>{props.posts.status === "PROGRESS" ? `모집중` : `모집완료`}</p>
+            </CompleteBtn>
+            <TitleDiv>
+              <h3>{props.posts.title}</h3>
+            </TitleDiv>
 
-        <TagBtn>
-          {props.posts.hashtags.map((tags) => (
-            <p>{tags}</p>
-          ))}
-          <span>{props.posts.date}</span>
-        </TagBtn>
-      </Div>
+            <TagBtn>
+              {props.posts.hashtags.map((tags) => (
+                <p>{tags}</p>
+              ))}
+              <span>{props.posts.date}</span>
+            </TagBtn>
+          </Div>
+        ) : (
+          <></>
+        )
+      ) : props.firstTypeClick === props.posts.isHost ? (
+        props.secondTypeClick === props.posts.status ? (
+          <Div onClick={onClick}>
+            <CompleteBtn>
+              <p>{props.posts.status === "PROGRESS" ? `모집중` : `모집완료`}</p>
+            </CompleteBtn>
+            <TitleDiv>
+              <h3>{props.posts.title}</h3>
+            </TitleDiv>
+
+            <TagBtn>
+              {props.posts.hashtags.map((tags) => (
+                <p>{tags}</p>
+              ))}
+              <span>{props.posts.date}</span>
+            </TagBtn>
+          </Div>
+        ) : (
+          <></>
+        )
+      ) : (
+        <></>
+      )}
     </>
   );
 }
