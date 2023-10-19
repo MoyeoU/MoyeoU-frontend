@@ -1,27 +1,27 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import Select from "react-dropdown-select";
 import TextEditor from "../components/TextEditor";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import tagJson from "../tag.json";
 import { useEffect } from "react";
 import axios from "axios";
 
 function EditPost() {
-  const [selectedCategory, setSelectedCategory] = useState([]); //선택한 카테고리 리스트
-  const [hashtags, setHashtags] = useState([]); //해시태그 리스트
+  const [selectCategory, setselectCategory] = useState("팀프로젝트");
+  const [selectTag, setselectTag] = useState("");
   const [itemsValue, setItemsValue] = useState("");
   const navigate = useNavigate();
   const { state } = useLocation();
   const postId = state;
   const [data, setData] = useState("");
 
-  const [selectedHashtag, setSelectedHashtag] = useState([]); //카테고리에 맞는 해시태그 리스트
   const [title, setTitle] = useState("");
   const [headCount, setHeadCount] = useState("");
   const [operationWay, setOperationWay] = useState("");
   const [expectedDate, setExpectedDate] = useState("");
   const [estimatedDuration, setEstimatedDuration] = useState("");
+  const [isTagVisible, setIsTagVisible] = useState([]);
   const [content, setContent] = useState("");
   const [items, setItems] = useState(""); //신청폼
 
@@ -39,17 +39,8 @@ function EditPost() {
         setOperationWay(response.data.operationWay);
         setExpectedDate(response.data.expectedDate);
         setEstimatedDuration(response.data.estimatedDuration);
+        setIsTagVisible(response.data.hashtags);
         setContent(response.data.content);
-        //해시태그 value어떻게 넣지
-        let tag = [];
-        for (let i = 0; i < response.data.hashtags.length; i++) {
-          let temp = {
-            id: response.data.hashtags[i],
-            name: response.data.hashtags[i],
-          };
-          tag = [...tag, temp];
-        }
-        setSelectedHashtag(tag);
         setData(response.data);
       })
       .catch((error) => {
@@ -74,12 +65,8 @@ function EditPost() {
         console.log(error);
       });
   };
-  console.log(selectedHashtag);
+
   const onSubmit = () => {
-    let totalHashTags = [];
-    for (let i = 0; i < selectedHashtag.length; i++) {
-      totalHashTags.push(selectedHashtag[i].name);
-    }
     axios
       .put(
         `http://52.79.241.162:8080/posts/${postId}`,
@@ -89,7 +76,7 @@ function EditPost() {
           operationWay: operationWay,
           expectedDate: expectedDate,
           estimatedDuration: estimatedDuration,
-          hashtags: totalHashTags,
+          hashtags: isTagVisible,
           content: content,
           items: items,
         },
@@ -118,104 +105,9 @@ function EditPost() {
     setItemsValue("");
   };
 
-  const categoryOptions = [
-    { id: "팀프로젝트", name: "팀프로젝트" },
-    { id: "어학", name: "어학" },
-    { id: "프로그래밍", name: "프로그래밍" },
-    { id: "취미/교양", name: "취미/교양" },
-    { id: "고시/공무원", name: "고시/공무원" },
-    { id: "기타", name: "기타" },
-  ];
-  const hashtagOptions = [
-    {
-      name: "팀프로젝트",
-      options: [
-        { id: "공과대학", name: "공과대학" },
-        { id: "사회과학대학", name: "사회과학대학" },
-        { id: "인문대학", name: "인문대학" },
-        { id: "자연과학대학", name: "자연과학대학" },
-        { id: "경상대학", name: "경상대학" },
-        { id: "약학대학", name: "약학대학" },
-        { id: "농업생명과학대학", name: "농업생명과학대학" },
-        { id: "간호대학", name: "간호대학" },
-        { id: "사범대학", name: "사범대학" },
-        { id: "생활과학대학", name: "생활과학대학" },
-        { id: "예술대학", name: "예술대학" },
-        { id: "수의과대학", name: "수의과대학" },
-      ],
-    },
-    {
-      name: "어학",
-      options: [
-        { id: "토익", name: "토익" },
-        { id: "토익 스피킹", name: "토익 스피킹" },
-        { id: "토플", name: "토플" },
-        { id: "일본어", name: "일본어" },
-        { id: "중국어", name: "중국어" },
-        { id: "한자", name: "한자" },
-        { id: "영어회화", name: "영어회화" },
-      ],
-    },
-    {
-      name: "프로그래밍",
-      options: [
-        { id: "프론트엔드", name: "프론트엔드" },
-        { id: "백엔드", name: "백엔드" },
-        { id: "코딩테스트", name: "코딩테스트" },
-        { id: "모바일 앱", name: "모바일 앱" },
-        { id: "보안/네트워크", name: "보안/네트워크" },
-        { id: "게임", name: "게임" },
-        { id: "하드웨어", name: "하드웨어" },
-        { id: "데이터/AI", name: "데이터/AI" },
-      ],
-    },
-    {
-      name: "자격증",
-      options: [
-        { id: "컴활", name: "컴활" },
-        { id: "정보처리기사", name: "정보처리기사" },
-        { id: "전기기사", name: "v" },
-        { id: "건축기사", name: "건축기사" },
-        { id: "조리기능사", name: "조리기능사" },
-        { id: "한능검", name: "한능검" },
-      ],
-    },
-    {
-      name: "취미/교양",
-      options: [
-        { id: "독서", name: "독서" },
-        { id: "음악", name: "음악" },
-        { id: "그림", name: "그림" },
-        { id: "운동", name: "운동" },
-      ],
-    },
-    {
-      name: "고시/공무원",
-      options: [
-        { id: "임용고시", name: "임용고시" },
-        { id: "간호사", name: "간호사" },
-        { id: "의사", name: "의사" },
-        { id: "행정고시", name: "행정고시" },
-        { id: "외무고시", name: "외무고시" },
-        { id: "공무원", name: "공무원" },
-      ],
-    },
-    {
-      name: "기타",
-      options: [{ id: "기타", name: "기타" }],
-    },
-  ];
-
-  const changeCategory = (e) => {
-    setSelectedCategory(e); //선택한 카테고리 값 set
-    e.map((d) =>
-      setHashtags(hashtagOptions.find((ctg) => ctg.name === d.id).options)
-    ); //카테고리에 맞는 해시태그 set
-  };
-
-  const changeHashtag = (e) => {
-    setSelectedHashtag(e); //선택한 해시태그 값 set
-    //console.log(selectedHashtag);
+  const changeCategory = (event) => {
+    setselectCategory(event.target.value);
+    setselectTag("");
   };
 
   const removeItems = (e) => {
@@ -223,6 +115,22 @@ function EditPost() {
     setItems(
       items.filter((element) => element !== e.target.previousSibling.innerText)
     );
+  };
+
+  const changeTag = (event) => {
+    setselectTag(event.target.value);
+  };
+  const addTagBtn = () => {
+    if (selectTag === "") {
+      alert("해시태그를 선택해주세요");
+    } else {
+      setIsTagVisible((prevList) => [...prevList, selectTag]);
+    }
+  };
+  const removeTag = (event) => {
+    const removeId = event.target.parentNode.id;
+    setIsTagVisible(isTagVisible.filter((value, index) => value !== removeId));
+    //event.target.parentNode.style.display = "inline-block";
   };
 
   useEffect(() => {
@@ -298,39 +206,76 @@ function EditPost() {
               <Ul>
                 <Li>
                   <P>카테고리</P>
-                  <Select
-                    style={{
-                      //css 수정필요
-                      width: 395,
-                      height: 40,
-                      fontSize: 15,
-                    }}
-                    options={categoryOptions}
-                    multiple={false}
-                    labelField="id"
-                    valueField="name"
-                    onChange={changeCategory}
-                    styles={{}}
-                    required
-                  ></Select>
+                  <TagSelect name="tag" id="tag" onChange={changeCategory}>
+                    {tagJson.category.map((item) => (
+                      <option value={item} key={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </TagSelect>
                 </Li>
                 <Li>
                   <P>해시태그</P>
-                  {/* <TextInput name="hashtag" id="hashtag" required /> */}
-                  <Select
-                    style={{
-                      //css 수정필요
-                      width: 395,
-                      height: 40,
-                      fontSize: 15,
-                    }}
-                    options={hashtags}
-                    labelField="id"
-                    valueField="name"
-                    multi
-                    onChange={changeHashtag}
-                    required
-                  ></Select>
+                  <TagSelect
+                    name="secondTag"
+                    id="secondTag"
+                    onChange={changeTag}
+                  >
+                    {selectCategory === "어학" ? (
+                      tagJson.tag2.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    ) : selectCategory === "프로그래밍" ? (
+                      tagJson.tag3.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    ) : selectCategory === "자격증" ? (
+                      tagJson.tag4.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    ) : selectCategory === "취미/교양" ? (
+                      tagJson.tag5.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    ) : selectCategory === "고시/공무원" ? (
+                      tagJson.tag6.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    ) : selectCategory === "기타" ? (
+                      <option>기타</option>
+                    ) : (
+                      tagJson.tag1.map((item) => (
+                        <option value={item} key={item}>
+                          {item}
+                        </option>
+                      ))
+                    )}
+                  </TagSelect>
+                  <button className="addBtn" onClick={addTagBtn}>
+                    추가
+                  </button>
+                </Li>
+              </Ul>
+              <Ul>
+                <Li></Li>
+                <Li>
+                  {data.hashtags === undefined
+                    ? ""
+                    : Object.values(isTagVisible).map((item) => (
+                        <TagEdit id={item}>
+                          {item} &nbsp;<span onClick={removeTag}>X</span>
+                        </TagEdit>
+                      ))}
                 </Li>
               </Ul>
             </Div>
@@ -388,6 +333,16 @@ function EditPost() {
 const Li = styled.li`
   float: left;
   width: 50%;
+  .addBtn {
+    margin: 0 0.5vw;
+    width: 3vw;
+    height: 4.5vh;
+    border: 1px solid #385493;
+    background-color: #385493;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+  }
 `;
 
 const Ul = styled.ul`
@@ -442,6 +397,40 @@ const TextInput = styled.input`
   height: 2vw;
   padding: 1px 2px;
   text-indent: 0.5vw;
+`;
+
+const TagSelect = styled.select`
+  box-sizing: content-box;
+  border: 2px solid lightgray;
+  font-size: 2vh;
+  border-radius: 5px;
+  width: 20vw;
+  height: 2vw;
+  padding: 1px 2px;
+  text-indent: 0.5vw;
+  :focus {
+    border: 2px solid black;
+  }
+`;
+
+const TagEdit = styled.button`
+  margin: 0.3vh 0.3vw;
+  border-radius: 5px;
+  //pointer-events: none;
+  background-color: #dcdcdc;
+  display: inline;
+  padding: 0.5vh 0.5vw;
+  font-size: 1.5rem;
+  :hover {
+    cursor: default;
+  }
+  span {
+    color: gray;
+    :hover {
+      cursor: pointer;
+      color: black;
+    }
+  }
 `;
 
 const CreateDiv = styled.div`
