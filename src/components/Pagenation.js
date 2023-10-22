@@ -6,7 +6,7 @@ function Pagenation({ totalPosts, limit, page, setPage }) {
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;
-
+  //console.log(currPage);
   return (
     <PageSection>
       <ButtonWrap>
@@ -76,6 +76,16 @@ const PageSection = styled.div`
 
 const ButtonWrap = styled.div``;
 
-const Button = styled.button``;
+const Button = styled.button`
+  border: 2px solid #385493;
+  border-radius: 0.7rem;
+  background-color: white;
+  font-size: 2rem;
+  margin: 0 0.3vw;
+  padding: 0.8vh 0.8vw;
+  :hover {
+    background-color: #deeaf6;
+  }
+`;
 
 export default Pagenation;

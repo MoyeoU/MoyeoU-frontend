@@ -10,8 +10,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCommentList from "../components/PostCommentList";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
 
 function PostView() {
   const { state } = useLocation();
@@ -19,6 +17,7 @@ function PostView() {
   const [data, setData] = useState("");
   const navigate = useNavigate();
   const [comments, setComments] = useState("");
+  const [image, setImage] = useState("");
   let contentCode = data.content;
 
   const getPost = async () => {
@@ -30,6 +29,37 @@ function PostView() {
       })
       .then((response) => {
         console.log(response.data);
+
+        if (response.data.isHost) {
+          axios
+            .get(`http://52.79.241.162:8080/members/me`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            })
+            .then((responsee) => {
+              console.log(responsee.data);
+              setImage(responsee.data.imagePath);
+              console.log(image);
+            })
+            .catch((errorr) => {
+              console.log(errorr);
+            });
+        } else {
+          axios
+            .get(`http://52.79.241.162:8080/members/${response.data.host.id}`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            })
+            .then((responsee) => {
+              console.log(responsee.data);
+              setImage(responsee.data.imagePath);
+            })
+            .catch((errorr) => {
+              console.log(errorr);
+            });
+        }
         setData(response.data);
       })
       .catch((error) => {
@@ -46,12 +76,33 @@ function PostView() {
         navigate(`/editPost`, { state: postId });
       }
     } else {
-      if (data.status === "COMPLETED") {
-        alert("모집이 완료되었습니다.");
+      if (!data.attended) {
+        if (data.status !== "PROGRESS") {
+          alert("모집이 완료되었습니다.");
+        } else {
+          navigate(`/applyForm`, {
+            state: postId,
+          });
+        }
       } else {
-        navigate(`/applyForm`, {
-          state: postId,
-        });
+        if (data.status !== "PROGRESS") {
+          alert("모집이 완료되어 취소할 수 없습니다.");
+        } else {
+          axios
+            .post(`http://52.79.241.162:8080/posts/${postId}/cancel`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            })
+            .then((response) => {
+              console.log(response);
+              alert("스터디 신청이 취소되었습니다.");
+              getPost();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       }
     }
   };
@@ -164,7 +215,7 @@ function PostView() {
                   <a href="./articledetail.html">
                     <img
                       className="userImg"
-                      src={userImg}
+                      src={image ? image : commentLogo}
                       alt="userProfileImage"
                     ></img>
                   </a>
@@ -232,7 +283,11 @@ function PostView() {
             ></div>
             <div id="studyPost_applyBox">
               <button className="studyApplyButton" onClick={modifyOrApply}>
-                {data.isHost ? "수정하기" : "신청하기"}
+                {data.isHost
+                  ? "수정하기"
+                  : data.attended
+                  ? "취소하기"
+                  : "신청하기"}
               </button>
               {data.isHost ? (
                 <>
@@ -281,6 +336,7 @@ function PostView() {
                   <PostCommentList
                     comment={comment}
                     key={comment.commentId}
+                    memberId={comment.authorId}
                     getPost={getPost}
                     postId={postId}
                   />

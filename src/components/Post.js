@@ -68,7 +68,7 @@ function Post({ info }) {
                   <TagBtn>..</TagBtn>
                 </>
               ) : (
-                data.tag.map((tags) => <TagBtn>{tags}</TagBtn>)
+                data.tag.map((tags, idx) => <TagBtn key={idx}>{tags}</TagBtn>)
               )}
               <br />
               <br />

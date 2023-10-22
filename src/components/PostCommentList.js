@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Header from "../components/Header";
 import "../article/articledetail.css";
 import leftArrow from "../img/leftArrow.jpg";
 import userImg from "../img/userImg.jpg";
@@ -13,6 +12,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 function PostCommentList({ comment, getPost, postId }) {
   const [modifyTrueOrNot, setModifyTrueOrNot] = useState(false);
   const [modifyContent, setModifyContent] = useState(comment.content);
+  const [image, setImage] = useState("");
+  const [data, setData] = useState("");
+  const navigate = useNavigate();
+
+  const getImage = () => {
+    //댓글 작성자 이미지 호출
+    axios
+      .get(`http://52.79.241.162:8080/members/${comment.authorId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        //setImage(response.data.imagePath);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const changeToModify = () => {
     //오떻게
@@ -63,65 +83,84 @@ function PostCommentList({ comment, getPost, postId }) {
         });
     }
   };
+  const goMemberPage = () => {
+    let MEMBERID = 0;
+    if (!comment.isAuthor) MEMBERID = comment.authorId;
+    navigate(`/mypage/${data.nickname}`, {
+      state: {
+        state: data.nickname,
+        memberId: MEMBERID,
+      },
+    });
+  };
+  useEffect(() => {
+    getImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(image);
   return (
     <>
-      <li className="comment_item">
-        <section id="comment_item_header">
-          <section id="comment_userInfo">
-            <a href="./articledetail.html">
-              <img
-                className="commentLogo"
-                src={commentLogo}
-                alt="commentLogo"
-              ></img>
-            </a>
-            <div id="comment_userName">{comment.nickname}</div>
+      {data ? (
+        <li className="comment_item">
+          <section id="comment_item_header">
+            <section id="comment_userInfo" onClick={goMemberPage}>
+              <a href="./articledetail.html">
+                <img
+                  className="commentLogo"
+                  src={data.imagePath ? data.imagePath : commentLogo}
+                  alt="commentLogo"
+                ></img>
+              </a>
+              <div id="comment_userName">{comment.nickname}</div>
+            </section>
+            <div id="comment_dateAndTime">
+              {comment.time.substring(0, 10)} {comment.time.substring(11, 16)}
+            </div>
           </section>
-          <div id="comment_dateAndTime">
-            {comment.time.substring(0, 10)} {comment.time.substring(11, 16)}
-          </div>
-        </section>
-        <section id="comment_content">
-          {modifyTrueOrNot ? (
-            <input
-              defaultValue={modifyContent}
-              onChange={(e) => setModifyContent(e.target.value)}
-            ></input>
-          ) : (
-            <span id="comment_content_ex1">{comment.content}</span>
-          )}
-          {comment.isAuthor ? (
-            modifyTrueOrNot ? (
-              <>
-                <DeleteCommentButton
-                  onClick={() => {
-                    setModifyTrueOrNot(false);
-                    setModifyContent(comment.content);
-                  }}
-                >
-                  취소
-                </DeleteCommentButton>
-                <DeleteCommentButton onClick={modifyComment}>
-                  완료
-                </DeleteCommentButton>
-              </>
+          <section id="comment_content">
+            {modifyTrueOrNot ? (
+              <input
+                defaultValue={modifyContent}
+                onChange={(e) => setModifyContent(e.target.value)}
+              ></input>
             ) : (
-              <>
-                <DeleteCommentButton
-                  onClick={() => removeComment(comment.commentId)}
-                >
-                  삭제
-                </DeleteCommentButton>
-                <DeleteCommentButton onClick={changeToModify}>
-                  수정
-                </DeleteCommentButton>
-              </>
-            )
-          ) : (
-            <></>
-          )}
-        </section>
-      </li>
+              <span id="comment_content_ex1">{comment.content}</span>
+            )}
+            {comment.isAuthor ? (
+              modifyTrueOrNot ? (
+                <>
+                  <DeleteCommentButton
+                    onClick={() => {
+                      setModifyTrueOrNot(false);
+                      setModifyContent(comment.content);
+                    }}
+                  >
+                    취소
+                  </DeleteCommentButton>
+                  <DeleteCommentButton onClick={modifyComment}>
+                    완료
+                  </DeleteCommentButton>
+                </>
+              ) : (
+                <>
+                  <DeleteCommentButton
+                    onClick={() => removeComment(comment.commentId)}
+                  >
+                    삭제
+                  </DeleteCommentButton>
+                  <DeleteCommentButton onClick={changeToModify}>
+                    수정
+                  </DeleteCommentButton>
+                </>
+              )
+            ) : (
+              <></>
+            )}
+          </section>
+        </li>
+      ) : (
+        ""
+      )}
     </>
   );
 }

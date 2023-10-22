@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import StudyHistory from "../components/Mypage/StudyHistory";
-import member from "../img/member.jpg";
+import member from "../img/commentLogo.jpg";
 import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
 import Tag from "../components/Mypage/Tag";
@@ -85,6 +85,7 @@ function Mypage() {
   const goChat = () => {
     navigate(`/chatRoom/${state.state}`, { state: state.state });
   };
+  //console.log(dataa.imagePath);
   return (
     <>
       <Header />
@@ -93,7 +94,10 @@ function Mypage() {
       ) : (
         <Div>
           <Left>
-            <img src={member} alt="member"></img>
+            <img
+              src={dataa.imagePath ? dataa.imagePath : member}
+              alt="member"
+            ></img>
             <h3>{dataa.nickname}</h3>
             <StarRate
               star={dataa.point === null ? 0 : Number(dataa.point)}

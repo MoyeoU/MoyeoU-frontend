@@ -13,14 +13,15 @@ function Edit() {
   const [id, setId] = useState();
   const [intro, setIntro] = useState("");
   const [isTagVisible, setIsTagVisible] = useState([]);
-  const [imgFile, setImgFile] = useState();
+
+  const [imagePath, setImagePath] = useState("");
 
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
   const [selectTag, setselectTag] = useState("");
-  const [isImgVisible, setIsImgVisible] = useState();
+  const [isImgVisible, setIsImgVisible] = useState("");
   const navigate = useNavigate();
   const imgRef = useRef();
-  const formData = new FormData();
+  //const formData = new FormData();
 
   const getUser = () => {
     axios
@@ -39,9 +40,10 @@ function Edit() {
         setId(response.data.nickname);
         setIntro(response.data.introduction);
         setIsTagVisible(response.data.hashtags);
-        setImgFile(response.data.imagePath);
+        if (response.data.imagePath !== null)
+          setIsImgVisible(response.data.imagePath);
+        setImagePath(response.data.imagePath);
         setData(response.data);
-        console.log(imgFile);
       })
       .catch((error) => {
         console.log(error);
@@ -49,33 +51,23 @@ function Edit() {
   };
 
   const putUser = () => {
-    formData.append("nickname", id);
-
-    if (intro !== data.introduction) {
-      formData.append("introduction", intro);
-    }
-    if (isTagVisible.length !== data.hashtags) {
-      for (let i = 0; i < isTagVisible.length; i++) {
-        formData.append("hashtags", isTagVisible[i]);
-      }
-    }
-    if (imgFile !== data.imagePath) formData.append("file", imgFile);
-
-    // FormData의 key, value 확인
-    for (let key of formData.keys()) {
-      console.log(key);
-    }
-    for (let value of formData.values()) {
-      console.log(value);
-    }
-
     axios
-      .put(`http://52.79.241.162:8080/members/me`, formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "multipart/form-data",
+      .put(
+        `http://52.79.241.162:8080/members/me`,
+        {
+          nickname: id,
+          imagePath: imagePath,
+          introduction: intro,
+          hashtags: isTagVisible,
         },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      /////// 여기까지!!!!
       .then((response) => {
         console.log(response.data);
         alert("수정이 완료되었습니다.");
@@ -97,16 +89,29 @@ function Edit() {
       setIsImgVisible(reader.result || "");
       //보이는거 따로 저장
     };
-    setImgFile(file);
-    //setImgFile(formData);
-
     e.target.value = "";
+    const formData = new FormData();
+    formData.append("image", file);
+
+    axios
+      .post(`http://52.79.241.162:8080/images`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setImagePath(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const removeImg = () => {
-    setImgFile();
+    setIsImgVisible("");
+    setImagePath(null);
   };
-
-  //console.log(imgFile);
   const onSubmit = () => {
     if (id !== "") {
       putUser();
@@ -152,9 +157,13 @@ function Edit() {
   const addTagBtn = () => {
     if (selectTag === "") {
       alert("해시태그를 선택해주세요");
-    } else {
-      setIsTagVisible((prevList) => [...prevList, selectTag]);
+      return;
     }
+    if (isTagVisible.includes(selectTag)) {
+      alert("이미 선택한 해시태그입니다.");
+      return;
+    }
+    setIsTagVisible((prevList) => [...prevList, selectTag]);
   };
   const removeTag = (event) => {
     const removeId = event.target.parentNode.id;

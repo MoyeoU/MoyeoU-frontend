@@ -25,6 +25,10 @@ function CreatePost() {
   const navigate = useNavigate();
 
   const onSubmit = () => {
+    // if (!items) {
+    //   alert("신청폼을 하나 이상 작성해 주세요.");
+    //   return;
+    // }
     axios
       .post(
         "http://52.79.241.162:8080/posts",
@@ -47,10 +51,20 @@ function CreatePost() {
       .then((response) => {
         console.log(response);
         alert("게시글 작성이 완료되었습니다.");
-        //navigate(`/`);
+        const postId = response.headers.location.slice(-1);
+        navigate(`/postView/${postId}`, {
+          state: postId,
+        });
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.data.message === "요청 파라미터가 잘못되었습니다.") {
+          if (Number(headCount) < 2) {
+            alert("모집 인원을 2명 이상으로 설정해주세요.");
+            return;
+          }
+          alert("항목을 모두 채워주세요");
+        }
       });
   };
 
@@ -78,9 +92,13 @@ function CreatePost() {
   const addTagBtn = () => {
     if (selectTag === "") {
       alert("해시태그를 선택해주세요");
-    } else {
-      setIsTagVisible((prevList) => [...prevList, selectTag]);
+      return;
     }
+    if (isTagVisible.includes(selectTag)) {
+      alert("이미 선택한 해시태그입니다.");
+      return;
+    }
+    setIsTagVisible((prevList) => [...prevList, selectTag]);
   };
   const removeTag = (event) => {
     const removeId = event.target.parentNode.id;
@@ -95,7 +113,7 @@ function CreatePost() {
     );
     //console.log(e.target.previousSibling.innerText);
   };
-  console.log(isTagVisible);
+  //console.log(isTagVisible);
   return (
     <div>
       <Header />
