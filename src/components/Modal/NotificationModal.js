@@ -6,6 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import jsonData from "../../data.json";
 import axios from "axios";
+import Attend from "../Notification/Attend";
+import Comment from "../Notification/Comment";
+import Reject from "../Notification/Reject";
+import Cancel from "../Notification/Cancel";
+import End from "../Notification/End";
+import Complete from "../Notification/Complete";
+import Accept from "../Notification/Accept";
 
 function Modal({ onClose }) {
   const modalRef = useRef(null);
@@ -97,12 +104,25 @@ function Modal({ onClose }) {
         </CloseButton>
         {data === ""
           ? ""
-          : Object.values(jsonData.note).map((item) => (
-              <Contents>
-                <span>{item.notify}</span>
-                <button onClick={onClick}>{item.btn}</button>
-              </Contents>
-            ))}
+          : data.map((item, idx) =>
+              item.type === "ATTEND" ? (
+                <Attend item={item} />
+              ) : item.type === "CANCEL" ? (
+                <Cancel item={item} />
+              ) : item.type === "ACCEPT" ? (
+                <Accept item={item} />
+              ) : item.type === "REJECT" ? (
+                <Reject item={item} />
+              ) : item.type === "COMPLETE" ? (
+                <Complete item={item} />
+              ) : item.type === "END" ? (
+                <End item={item} />
+              ) : item.type === "COMMENT" ? (
+                <Comment item={item} />
+              ) : (
+                <></>
+              )
+            )}
       </ModalWrap>
     </ModalContainer>
   );
@@ -133,36 +153,6 @@ const CloseButton = styled.div`
     float: right;
     color: #5d5d5d;
     font-size: 2rem;
-  }
-`;
-
-//const Div = styled.div``;
-
-const Contents = styled.div`
-  border-bottom: 0.1rem solid lightgray;
-  margin: 0vh 1vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  button {
-    width: 5vw;
-    height: 5vh;
-    margin: 2vh 0;
-    border: 1px solid #dcdcdc;
-    background-color: #dcdcdc;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
-    :hover {
-      background-color: darkgray;
-      cursor: pointer;
-    }
-    &:active {
-      opacity: 0.5;
-    }
-  }
-  span {
-    font-size: 1.2rem;
   }
 `;
 

@@ -201,37 +201,33 @@ function PostView() {
         <div id="root">
           <div id="articlewrapper">
             <section id="studyPost_header">
-              <div id="studyPost_headerIn">
-                <a href="/">
-                  <img className="leftArrow" src={leftArrow} alt="back"></img>
-                </a>
+              <div id="studyPost_headerIn" onClick={() => navigate("/")}>
+                <img className="leftArrow" src={leftArrow} alt="back"></img>
+
                 <div id="recruitTag">
                   {data.status === "PROGRESS" ? "모집중" : "모집완료"}
                 </div>
               </div>
               <div id="studyPost_title">{data.title}</div>
               <div id="studyPost_user_date_comment">
-                <div id="studyPost_user">
-                  <a href="./articledetail.html">
-                    <img
-                      className="userImg"
-                      src={image ? image : commentLogo}
-                      alt="userProfileImage"
-                    ></img>
-                  </a>
-                  <div
-                    id="userName"
-                    onClick={() =>
-                      navigate(`/mypage/${data.host.nickname}`, {
-                        state: {
-                          state: data.host.nickname,
-                          memberId: data.host.id,
-                        },
-                      })
-                    }
-                  >
-                    {data.host.nickname}
-                  </div>
+                <div
+                  id="studyPost_user"
+                  onClick={() =>
+                    navigate(`/mypage/${data.host.nickname}`, {
+                      state: {
+                        state: data.host.nickname,
+                        memberId: data.host.id,
+                      },
+                    })
+                  }
+                >
+                  <img
+                    className="userImg"
+                    src={image ? image : commentLogo}
+                    alt="userProfileImage"
+                  ></img>
+
+                  <div id="userName">{data.host.nickname}</div>
                 </div>
                 <div id="studyPost_date">{data.createdAt}</div>
                 <div id="studyPost_commentNum">
@@ -336,7 +332,6 @@ function PostView() {
                   <PostCommentList
                     comment={comment}
                     key={comment.commentId}
-                    memberId={comment.authorId}
                     getPost={getPost}
                     postId={postId}
                   />
