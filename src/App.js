@@ -12,6 +12,7 @@ import Chat from "./routes/Chat";
 import ScrollToTop from "./components/ScrollToTop";
 import ApplyForm from "./routes/ApplyForm";
 import EditPost from "./routes/EditPost";
+import FormCheck from "./routes/FormCheck";
 
 function App() {
   return (
@@ -89,6 +90,12 @@ function App() {
             //edit 경로
             path="/editPost"
             element={<EditPost />}
+          ></Route>
+          <Route
+            //path={`${process.env.PUBLIC_URL}/movie/:id`}
+            //edit 경로
+            path="/formCheck"
+            element={<FormCheck />}
           ></Route>
         </Routes>
       </Router>

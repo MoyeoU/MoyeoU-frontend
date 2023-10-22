@@ -51,7 +51,8 @@ function CreatePost() {
       .then((response) => {
         console.log(response);
         alert("게시글 작성이 완료되었습니다.");
-        const postId = response.headers.location.slice(-1);
+        const words = response.headers.location.split("/");
+        const postId = Number(words[words.length - 1]);
         navigate(`/postView/${postId}`, {
           state: postId,
         });

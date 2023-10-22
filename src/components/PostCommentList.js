@@ -104,13 +104,11 @@ function PostCommentList({ comment, getPost, postId }) {
         <li className="comment_item">
           <section id="comment_item_header">
             <section id="comment_userInfo" onClick={goMemberPage}>
-              <a href="./articledetail.html">
-                <img
-                  className="commentLogo"
-                  src={data.imagePath ? data.imagePath : commentLogo}
-                  alt="commentLogo"
-                ></img>
-              </a>
+              <img
+                className="commentLogo"
+                src={data.imagePath ? data.imagePath : commentLogo}
+                alt="commentLogo"
+              ></img>
               <div id="comment_userName">{comment.nickname}</div>
             </section>
             <div id="comment_dateAndTime">
