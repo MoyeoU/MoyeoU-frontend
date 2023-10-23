@@ -41,7 +41,7 @@ function Home() {
 }
 
 const Div = styled.div`
-  padding: 5vh 10vw 10vh;
+  padding: 6vh 10vw 10vh;
   justify-content: center;
   align-items: center;
   min-height: 70vh;

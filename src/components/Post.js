@@ -53,28 +53,27 @@ function Post({ info }) {
               </Title>
               <Person>
                 <PersonImg>
-                  <BsPersonFill />
+                  <BsPersonFill size="30" color="#828282" />
                 </PersonImg>
                 <span>
                   &nbsp;
                   {data.presentMember}&nbsp;/&nbsp;{data.totalMember}
                 </span>
               </Person>
-              <br />
-              {data.tag.length > 2 ? (
-                <>
-                  <TagBtn>{data.tag[0]}</TagBtn>
-                  <TagBtn>{data.tag[1]}</TagBtn>
-                  <TagBtn>..</TagBtn>
-                </>
-              ) : (
-                data.tag.map((tags, idx) => <TagBtn key={idx}>{tags}</TagBtn>)
-              )}
-              <br />
-              <br />
-              <br />
+              <Hashtag>
+                {data.tag.length > 3 ? (
+                  <>
+                    <TagBtn>{data.tag[0]}</TagBtn>
+                    <TagBtn>{data.tag[1]}</TagBtn>
+                    <TagBtn>{data.tag[2]}</TagBtn>
+                    <TagBtn>..</TagBtn>
+                  </>
+                ) : (
+                  data.tag.map((tags, idx) => <TagBtn key={idx}>{tags}</TagBtn>)
+                )}
+              </Hashtag>
               <hr />
-              <Writer onClick={goMypage}>{data.writer} 님</Writer>
+              <Writer onClick={goMypage}>{data.writer}</Writer>
             </PostLayout>
           );
         })
@@ -92,8 +91,17 @@ const Div = styled.div`
   overflow: auto;
 `;
 const Person = styled.div`
+  padding-left: 0.5vw;
   display: flex;
+  margin-bottom: 1vh;
   align-items: center;
+  span {
+    margin-left: 0.5vw;
+    font-size: 1.5rem;
+  }
+`;
+const Hashtag = styled.div`
+  margin: 1.5vh 0vh 1vh 0.1vw;
 `;
 const PersonImg = styled.div`
   float: left;
@@ -119,8 +127,10 @@ const PostLayout = styled.div`
   }
 `;
 const Title = styled.div`
+  margin: 0.8em 0.8em 4.5em 0.8em;
   min-height: 4em;
   max-height: 4em;
+  font-size: 1.3rem;
   // h3 {
   //   width: 15.4vw;
   //   overflow: hidden;
@@ -134,22 +144,22 @@ const Title = styled.div`
 `;
 const CompleteBtn = styled.p`
   background-color: #deeaf6;
-  margin: 0.5em;
+  margin: 0.8em 0em 0.5em 0.5em;
   pointer-events: none;
   display: inline-block;
-  padding: 0.3em 0.5em;
+  padding: 0.5em 1em;
   border-radius: 0.5em;
   color: #385493;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: bold;
 `;
 
 const TagBtn = styled.p`
   background-color: #dcdcdc;
-  margin: 1em 1em 0.5em 0;
+  margin: 0em 0.5em 0.5em 0;
   pointer-events: none;
   display: inline-block;
-  padding: 0.3em 0.5em;
+  padding: 0.5em 0.5em;
   border-radius: 0.5em;
   font-size: 1.3rem;
 `;
@@ -157,6 +167,8 @@ const TagBtn = styled.p`
 const Writer = styled.p`
   float: right;
   font-weight: bold;
+  font-size: 1.5rem;
+  margin-right: 0.5em;
 `;
 
 export default Post;

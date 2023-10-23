@@ -311,7 +311,7 @@ const TitleInput = styled.input`
   border-bottom: 3px solid #0d47a1;
   width: 100%;
   height: 10vh;
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bold;
   text-indent: 0.5vw;
   :focus {

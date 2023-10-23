@@ -167,6 +167,7 @@ const List = styled.div`
   margin-bottom: 5vh;
   ul {
     padding-inline-start: 0;
+    margin-top: 10vh;
   }
   li {
     display: inline-block;
@@ -188,13 +189,13 @@ const List = styled.div`
 
 const Gather = styled.div`
   clear: both;
-  margin: 0 1vw 1vh;
+  margin: 0 1vw 2vh;
   overflow: auto;
 `;
 
 const Classification = styled.button`
   width: 8%;
-  height: 5%;
+  height: 10%;
   background-color: white;
   padding: 1vh 1vw;
   border-radius: 0.5em;
@@ -217,7 +218,7 @@ const WriteBtn = styled.button`
   //width: 10%;
   //height: 5%;
   border: none;
-  margin: 0 1vw;
+  margin: 0 3vw 0 1vw;
   background-color: white;
   font-weight: bold;
   :hover {
@@ -244,6 +245,7 @@ const Detail = styled.div`
     border-radius: 0.7rem;
     margin: 1vh 0.5vw;
     padding: 0.7vh 0.7vw;
+    font-weight: 400;
     :hover {
       background-color: #e7e7e7;
     }

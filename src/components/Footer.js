@@ -7,7 +7,7 @@ function Footer() {
       <Div>
         <ImgDiv>
           <img
-            style={{ width: "6em", height: "4em" }}
+            style={{ width: "11em", height: "7.5em" }}
             src={logo}
             alt="logo"
           ></img>
@@ -33,13 +33,17 @@ const Div = styled.div`
 
 const ImgDiv = styled.div`
   float: left;
+  margin-left: 1.5vw;
+  margin-top: 2vh;
 `;
 
 const TextDiv = styled.div`
   margin-top: 5vh;
+  margin-right: 3vw;
   float: right;
   color: gray;
   p {
+    font-size: 1.5rem;
     margin-top: 0;
     margin-bottom: 0;
   }

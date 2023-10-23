@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 
 function Pagenation({ totalPosts, limit, page, setPage }) {
+  console.log(totalPosts);
   const numPages = Math.ceil(totalPosts / limit);
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;
-  //console.log(currPage);
+
   return (
     <PageSection>
       <ButtonWrap>
@@ -20,8 +21,11 @@ function Pagenation({ totalPosts, limit, page, setPage }) {
           &lt;
         </Button>
         <Button
-          onClick={() => setPage(firstNum)}
+          onClick={() => {
+            setPage(firstNum);
+          }}
           aria-current={page === firstNum ? "page" : null}
+          style={{ backgroundColor: page === firstNum ? "#deeaf6" : "white" }}
         >
           {firstNum}
         </Button>
@@ -37,6 +41,9 @@ function Pagenation({ totalPosts, limit, page, setPage }) {
                     setPage(firstNum + 1 + i);
                   }}
                   aria-current={page === firstNum + 1 + i ? "page" : null}
+                  style={{
+                    backgroundColor: (page % 5) - 2 === i ? "#deeaf6" : "white",
+                  }}
                 >
                   {firstNum + 1 + i}
                 </Button>
@@ -48,6 +55,9 @@ function Pagenation({ totalPosts, limit, page, setPage }) {
                   key={i + 1}
                   onClick={() => setPage(lastNum)}
                   aria-current={page === lastNum ? "page" : null}
+                  style={{
+                    backgroundColor: (page % 5) + 3 === i ? "#deeaf6" : "white",
+                  }}
                 >
                   {lastNum}
                 </Button>

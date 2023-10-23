@@ -191,6 +191,28 @@
       "type": ["팀프로젝트", "프로그래밍"],
       "writer": "coong0",
       "date": "2023-05-02"
+    },
+    {
+      "id": "15",
+      "title": "앱런칭을 위한 프론트/백엔드 추가 멤버 찾아요!",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", "Python", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
+    },
+    {
+      "id": "16",
+      "title": "새로추가",
+      "complete": "N",
+      "totalMember": "2",
+      "presentMember": "1",
+      "tag": ["TypeScript", "Python", "기타"],
+      "type": ["팀프로젝트", "프로그래밍"],
+      "writer": "coong0",
+      "date": "2023-05-02"
     }
   ],
   "comm": [

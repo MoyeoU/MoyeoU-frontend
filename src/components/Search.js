@@ -23,7 +23,7 @@ function Search() {
             <AiFillCloseCircle
               onClick={remove}
               className="aifillclosecircle"
-              size={15}
+              size={20}
             />
           ) : (
             ""
@@ -63,6 +63,7 @@ const ParentDiv = styled.div`
     padding: 2vh 1vw;
     font-size: 1.5rem;
     font-weight: bold;
+    letter-spacing: 0.1rem;
     :focus {
       border-color: #385493;
     }
@@ -92,7 +93,7 @@ const ChildDiv = styled.div`
   .bisearch {
     position: absolute;
     right: 0%;
-    top: 70%;
+    top: 99%;
     float: right;
     color: #939393;
     :hover {
