@@ -4,7 +4,7 @@ import tagJson from "../tag.json";
 import TextEditor from "../components/TextEditor";
 import { useEffect, useState } from "react";
 import React from "react";
-import Select from "react-dropdown-select";
+import { IoIosAddCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -120,7 +120,7 @@ function CreatePost() {
       <Header />
       <CreateDiv>
         <Div>
-          <Ul>
+          <TitleUl>
             <TitleInput
               placeholder="제목을 입력해주세요."
               required
@@ -128,7 +128,7 @@ function CreatePost() {
                 setTitle(e.target.value);
               }}
             />
-          </Ul>
+          </TitleUl>
           <Ul>
             <Li>
               <P>모집 인원</P>
@@ -252,10 +252,14 @@ function CreatePost() {
         <Div>
           <Ul>
             <li>
-              <P>
+              <FormMaker>
                 신청 양식을 만들어주세요.
-                <ItemButton onClick={onCreateForm}>등록</ItemButton>
-              </P>
+                <IoIosAddCircle
+                  size="32"
+                  className="addIcon"
+                  onClick={onCreateForm}
+                />
+              </FormMaker>
               <TextInput
                 value={itemsValue}
                 onChange={(e) => {
@@ -265,7 +269,11 @@ function CreatePost() {
               {items.map((v) => (
                 <ItemDiv>
                   <p key={v}>{v}</p>
-                  <button onClick={removeItems}>삭제</button>
+                  <IoIosCloseCircleOutline
+                    size="25"
+                    className="deleteIcon"
+                    onClick={removeItems}
+                  />
                 </ItemDiv>
               ))}
             </li>
@@ -299,9 +307,16 @@ const Li = styled.li`
   }
 `;
 
+const TitleUl = styled.ul`
+  display: flex;
+  max-width: 100%;
+  margin-bottom: 6vh;
+`;
+
 const Ul = styled.ul`
   display: flex;
   max-width: 100%;
+  margin-bottom: 3vh;
 `;
 
 const TitleInput = styled.input`
@@ -356,23 +371,20 @@ const TagEdit = styled.button`
   }
 `;
 
-const ItemButton = styled.button`
-  size: 0.2rem;
-`;
-
 const P = styled.p`
   font-size: 2.5vh;
   font-weight: bold;
-  button {
-    //border:2px solid gray;
-    //border-radius:15px;
-    background-color:white;
-    font-size:25px;
-    color:gray;
-    margin 0 1vw;
-    :hover{
-      cursor:pointer;
-      color:black;
+`;
+
+const FormMaker = styled.p`
+  font-size: 2.5vh;
+  font-weight: bold;
+  display: flex;
+  .addIcon {
+    margin-left: 1vw;
+    color: lightgray;
+    :hover {
+      cursor: pointer;
     }
   }
 `;
@@ -393,6 +405,12 @@ const CreateDiv = styled.div`
   min-height: 70vh;
   overflow: auto;
   max-width: 100%;
+`;
+
+const EditerDiv = styled.div`
+  max-width: 100%;
+  height: auto;
+  margin: 5vh 10vw 0 10vw;
 `;
 
 const Div = styled.div`
@@ -419,8 +437,24 @@ const Btn = styled.div`
 `;
 
 const ItemDiv = styled.div`
+  margin-top: 1.5vh;
+  padding-left: 1.5vw;
+  height: 5em;
+  background-color: #ecf1f3;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  position: relative;
   p {
     display: inline;
+    font-size: 1.85vh;
+    margin: auto;
+    color: gray;
+  }
+  .deleteIcon {
+    float: right;
+    margin: 0.7vw 1vh 0.2vw 0.2vh;
+    color: gray;
   }
 `;
 
