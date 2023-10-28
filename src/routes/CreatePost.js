@@ -7,6 +7,7 @@ import React from "react";
 import { IoIosAddCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function CreatePost() {
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
@@ -49,29 +50,50 @@ function CreatePost() {
         }
       )
       .then((response) => {
-        console.log(response);
-        alert("게시글 작성이 완료되었습니다.");
-        const words = response.headers.location.split("/");
-        const postId = Number(words[words.length - 1]);
-        navigate(`/postView/${postId}`, {
-          state: postId,
+        Swal.fire({
+          icon: 'success',
+          title: '게시글 작성이 완료되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#385493'
+        }).then(() => {
+          const words = response.headers.location.split("/");
+          const postId = Number(words[words.length - 1]);
+          navigate(`/postView/${postId}`, {
+            state: postId,
+          });
         });
       })
       .catch((err) => {
         console.log(err);
         if (err.response.data.message === "요청 파라미터가 잘못되었습니다.") {
           if (Number(headCount) < 2) {
-            alert("모집 인원을 2명 이상으로 설정해주세요.");
+            Swal.fire({
+              icon: 'warning',
+              text: "모집 인원을 2명 이상으로 설정해주세요.",
+              showConfirmButton: false,
+              timer: 1200
+            })
             return;
           }
-          alert("항목을 모두 채워주세요");
+          Swal.fire({
+            icon: 'warning',
+            text: '모든 항목을 채워주세요.',
+            showConfirmButton: false,
+            timer: 1200
+          })
         }
       });
   };
 
   const goMain = () => {
-    alert("게시글 작성이 취소되었습니다.");
-    navigate(`/`);
+    Swal.fire({
+      title: "게시글 작성이 취소되었습니다.",
+      icon: 'info',
+      confirmButtonText: "확인",
+      confirmButtonColor: '#385493',
+    }).then(() => {
+      navigate(`/`);
+    });
   };
   const onCreateForm = () => {
     setItems((v) => [itemsValue, ...v]);
@@ -92,11 +114,21 @@ function CreatePost() {
   };
   const addTagBtn = () => {
     if (selectTag === "") {
-      alert("해시태그를 선택해주세요");
+      Swal.fire({
+        icon: 'warning',
+        text: "해시태그를 선택해주세요.",
+        showConfirmButton: false,
+        timer: 1200
+      })
       return;
     }
     if (isTagVisible.includes(selectTag)) {
-      alert("이미 선택한 해시태그입니다.");
+      Swal.fire({
+        icon: 'warning',
+        text: "이미 선택한 해시태그입니다.",
+        showConfirmButton: false,
+        timer: 1200
+      })
       return;
     }
     setIsTagVisible((prevList) => [...prevList, selectTag]);
@@ -380,6 +412,7 @@ const FormMaker = styled.p`
   font-size: 2.5vh;
   font-weight: bold;
   display: flex;
+  align-items: center;
   .addIcon {
     margin-left: 1vw;
     color: lightgray;

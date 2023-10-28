@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCommentList from "../components/PostCommentList";
+import Swal from "sweetalert2";
 
 function PostView() {
   const { state } = useLocation();
@@ -144,24 +145,37 @@ function PostView() {
   };
 
   const removePost = () => {
-    const removeOrNot = window.confirm("게시물을 삭제하시겠습니까?");
-    if (removeOrNot) {
-      //삭제 api
-      axios
-        .delete(`http://52.79.241.162:8080/posts/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          alert("삭제가 완료되었습니다.");
-          navigate(`/`);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    Swal.fire({
+      title: '게시물을 삭제하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      confirmButtonColor: '#385493',
+      cancelButtonText: '취소',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://52.79.241.162:8080/posts/${postId}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          })
+          .then((response) => {
+            Swal.fire({
+              title: '삭제가 완료되었습니다.',
+              icon: 'success',
+              confirmButtonText: '확인',
+              confirmButtonColor: '#385493',
+            }).then(() => {
+              navigate(`/`);
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire('게시물 삭제 중 오류가 발생했습니다.', 'error');
+          });
+      }
+    });
   };
 
   const uploadComment = () => {
