@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import tagJson from "../tag.json";
 import { useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function EditPost() {
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
@@ -87,9 +88,14 @@ function EditPost() {
         }
       )
       .then((response) => {
-        console.log(response);
-        alert("게시글 수정이 완료되었습니다.");
-        navigate(`/postView/${postId}`, { state: postId });
+        Swal.fire({
+          icon: 'success',
+          title: '게시글 수정이 완료되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#385493'
+        }).then(() => {
+          navigate(`/postView/${postId}`, { state: postId });
+        });
       })
       .catch((err) => {
         console.log(err);
