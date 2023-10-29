@@ -17,7 +17,7 @@ function Edit() {
   const [imagePath, setImagePath] = useState("");
 
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("");
+  const [selectTag, setselectTag] = useState("공과대학");
   const [isImgVisible, setIsImgVisible] = useState("");
   const navigate = useNavigate();
   const imgRef = useRef();
@@ -148,8 +148,23 @@ function Edit() {
   };
 
   const changeCategory = (event) => {
-    setselectCategory(event.target.value);
-    setselectTag("");
+    let categoryValue = event.target.value;
+    setselectCategory(categoryValue);
+    if (categoryValue === "팀프로젝트") {
+      setselectTag(tagJson.tag1[0]);
+    } else if (categoryValue === "어학") {
+      setselectTag(tagJson.tag2[0]);
+    } else if (categoryValue === "프로그래밍") {
+      setselectTag(tagJson.tag3[0]);
+    } else if (categoryValue === "자격증") {
+      setselectTag(tagJson.tag4[0]);
+    } else if (categoryValue === "취미/교양") {
+      setselectTag(tagJson.tag5[0]);
+    } else if (categoryValue === "고시/공무원") {
+      setselectTag(tagJson.tag6[0]);
+    } else {
+      setselectTag("기타");
+    }
   };
   const changeTag = (event) => {
     setselectTag(event.target.value);
@@ -315,6 +330,16 @@ function Edit() {
               <Btn>
                 <button type="button" onClick={withdrawAccount}>
                   탈퇴하기
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate(`/mypage/${id}`, {
+                      state: { state: id, memberId: 0 },
+                    });
+                  }}
+                >
+                  취소
                 </button>
                 <button type="submit" onClick={onSubmit}>
                   완료
