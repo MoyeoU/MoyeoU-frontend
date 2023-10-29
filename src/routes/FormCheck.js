@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import studentImg from "../img/student.png";
 
 function FormCheck() {
   const { state } = useLocation();
@@ -83,34 +84,85 @@ function FormCheck() {
       ) : (
         <Div>
           <Content>
-            <h1>{state.memberName}님의 신청폼입니다.</h1>
-            <table>
+            <Title>{state.memberName}님이</Title>
+            <Title>스터디를 신청했어요 :)</Title>
+            <Img
+              style={{ width: "13rem", height: "12rem" }}
+              src={studentImg}
+              alt="studentImg"
+            ></Img>
+            <Table>
               <tbody>
                 {data.map((form, idx) => (
                   <tr key={idx}>
                     <td>
-                      <label>{form.itemName}</label>
+                      <FormItem>{form.itemName}</FormItem>
+                      {/* <Item>{form.itemName}</Item> */}
                     </td>
                     <td>
-                      <input value={form.answer} disabled />
+                      <FormAnswer>{form.answer}</FormAnswer>
+                      {/* <input value={form.answer} disabled /> */}
                     </td>
                   </tr>
                 ))}
-                <tr>
-                  <td></td>
-                  <td>
-                    <Button onClick={accept}>수락하기</Button>
-                    <Button onClick={reject}>거절하기</Button>
-                  </td>
-                </tr>
               </tbody>
-            </table>
+            </Table>
+            <BtnBox>
+              <Button onClick={accept}>수락하기</Button>
+              <Button onClick={reject}>거절하기</Button>
+            </BtnBox>
           </Content>
         </Div>
       )}
     </>
   );
 }
+const FormItem = styled.div`
+  margin-left: 2vw;
+  font-size: 1.5vh;
+  font-weight: bold;
+  height: 0.8vh;
+  border-radius: 5px;
+  background-color: #d3def1;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1vw;
+`;
+
+const FormAnswer = styled.div`
+  min-width: 15vw;
+  margin: 0 2vw;
+  height: 0.8vh;
+  font-size: 1.5vh;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: #a5bbe3;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1vw;
+`;
+
+const BtnBox = styled.div``;
+
+const Table = styled.table`
+  min-width: 25vw;
+  border-collapse: separate;
+  border-spacing: 0 2vh;
+  padding-bottom: 3vh;
+  border-bottom: 2px solid lightgray;
+`;
+
+const Img = styled.img`
+  margin-top: 2.5vh;
+`;
+const Title = styled.h1`
+  margin-top: 0;
+  margin-bottom: 1vh;
+`;
 
 const Div = styled.div`
   height: auto;
@@ -123,7 +175,7 @@ const Content = styled.div`
   text-align: center;
   margin: 10vh auto;
   table {
-    margin: 10vh auto;
+    margin: 2vh auto;
   }
 `;
 
@@ -135,7 +187,7 @@ const Button = styled.button`
   background-color: #385493;
   color: white;
   font-weight: bold;
-  font-size: 1.7vh;
+  font-size: 1.6vh;
   border-radius: 5px;
   :hover {
     cursor: pointer;

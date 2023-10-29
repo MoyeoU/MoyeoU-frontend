@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import studentImg from "../img/student.png";
 
 function ApplyForm() {
   const { state } = useLocation();
@@ -84,6 +85,11 @@ function ApplyForm() {
         <Div>
           <Content>
             <P>새로운 스터디를 만나보세요!</P>
+            <Img
+              style={{ width: "13rem", height: "12rem" }}
+              src={studentImg}
+              alt="studentImg"
+            ></Img>
             <Table>
               <tbody>
                 {data.map((item) => (
@@ -118,6 +124,11 @@ const Label = styled.label`
   padding-left: 2vw;
 `;
 
+
+const Img = styled.img`
+  margin-top: 2.5vh;
+`;
+
 const TextInput = styled.input`
   border: 2px solid lightgray;
   font-size: 1.5vh;
@@ -146,7 +157,7 @@ const Content = styled.div`
   text-align: center;
   margin: 10vh auto;
   table {
-    margin: 6vh auto 4vh auto;
+    margin: 5vh auto 4vh auto;
     padding-bottom: 6vh;
   }
 `;
