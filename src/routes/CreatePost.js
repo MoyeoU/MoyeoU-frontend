@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 
 function CreatePost() {
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("");
+  const [selectTag, setselectTag] = useState("공과대학");
   const [itemsValue, setItemsValue] = useState("");
 
   const [title, setTitle] = useState("");
@@ -51,10 +51,10 @@ function CreatePost() {
       )
       .then((response) => {
         Swal.fire({
-          icon: 'success',
-          title: '게시글 작성이 완료되었습니다.',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#385493'
+          icon: "success",
+          title: "게시글 작성이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
         }).then(() => {
           const words = response.headers.location.split("/");
           const postId = Number(words[words.length - 1]);
@@ -68,19 +68,19 @@ function CreatePost() {
         if (err.response.data.message === "요청 파라미터가 잘못되었습니다.") {
           if (Number(headCount) < 2) {
             Swal.fire({
-              icon: 'warning',
+              icon: "warning",
               text: "모집 인원을 2명 이상으로 설정해주세요.",
               showConfirmButton: false,
-              timer: 1200
-            })
+              timer: 1200,
+            });
             return;
           }
           Swal.fire({
-            icon: 'warning',
-            text: '모든 항목을 채워주세요.',
+            icon: "warning",
+            text: "모든 항목을 채워주세요.",
             showConfirmButton: false,
-            timer: 1200
-          })
+            timer: 1200,
+          });
         }
       });
   };
@@ -88,16 +88,27 @@ function CreatePost() {
   const goMain = () => {
     Swal.fire({
       title: "게시글 작성이 취소되었습니다.",
-      icon: 'info',
+      icon: "info",
       confirmButtonText: "확인",
-      confirmButtonColor: '#385493',
+      confirmButtonColor: "#385493",
     }).then(() => {
       navigate(`/`);
     });
   };
   const onCreateForm = () => {
-    setItems((v) => [itemsValue, ...v]);
-    setItemsValue("");
+    if (items.includes(itemsValue)) {
+      Swal.fire({
+        icon: "warning",
+        text: "이미 존재하는 신청 양식입니다.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      return;
+    }
+    if (itemsValue !== "") {
+      setItems((v) => [...v, itemsValue]);
+      setItemsValue("");
+    }
   };
 
   useEffect(() => {
@@ -105,8 +116,23 @@ function CreatePost() {
   }, []);
 
   const changeCategory = (event) => {
-    setselectCategory(event.target.value);
-    setselectTag("");
+    let categoryValue = event.target.value;
+    setselectCategory(categoryValue);
+    if (categoryValue === "팀프로젝트") {
+      setselectTag(tagJson.tag1[0]);
+    } else if (categoryValue === "어학") {
+      setselectTag(tagJson.tag2[0]);
+    } else if (categoryValue === "프로그래밍") {
+      setselectTag(tagJson.tag3[0]);
+    } else if (categoryValue === "자격증") {
+      setselectTag(tagJson.tag4[0]);
+    } else if (categoryValue === "취미/교양") {
+      setselectTag(tagJson.tag5[0]);
+    } else if (categoryValue === "고시/공무원") {
+      setselectTag(tagJson.tag6[0]);
+    } else {
+      setselectTag("기타");
+    }
   };
 
   const changeTag = (event) => {
@@ -115,20 +141,20 @@ function CreatePost() {
   const addTagBtn = () => {
     if (selectTag === "") {
       Swal.fire({
-        icon: 'warning',
+        icon: "warning",
         text: "해시태그를 선택해주세요.",
         showConfirmButton: false,
-        timer: 1200
-      })
+        timer: 1200,
+      });
       return;
     }
     if (isTagVisible.includes(selectTag)) {
       Swal.fire({
-        icon: 'warning',
+        icon: "warning",
         text: "이미 선택한 해시태그입니다.",
         showConfirmButton: false,
-        timer: 1200
-      })
+        timer: 1200,
+      });
       return;
     }
     setIsTagVisible((prevList) => [...prevList, selectTag]);
@@ -141,12 +167,11 @@ function CreatePost() {
 
   const removeItems = (e) => {
     //setItems에서 제거
-    setItems(
-      items.filter((element) => element !== e.target.previousSibling.innerText)
+    const filtered = items.filter(
+      (element) => element !== e.target.previousSibling.innerText
     );
-    //console.log(e.target.previousSibling.innerText);
+    setItems(filtered);
   };
-  //console.log(isTagVisible);
   return (
     <div>
       <Header />
@@ -287,7 +312,7 @@ function CreatePost() {
               <FormMaker>
                 신청 양식을 만들어주세요.
                 <IoIosAddCircle
-                  size="32"
+                  size="30"
                   className="addIcon"
                   onClick={onCreateForm}
                 />
@@ -301,11 +326,9 @@ function CreatePost() {
               {items.map((v) => (
                 <ItemDiv>
                   <p key={v}>{v}</p>
-                  <IoIosCloseCircleOutline
-                    size="25"
-                    className="deleteIcon"
-                    onClick={removeItems}
-                  />
+                  <span onClick={removeItems}>
+                    <IoIosCloseCircleOutline size="25" className="deleteIcon" />
+                  </span>
                 </ItemDiv>
               ))}
             </li>
@@ -414,7 +437,7 @@ const FormMaker = styled.p`
   display: flex;
   align-items: center;
   .addIcon {
-    margin-left: 1vw;
+    margin-left: 2vw;
     color: lightgray;
     :hover {
       cursor: pointer;
@@ -478,6 +501,7 @@ const ItemDiv = styled.div`
   font-weight: bold;
   display: flex;
   position: relative;
+  align-items: center;
   p {
     display: inline;
     font-size: 1.85vh;
@@ -486,8 +510,10 @@ const ItemDiv = styled.div`
   }
   .deleteIcon {
     float: right;
-    margin: 0.7vw 1vh 0.2vw 0.2vh;
+    margin: 0 1vh 0 0.2vh;
     color: gray;
+    pointer-events: none;
+  }
   }
 `;
 
