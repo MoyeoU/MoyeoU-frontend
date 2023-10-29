@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import studentImg from "../img/student.png";
 
 function ApplyForm() {
   const { state } = useLocation();
@@ -83,35 +84,66 @@ function ApplyForm() {
       ) : (
         <Div>
           <Content>
-            <h1>새로운 스터디를 만나보세요!</h1>
-            <table>
+            <P>새로운 스터디를 만나보세요!</P>
+            <Img
+              style={{ width: "13rem", height: "12rem" }}
+              src={studentImg}
+              alt="studentImg"
+            ></Img>
+            <Table>
               <tbody>
                 {data.map((item) => (
                   <tr key={item.itemId}>
                     <td>
-                      <label htmlFor={item.itemId}>{item.itemName}</label>
+                      <Label htmlFor={item.itemId}>{item.itemName}</Label>
                     </td>
                     <td>
-                      <input id={item.itemId} required onChange={setName} />
+                      <TextInput id={item.itemId} required onChange={setName} />
                     </td>
-                    <td></td>
                   </tr>
                 ))}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <Button onClick={apply}>신청하기</Button>
-                  </td>
-                </tr>
               </tbody>
-            </table>
+            </Table>
+            <Button onClick={apply}>신청하기</Button>
           </Content>
         </Div>
       )}
     </>
   );
 }
+
+const Table = styled.table`
+  border-collapse: separate;
+  border-spacing: 0 2vh;
+  font-size: 1.8vh;
+  font-weight: bold;
+  border-bottom: 2px solid lightgray;
+`;
+
+const Label = styled.label`
+  padding-left: 2vw;
+`;
+
+const Img = styled.img`
+  margin-top: 2.5vh;
+`;
+
+const TextInput = styled.input`
+  border: 2px solid lightgray;
+  font-size: 1.5vh;
+  border-radius: 5px;
+  width: 20vw;
+  height: 2vw;
+  padding: 1px 2px;
+  text-indent: 0.5vw;
+  margin-left: 2vw;
+  margin-right: 3vw;
+`;
+
+const P = styled.p`
+  font-size: 2.8vh;
+  font-weight: bold;
+`;
 
 const Div = styled.div`
   height: auto;
@@ -124,19 +156,19 @@ const Content = styled.div`
   text-align: center;
   margin: 10vh auto;
   table {
-    margin: 10vh auto;
+    margin: 5vh auto 4vh auto;
+    padding-bottom: 6vh;
   }
 `;
 
 const Button = styled.button`
-  margin: 0.5em 0.5em;
-  width: 8em;
+  width: 7em;
   height: 3em;
   border: 1px solid #385493;
   background-color: #385493;
   color: white;
   font-weight: bold;
-  font-size: 1.7vh;
+  font-size: 1.5vh;
   border-radius: 5px;
   :hover {
     cursor: pointer;
