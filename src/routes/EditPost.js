@@ -16,7 +16,6 @@ function EditPost() {
   const { state } = useLocation();
   const postId = state;
   const [data, setData] = useState("");
-
   const [title, setTitle] = useState("");
   const [headCount, setHeadCount] = useState("");
   const [operationWay, setOperationWay] = useState("");
