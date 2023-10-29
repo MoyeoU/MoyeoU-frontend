@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import TextEditor from "../components/TextEditor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IoIosAddCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import tagJson from "../tag.json";
-import { useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function EditPost() {
   const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("");
+  const [selectTag, setselectTag] = useState("공과대학");
   const [itemsValue, setItemsValue] = useState("");
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -87,9 +88,14 @@ function EditPost() {
         }
       )
       .then((response) => {
-        console.log(response);
-        alert("게시글 수정이 완료되었습니다.");
-        navigate(`/postView/${postId}`, { state: postId });
+        Swal.fire({
+          icon: "success",
+          title: "게시글 수정이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          navigate(`/postView/${postId}`, { state: postId });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -101,20 +107,47 @@ function EditPost() {
     navigate(`/postView/${postId}`, { state: postId });
   };
   const onCreateForm = () => {
-    setItems((v) => [itemsValue, ...v]);
-    setItemsValue("");
+    if (items.includes(itemsValue)) {
+      Swal.fire({
+        icon: "warning",
+        text: "이미 존재하는 신청 양식입니다.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      return;
+    }
+    if (itemsValue !== "") {
+      setItems((v) => [...v, itemsValue]);
+      setItemsValue("");
+    }
   };
 
   const changeCategory = (event) => {
-    setselectCategory(event.target.value);
-    setselectTag("");
+    let categoryValue = event.target.value;
+    setselectCategory(categoryValue);
+    if (categoryValue === "팀프로젝트") {
+      setselectTag(tagJson.tag1[0]);
+    } else if (categoryValue === "어학") {
+      setselectTag(tagJson.tag2[0]);
+    } else if (categoryValue === "프로그래밍") {
+      setselectTag(tagJson.tag3[0]);
+    } else if (categoryValue === "자격증") {
+      setselectTag(tagJson.tag4[0]);
+    } else if (categoryValue === "취미/교양") {
+      setselectTag(tagJson.tag5[0]);
+    } else if (categoryValue === "고시/공무원") {
+      setselectTag(tagJson.tag6[0]);
+    } else {
+      setselectTag("기타");
+    }
   };
 
   const removeItems = (e) => {
     //setItems에서 제거
-    setItems(
-      items.filter((element) => element !== e.target.previousSibling.innerText)
+    const filtered = items.filter(
+      (element) => element !== e.target.previousSibling.innerText
     );
+    setItems(filtered);
   };
 
   const changeTag = (event) => {
@@ -122,10 +155,24 @@ function EditPost() {
   };
   const addTagBtn = () => {
     if (selectTag === "") {
-      alert("해시태그를 선택해주세요");
-    } else {
-      setIsTagVisible((prevList) => [...prevList, selectTag]);
+      Swal.fire({
+        icon: "warning",
+        text: "해시태그를 선택해주세요.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      return;
     }
+    if (isTagVisible.includes(selectTag)) {
+      Swal.fire({
+        icon: "warning",
+        text: "이미 선택한 해시태그입니다.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      return;
+    }
+    setIsTagVisible((prevList) => [...prevList, selectTag]);
   };
   const removeTag = (event) => {
     const removeId = event.target.parentNode.id;
@@ -147,7 +194,7 @@ function EditPost() {
         <>
           <CreateDiv>
             <Div>
-              <Ul>
+              <TitleUl>
                 <TitleInput
                   placeholder="제목을 입력해주세요."
                   required
@@ -156,7 +203,7 @@ function EditPost() {
                     setTitle(e.target.value);
                   }}
                 />
-              </Ul>
+              </TitleUl>
               <Ul>
                 <Li>
                   <P>모집 인원</P>
@@ -294,10 +341,14 @@ function EditPost() {
             <Div>
               <Ul>
                 <li>
-                  <P>
+                  <FormMaker>
                     신청 양식을 만들어주세요.
-                    <ItemButton onClick={onCreateForm}>등록</ItemButton>
-                  </P>
+                    <IoIosAddCircle
+                      size="30"
+                      className="addIcon"
+                      onClick={onCreateForm}
+                    />
+                  </FormMaker>
                   <TextInput
                     value={itemsValue}
                     onChange={(e) => {
@@ -309,7 +360,12 @@ function EditPost() {
                     : items.map((v) => (
                         <ItemDiv>
                           <p key={v}>{v}</p>
-                          <button onClick={removeItems}>삭제</button>
+                          <span onClick={removeItems}>
+                            <IoIosCloseCircleOutline
+                              size="25"
+                              className="deleteIcon"
+                            />
+                          </span>
                         </ItemDiv>
                       ))}
                 </li>
@@ -345,9 +401,16 @@ const Li = styled.li`
   }
 `;
 
+const TitleUl = styled.ul`
+  display: flex;
+  max-width: 100%;
+  margin-bottom: 6vh;
+`;
+
 const Ul = styled.ul`
   display: flex;
   max-width: 100%;
+  margin-bottom: 3vh;
 `;
 
 const TitleInput = styled.input`
@@ -375,18 +438,6 @@ const ItemButton = styled.button`
 const P = styled.p`
   font-size: 2.5vh;
   font-weight: bold;
-  button {
-    //border:2px solid gray;
-    //border-radius:15px;
-    background-color:white;
-    font-size:25px;
-    color:gray;
-    margin 0 1vw;
-    :hover{
-      cursor:pointer;
-      color:black;
-    }
-  }
 `;
 
 const TextInput = styled.input`
@@ -397,6 +448,20 @@ const TextInput = styled.input`
   height: 2vw;
   padding: 1px 2px;
   text-indent: 0.5vw;
+`;
+
+const FormMaker = styled.p`
+  font-size: 2.5vh;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  .addIcon {
+    margin-left: 2vw;
+    color: lightgray;
+    :hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const TagSelect = styled.select`
@@ -465,9 +530,28 @@ const Btn = styled.div`
 `;
 
 const ItemDiv = styled.div`
-  p {
-    display: inline;
-  }
+margin-top: 1.5vh;
+padding-left: 1.5vw;
+height: 5em;
+background-color: #ecf1f3;
+border-radius: 5px;
+font-weight: bold;
+display: flex;
+position: relative;
+align-items: center;
+p {
+  display: inline;
+  font-size: 1.85vh;
+  margin: auto;
+  color: gray;
+}
+.deleteIcon {
+  float: right;
+  margin: 0 1vh 0 0.2vh;
+  color: gray;
+  pointer-events: none;
+}
+}
 `;
 
 export default EditPost;
