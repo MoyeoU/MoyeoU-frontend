@@ -35,7 +35,6 @@ function PostCommentList({ comment, getPost, postId }) {
   };
 
   const changeToModify = () => {
-    //오떻게
     setModifyTrueOrNot(true);
   };
 
@@ -97,74 +96,134 @@ function PostCommentList({ comment, getPost, postId }) {
     getImage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(image);
   return (
     <>
       {data ? (
-        <li className="comment_item">
-          <section id="comment_item_header">
-            <section id="comment_userInfo" onClick={goMemberPage}>
+        <Div>
+          <Header>
+            <Info onClick={goMemberPage}>
               <img
-                className="commentLogo"
                 src={data.imagePath ? data.imagePath : commentLogo}
                 alt="commentLogo"
               ></img>
-              <div id="comment_userName">{comment.nickname}</div>
-            </section>
-            <div id="comment_dateAndTime">
+              <h2>{comment.nickname}</h2>
+            </Info>
+            <p>
               {comment.time.substring(0, 10)} {comment.time.substring(11, 16)}
-            </div>
-          </section>
-          <section id="comment_content">
-            {modifyTrueOrNot ? (
-              <input
-                defaultValue={modifyContent}
-                onChange={(e) => setModifyContent(e.target.value)}
-              ></input>
-            ) : (
-              <span id="comment_content_ex1">{comment.content}</span>
-            )}
-            {comment.isAuthor ? (
-              modifyTrueOrNot ? (
-                <>
-                  <DeleteCommentButton
-                    onClick={() => {
-                      setModifyTrueOrNot(false);
-                      setModifyContent(comment.content);
-                    }}
-                  >
-                    취소
-                  </DeleteCommentButton>
-                  <DeleteCommentButton onClick={modifyComment}>
-                    완료
-                  </DeleteCommentButton>
-                </>
+            </p>
+          </Header>
+          <Content>
+            <Comment>
+              {modifyTrueOrNot ? (
+                <input
+                  defaultValue={modifyContent}
+                  onChange={(e) => setModifyContent(e.target.value)}
+                ></input>
               ) : (
-                <>
-                  <DeleteCommentButton
-                    onClick={() => removeComment(comment.commentId)}
-                  >
-                    삭제
-                  </DeleteCommentButton>
-                  <DeleteCommentButton onClick={changeToModify}>
-                    수정
-                  </DeleteCommentButton>
-                </>
-              )
-            ) : (
-              <></>
-            )}
-          </section>
-        </li>
+                <span>{comment.content}</span>
+              )}
+            </Comment>
+            <Button>
+              {comment.isAuthor ? (
+                modifyTrueOrNot ? (
+                  <>
+                    <button onClick={modifyComment}>완료</button>
+                    <button
+                      onClick={() => {
+                        setModifyTrueOrNot(false);
+                        setModifyContent(comment.content);
+                      }}
+                    >
+                      취소
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => removeComment(comment.commentId)}>
+                      삭제
+                    </button>
+                    <button onClick={changeToModify}>수정</button>
+                  </>
+                )
+              ) : (
+                <></>
+              )}
+            </Button>
+          </Content>
+        </Div>
       ) : (
         ""
       )}
     </>
   );
 }
-const DeleteCommentButton = styled.button`
-  float: right;
-  margin: 0 0.5vw;
+
+const Div = styled.div`
+  margin-bottom: 4vh;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid #939393;
+`;
+
+const Header = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1vh;
+  p {
+    font-size: 1.5rem;
+    color: #717171;
+  }
+`;
+
+const Info = styled.section`
+  display: flex;
+  align-items: center;
+  //position: relative;
+  img {
+    //border: 2px solid #385493;
+    //display: block;
+    width: 6vh;
+    height: 6vh;
+    margin: 0 1vw;
+    object-fit: cover;
+  }
+`;
+
+const Content = styled.section`
+  margin-left: 1vw;
+  display: flex;
+  justify-content: space-between;
+  input {
+    font-size: 1.5rem;
+    width: 60rem;
+    border: none;
+    border-bottom: solid #717171 1px;
+    :focus {
+      outline: none;
+    }
+  }
+  span {
+    font-size: 1.7rem;
+  }
+`;
+
+const Comment = styled.div`
+  max-width: 60rem;
+  y-overflow: auto;
+`;
+const Button = styled.div`
+  width: 20vw;
+  button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    float: right;
+    color: #717171;
+    :hover {
+      color: black;
+    }
+  }
 `;
 
 export default PostCommentList;

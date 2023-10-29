@@ -18,9 +18,11 @@ function PostList() {
   ];
   const [typeClicked, setTypeClicked] = useState("전체"); //클릭한 카테고리
   const [filteredTag, setFilteredTag] = useState(""); //해당 카테고리 태그들 리스트
+
   const [finalTag, setFinalTag] = useState(""); //클릭한 태그 리스트
   //final 없으면 그냥 filteredTag 보내기
   const [gatheringTag, setGatheringTag] = useState("모집중"); //모집여부버튼
+
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
@@ -47,7 +49,13 @@ function PostList() {
     onShowTag();
   };
   const chooseFinalTag = (event) => {
-    setFinalTag((prevList) => [...prevList, event.target.innerText.slice(1)]);
+    let chosenTag = event.target.innerText.slice(1);
+    if (finalTag.includes(chosenTag)) {
+      const filtered = finalTag.filter((element) => element !== chosenTag);
+      setFinalTag(filtered);
+      return;
+    }
+    setFinalTag((prevList) => [...prevList, chosenTag]);
   };
   const sendResult = () => {
     if (finalTag === "") {
