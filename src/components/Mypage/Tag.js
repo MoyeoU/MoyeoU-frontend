@@ -13,6 +13,7 @@ function Tag({ tag }) {
 }
 
 const TagBtn = styled.div`
+  min-height: 5vh;
   span {
     background-color: #dcdcdc;
     margin: 0.4em;

@@ -3,12 +3,13 @@ import styled from "styled-components";
 import useOutSideClick from "../../hooks/useOutSideClick";
 import ModalContainer from "./ModalContainer";
 import data from "../../data.json";
+import bffImg from "../../img/bff.png";
 import StarRate from "../Mypage/StarRate";
 import axios from "axios";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-function Modal({ onClose, memberId }) {
+function Modal({ onClose, memberId, name }) {
   const modalRef = useRef(null);
   const [data, setData] = useState("");
   const handleClose = () => {
@@ -50,6 +51,14 @@ function Modal({ onClose, memberId }) {
             <IoClose size="30" />
           </p>
         </CloseButton>
+        <Title>
+          <img
+            style={{ width: "10rem", height: "10rem" }}
+            src={bffImg}
+            alt="bffImg"
+          ></img>
+          <h2>{name} 님의 평가내역</h2>
+        </Title>
 
         {data === "" ? (
           ""
@@ -69,6 +78,11 @@ function Modal({ onClose, memberId }) {
     </ModalContainer>
   );
 }
+
+const Title = styled.div`
+  text-align: center;
+  margin-bottom: 3vh;
+`;
 
 const ModalWrap = styled.div`
   width: 30vw;
@@ -106,13 +120,13 @@ const CloseButton = styled.div`
 `;
 
 const Contents = styled.div`
-  //margin: 0 1vw 2vh;
-  border-bottom: 0.1rem solid lightgray;
-  margin: 0vh 1vw;
+  margin: 1vh 1vw;
   display: flex;
   align-items: center;
   max-height: 12vh;
   min-height: 12vh;
+  background-color: #effaff;
+  border-radius: 1.5rem;
   div {
     font-size: 1.3rem;
     font-weight: bold;
