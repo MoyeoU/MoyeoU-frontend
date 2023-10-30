@@ -4,7 +4,6 @@ import { BsPersonFill } from "react-icons/bs";
 import Moyeou from "../img/MoyeoU.jpg";
 import Swal from "sweetalert2";
 
-
 function Post({ info }) {
   const navigate = useNavigate();
   const onClick = (postId) => {
@@ -112,6 +111,7 @@ const Person = styled.div`
 `;
 const Hashtag = styled.div`
   margin: 1.5vh 0vh 1vh 0.1vw;
+  min-height: 3.5rem;
 `;
 const PersonImg = styled.div`
   float: left;

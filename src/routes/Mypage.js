@@ -114,6 +114,7 @@ function Mypage() {
                     setCommentModalIsOpen(false);
                   }}
                   memberId={dataa.id}
+                  name={dataa.nickname}
                 />
               )}
             </starText>
@@ -194,20 +195,20 @@ function Mypage() {
 }
 
 const Div = styled.div`
-  width: 90%;
-  max-width: 90%;
+  width: 80%;
+  max-width: 80%;
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  margin: 0 auto 4vh auto;
+  margin: 0 auto 7vh auto;
   //float:left;
 `;
 
 const Left = styled.div`
   float: left;
   text-align: center;
-  width: 25%;
-  margin: 4vh 4vw;
+  width: 28%;
+  margin: 4vh 5vw 4vh 5vw;
   h3 {
     font-weight: bold;
     font-size: 4vh;
@@ -290,8 +291,8 @@ const Middle = styled.div`
 
 const Right = styled.div`
   float: left;
-  width: 55%;
-  margin: 4vh 4vw;
+  width: 45%;
+  margin: 4vh 4vw 4vh 5vw;
   h2,
   h3 {
     display: inline;
