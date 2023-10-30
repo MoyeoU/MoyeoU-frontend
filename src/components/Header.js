@@ -19,11 +19,11 @@ function Header() {
   const navigate = useNavigate();
   const getLoginOrNot = () => {
     //로그인 여부 체크, 나중에는 문자열 있는지없는지
-    setUser(localStorage.getItem("id"));
-    if (user) {
-      setLogin(true);
-    } else {
+    if (localStorage.getItem("id") === null) {
       setLogin(false);
+    } else {
+      setLogin(true);
+      setUser(localStorage.getItem("id"));
     }
   };
 
@@ -46,6 +46,7 @@ function Header() {
         console.log(response);
         localStorage.clear();
         setUser("");
+        getLoginOrNot();
         navigate(`/`);
       })
       .catch((err) => {

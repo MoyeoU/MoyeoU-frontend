@@ -10,8 +10,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function CreatePost() {
-  const [selectCategory, setselectCategory] = useState("팀프로젝트");
-  const [selectTag, setselectTag] = useState("공과대학");
+  const [selectCategory, setselectCategory] = useState("어학");
+  const [selectTag, setselectTag] = useState("토익");
   const [itemsValue, setItemsValue] = useState("");
 
   const [title, setTitle] = useState("");
@@ -118,18 +118,18 @@ function CreatePost() {
   const changeCategory = (event) => {
     let categoryValue = event.target.value;
     setselectCategory(categoryValue);
-    if (categoryValue === "팀프로젝트") {
-      setselectTag(tagJson.tag1[0]);
-    } else if (categoryValue === "어학") {
-      setselectTag(tagJson.tag2[0]);
+    if (categoryValue === "어학") {
+      setselectTag(tagJson.tag1[0][0]);
     } else if (categoryValue === "프로그래밍") {
-      setselectTag(tagJson.tag3[0]);
+      setselectTag(tagJson.tag2[0][0]);
+    } else if (categoryValue === "팀프로젝트") {
+      setselectTag(tagJson.tag3[0][0]);
     } else if (categoryValue === "자격증") {
-      setselectTag(tagJson.tag4[0]);
+      setselectTag(tagJson.tag4[0][0]);
     } else if (categoryValue === "취미/교양") {
-      setselectTag(tagJson.tag5[0]);
+      setselectTag(tagJson.tag5[0][0]);
     } else if (categoryValue === "고시/공무원") {
-      setselectTag(tagJson.tag6[0]);
+      setselectTag(tagJson.tag6[0][0]);
     } else {
       setselectTag("기타");
     }
@@ -233,8 +233,8 @@ function CreatePost() {
               <P>카테고리</P>
               <TagSelect name="tag" id="tag" onChange={changeCategory}>
                 {tagJson.category.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
+                  <option value={item[0]} key={item[1]}>
+                    {item[0]}
                   </option>
                 ))}
               </TagSelect>
@@ -242,42 +242,42 @@ function CreatePost() {
             <Li>
               <P>해시태그</P>
               <TagSelect name="secondTag" id="secondTag" onChange={changeTag}>
-                {selectCategory === "어학" ? (
+                {selectCategory === "프로그래밍" ? (
                   tagJson.tag2.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
-                ) : selectCategory === "프로그래밍" ? (
+                ) : selectCategory === "팀프로젝트" ? (
                   tagJson.tag3.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
                 ) : selectCategory === "자격증" ? (
                   tagJson.tag4.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
                 ) : selectCategory === "취미/교양" ? (
                   tagJson.tag5.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
                 ) : selectCategory === "고시/공무원" ? (
                   tagJson.tag6.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
                 ) : selectCategory === "기타" ? (
                   <option>기타</option>
                 ) : (
                   tagJson.tag1.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item[0]} key={item[1]}>
+                      {item[0]}
                     </option>
                   ))
                 )}

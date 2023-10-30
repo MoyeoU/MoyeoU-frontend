@@ -6,77 +6,64 @@ import tagJson from "../tag.json";
 import Search from "../components/Search";
 import Swal from "sweetalert2";
 
-function PostList() {
-  let data = [
-    "전체",
-    "팀프로젝트",
-    "어학",
-    "프로그래밍",
-    "자격증",
-    "취미/교양",
-    "고시/공무원",
-    "기타",
-  ];
-  const [typeClicked, setTypeClicked] = useState("전체"); //클릭한 카테고리
+function PostList(props) {
   const [filteredTag, setFilteredTag] = useState(""); //해당 카테고리 태그들 리스트
 
-  const [finalTag, setFinalTag] = useState(""); //클릭한 태그 리스트
-  //final 없으면 그냥 filteredTag 보내기
-  const [gatheringTag, setGatheringTag] = useState("모집중"); //모집여부버튼
+  //const [login, setLogin] = useState(false);
+  //const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
-  const [login, setLogin] = useState(false);
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-
-  const onShowTag = () => {
-    if (typeClicked === "팀프로젝트") {
+  const typeFiltering = (event) => {
+    const temp = event.target.innerText;
+    props.setFinalTag("");
+    props.setGatheringTag("PROGRESS");
+    if (temp === "어학") {
       setFilteredTag(tagJson.tag1);
-    } else if (typeClicked === "어학") {
+      props.setTypeClicked([temp, 1]);
+    } else if (temp === "프로그래밍") {
       setFilteredTag(tagJson.tag2);
-    } else if (typeClicked === "프로그래밍") {
+      props.setTypeClicked([temp, 2]);
+    } else if (temp === "팀프로젝트") {
       setFilteredTag(tagJson.tag3);
-    } else if (typeClicked === "자격증") {
+      props.setTypeClicked([temp, 3]);
+    } else if (temp === "자격증") {
       setFilteredTag(tagJson.tag4);
-    } else if (typeClicked === "취미/교양") {
+      props.setTypeClicked([temp, 4]);
+    } else if (temp === "취미/교양") {
       setFilteredTag(tagJson.tag5);
-    } else if (typeClicked === "고시/공무원") {
+      props.setTypeClicked([temp, 5]);
+    } else if (temp === "고시/공무원") {
       setFilteredTag(tagJson.tag6);
+      props.setTypeClicked([temp, 6]);
+    } else if (temp === "기타") {
+      setFilteredTag("");
+      props.setTypeClicked([temp, 7]);
     } else {
       setFilteredTag("");
+      props.setTypeClicked([temp, 0]);
     }
-  };
-  const typeFiltering = (event) => {
-    setTypeClicked(event.target.innerText);
-    setFinalTag("");
-    onShowTag();
   };
   const chooseFinalTag = (event) => {
     let chosenTag = event.target.innerText.slice(1);
-    if (finalTag.includes(chosenTag)) {
-      const filtered = finalTag.filter((element) => element !== chosenTag);
-      setFinalTag(filtered);
+    if (props.finalTag.includes(chosenTag)) {
+      const filtered = props.finalTag.filter(
+        (element) => element !== chosenTag
+      );
+      props.setFinalTag(filtered);
       return;
     }
-    setFinalTag((prevList) => [...prevList, chosenTag]);
+    props.setFinalTag((prevList) => [...prevList, chosenTag]);
   };
-  const sendResult = () => {
-    if (finalTag === "") {
-      //console.log(typeClicked);
-    } else {
-      //console.log(finalTag);
-    }
-    //console.log(gatheringTag);
-    //연결,,
-  };
+
   const gathering = (event) => {
     if (event.target.innerText === "모집중") {
-      setGatheringTag("모집중");
+      props.setGatheringTag("PROGRESS");
     } else {
-      setGatheringTag("모집완료");
+      props.setGatheringTag("COMPLETED&END");
     }
   };
   const navigate = useNavigate();
   const goCreatePost = () => {
-    if (login) {
+    if (localStorage.getItem("id") !== null) {
       navigate(`/createPost`);
     } else {
       Swal.fire({
@@ -90,38 +77,46 @@ function PostList() {
   };
 
   const resetTag = () => {
-    setFinalTag("");
+    props.setFinalTag("");
   };
 
-  const getLoginOrNot = () => {
-    //로그인 여부 체크, 나중에는 문자열 있는지없는지
-    if (localStorage.getItem("id")) {
-      setLogin(true);
-    } else {
-      setLogin(false);
-    }
-  };
+  // const getLoginOrNot = () => {
+  //   //로그인 여부 체크, 나중에는 문자열 있는지없는지
+  //   // if (localStorage.getItem("id")) {
+  //   //   setLogin(true);
+  //   // } else {
+  //   //   setLogin(false);
+  //   // }
+  // };
 
-  useEffect(() => {
-    getLoginOrNot();
-    onShowTag();
-    sendResult();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginModalIsOpen, finalTag, typeClicked, gatheringTag]);
+  // useEffect(() => {
+  //   getLoginOrNot();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loginModalIsOpen]);
 
   return (
     <>
-      <Search />
+      <Search
+        getPost={props.getPost}
+        search={props.search}
+        setSearch={props.setSearch}
+      />
       <List>
         <ul>
-          {data.map((item) => {
+          <li
+            className={"전체" === props.typeClicked[0] ? "active" : ""}
+            onClick={typeFiltering}
+          >
+            전체
+          </li>
+          {tagJson.category.map((item) => {
             return (
               <>
                 <li
-                  className={item === typeClicked ? "active" : ""}
+                  className={item[0] === props.typeClicked[0] ? "active" : ""}
                   onClick={typeFiltering}
                 >
-                  {item}
+                  {item[0]}
                 </li>
               </>
             );
@@ -131,10 +126,10 @@ function PostList() {
           {Object.values(filteredTag).map((item) =>
             item !== "전체" ? (
               <button
-                className={finalTag.includes(item) ? "active2" : ""}
+                className={props.finalTag.includes(item[0]) ? "active2" : ""}
                 onClick={chooseFinalTag}
               >
-                #{item}
+                #{item[0]}
               </button>
             ) : (
               <span></span>
@@ -147,27 +142,27 @@ function PostList() {
 
       <Gather>
         <Classification
-          className={gatheringTag === "모집중" ? "active" : ""}
+          className={props.gatheringTag === "PROGRESS" ? "active" : ""}
           onClick={gathering}
         >
           모집중
         </Classification>
         <Classification
-          className={gatheringTag === "모집완료" ? "active" : ""}
+          className={props.gatheringTag === "COMPLETED&END" ? "active" : ""}
           onClick={gathering}
         >
           모집완료
         </Classification>
         <WriteBtn>
           <p onClick={goCreatePost}>글쓰기</p>
-          {loginModalIsOpen && (
+          {/* {loginModalIsOpen && (
             <LoginModal
               open={loginModalIsOpen}
               onClose={() => {
                 setLoginModalIsOpen(false);
               }}
             />
-          )}
+          )} */}
         </WriteBtn>
       </Gather>
     </>

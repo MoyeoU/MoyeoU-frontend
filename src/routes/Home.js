@@ -1,16 +1,23 @@
 import Header from "../components/Header";
 import Ad from "../components/Ad";
 import PostList from "../components/PostList";
-import data from "../data.json";
 import Post from "../components/Post";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pagenation from "../components/Pagenation";
+import axios from "axios";
+import tagJson from "../tag.json";
 
 function Home() {
   const [page, setPage] = useState(1); //현재 페이지 state
   const limit = 12;
   const offset = (page - 1) * limit;
+  const [data, setData] = useState("");
+
+  const [search, setSearch] = useState("");
+  const [typeClicked, setTypeClicked] = useState(["전체", 0]); //클릭한 카테고리
+  const [finalTag, setFinalTag] = useState(""); //클릭한 태그 리스트
+  const [gatheringTag, setGatheringTag] = useState("PROGRESS"); //모집여부버튼
 
   const postsData = (posts) => {
     if (posts) {
@@ -19,20 +26,63 @@ function Home() {
     }
   };
 
+  const getPost = () => {
+    let input = "";
+    input += "status=" + gatheringTag;
+    if (search !== "") {
+      input += "&title=" + search;
+    }
+    if (typeClicked[0] !== "전체") {
+      input += "&categoryId=" + typeClicked[1];
+    }
+    if (finalTag !== "") {
+      const objectName = "tag" + typeClicked[1];
+      for (let i = 0; i < finalTag.length; i++) {
+        for (let j = 0; j < tagJson[objectName].length; j++) {
+          if (finalTag[i] === tagJson[objectName][j][0]) {
+            input += "&hashTagId=" + tagJson[objectName][j][1];
+          }
+        }
+      }
+    }
+    console.log(input);
+    axios
+      .get(`http://52.79.241.162:8080/posts?${input}`)
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, typeClicked, finalTag, gatheringTag]);
+
   return (
     <>
       <Header />
       <Ad />
       <Div>
-        <PostList />
-        <Post info={postsData(data.board)} />
-        {/* {Object.values(data.board).map((posts) => (
-          //<Post {...posts} key={posts.id} />
-        ))} */}
+        <PostList
+          getPost={getPost}
+          search={search}
+          setSearch={setSearch}
+          typeClicked={typeClicked}
+          setTypeClicked={setTypeClicked}
+          finalTag={finalTag}
+          setFinalTag={setFinalTag}
+          gatheringTag={gatheringTag}
+          setGatheringTag={setGatheringTag}
+        />
+        {data ? <Post info={postsData(data)} /> : <p>로딩중</p>}
         <Pagenation
           limit={limit}
           page={page}
-          totalPosts={data.board.length}
+          totalPosts={data.length}
           setPage={setPage}
         />
       </Div>
