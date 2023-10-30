@@ -6,6 +6,7 @@ import data from "../../data.json";
 import StarRate from "../Mypage/StarRate";
 import axios from "axios";
 import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 function Modal({ onClose, memberId }) {
   const modalRef = useRef(null);
@@ -44,22 +45,25 @@ function Modal({ onClose, memberId }) {
   return (
     <ModalContainer>
       <ModalWrap ref={modalRef}>
-        <CloseButton onClick={handleClose}>
-          <p className="fa-solid fa-xmark">X</p>
+        <CloseButton>
+          <p onClick={handleClose}>
+            <IoClose size="30" />
+          </p>
         </CloseButton>
 
         {data === "" ? (
           ""
         ) : (
-          <Contents>
+          <>
             {data.map((props, idx) => (
-              <Div id={props.content}>
-                <StarRate star={props.point} id={idx} />
-                <span>{props.content}</span>
-                <hr />
-              </Div>
+              <Contents key={props.content}>
+                <div>
+                  <StarRate star={props.point} id={idx} />
+                </div>
+                <div>{props.content}</div>
+              </Contents>
             ))}
-          </Contents>
+          </>
         )}
       </ModalWrap>
     </ModalContainer>
@@ -67,41 +71,55 @@ function Modal({ onClose, memberId }) {
 }
 
 const ModalWrap = styled.div`
-  width: 25vw;
+  width: 30vw;
   //height: fit-content;
-  min-height: 50vh;
-  max-height: 50vh;
+  min-height: 45vh;
+  max-height: 45vh;
   overflow-y: scroll;
-  border-radius: 10px;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #ccc;
+  }
+  border-radius: 5px;
   background-color: #fff;
   position: absolute;
-  top: 38%;
-  left: 23%;
-  box-shadow: 0 5px 25px gray;
+  top: 50%;
+  left: 25%;
+  box-shadow: 0 0.5rem 1rem gray;
 `;
 
 const CloseButton = styled.div`
   width: 100%;
-  height: auto;
   overflow: auto;
-  //margin: 1vh 1vw;
-  cursor: pointer;
   p {
-    margin: 0.5vh 1vw;
+    cursor: pointer;
+    :hover {
+      color: black;
+    }
+    margin: 1vh 1vw;
     float: right;
     color: #5d5d5d;
-    font-size: 3vh;
   }
 `;
 
-const Div = styled.div`
-  margin: 1vh 0;
-  height: auto;
-  overflow: auto;
-`;
-
 const Contents = styled.div`
-  margin: 0 1vw 2vh;
+  //margin: 0 1vw 2vh;
+  border-bottom: 0.1rem solid lightgray;
+  margin: 0vh 1vw;
+  display: flex;
+  align-items: center;
+  max-height: 12vh;
+  min-height: 12vh;
+  div {
+    font-size: 1.3rem;
+    font-weight: bold;
+    align-items: center;
+    margin: 0 0.5vw;
+    display: flex;
+  }
 `;
 
 export default Modal;
