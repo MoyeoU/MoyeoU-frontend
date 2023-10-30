@@ -103,7 +103,8 @@ function Mypage() {
               star={dataa.point === null ? 0 : Number(dataa.point)}
               id="-1"
             />
-            <p>
+            <br />
+            <starText>
               {(dataa.point === null ? 0 : Number(dataa.point) / 20).toFixed(1)}{" "}
               / 5.0 <button onClick={viewComment}>{">"}</button>
               {commentModalIsOpen && (
@@ -115,7 +116,8 @@ function Mypage() {
                   memberId={dataa.id}
                 />
               )}
-            </p>
+            </starText>
+            <br />
             <br />
             <hr />
             <br />
@@ -197,7 +199,7 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  margin: 0 auto;
+  margin: 0 auto 4vh auto;
   //float:left;
 `;
 
@@ -209,15 +211,23 @@ const Left = styled.div`
   h3 {
     font-weight: bold;
     font-size: 4vh;
-    margin: 1vh 0;
+    margin: 1vh 0 2vh 0;
+  }
+  starText {
+    font-weight: bold;
+    font-size: 1.8rem;
   }
   img {
-    width: 7em;
-    height: 7em;
+    width: 15em;
+    height: 15em;
+    border-radius: 30%;
+    margin-bottom: 1.5vh;
   }
   button {
     border: none;
+    font-size: 2.2rem;
     background-color: white;
+    margin-left: 0.5vw;
     border-radius: 2em;
     :hover {
       cursor: pointer;
@@ -232,25 +242,31 @@ const More = styled.div`
   text-align: left;
   p {
     margin-top: 0;
+    margin-bottom: 0.5vh;
     padding: 0 0 0 2vw;
     color: gray;
     font-weight: bold;
+    font-size: 1.8rem;
   }
 `;
 const OneLiner = styled.div`
-  border: 2px solid darkgray;
-  min-height: 15vh;
+  border: 2px solid lightgray;
+  min-height: 12vh;
   border-radius: 10px;
-  margin: 1vh 1.5vw;
-  margin-bottom: 2vh;
-  padding: 2%;
+  margin: 2vh 1.5vw 2vh;
+  // background-color: #d3def1;
+  padding: 5%;
+  font-size: 1.6rem;
+  font-weight: light;
+  line-height: 120%;
 `;
 
 const Btn = styled.div`
   button {
-    margin: 0.5em 0.5em;
-    width: 8em;
+    padding: 1vh 1vw;
+    width: 7em;
     height: 3em;
+    font-size: 1.7rem;
     border: 1px solid #385493;
     background-color: #385493;
     color: white;
@@ -297,6 +313,7 @@ const Filtering = styled.div`
 const MineOrNot = styled.div`
   margin-bottom: 2vh;
   h2 {
+    font-size: 2rem;
     color: #505050;
     :hover {
       color: #385493;
@@ -305,8 +322,12 @@ const MineOrNot = styled.div`
     &.active {
       color: #385493;
       padding-bottom: 0.5vh;
-      border-bottom: 0.3rem solid #385493;
+      border-bottom: 0.4rem solid #385493;
     }
+  }
+  span {
+    margin: 0.4vw;
+    font-size: 2rem;
   }
 `;
 
@@ -314,6 +335,7 @@ const NowOrNot = styled.div`
   float: right;
   margin-bottom: 2vh;
   h3 {
+    font-size: 1.5rem;
     color: #505050;
     :hover {
       color: #385493;
@@ -322,8 +344,12 @@ const NowOrNot = styled.div`
     &.active {
       color: #385493;
       padding-bottom: 0.3vh;
-      border-bottom: 0.2rem solid #385493;
+      border-bottom: 0.25rem solid #385493;
     }
+  }
+  span {
+    margin: 0.2vw;
+    font-size: 1rem;
   }
 `;
 
