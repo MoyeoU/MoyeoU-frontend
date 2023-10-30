@@ -20,10 +20,10 @@ function End(item) {
   return (
     <>
       <Contents onClick={moveToPost}>
-        <span>
+        <div>
           '{item.item.postTitle}' 게시물의 스터디가 종료되었습니다. 스터디원을
           평가하세요.
-        </span>
+        </div>
         <button onClick={onClick}>평가하기</button>
       </Contents>
     </>
@@ -36,26 +36,33 @@ const Contents = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  max-height: 12vh;
+  min-height: 12vh;
+  div {
+    max-height: 10vh;
+    min-height: 10vh;
+    font-size: 1.3rem;
+    font-weight: bold;
+    align-items: center;
+    display: flex;
+  }
   button {
-    width: 5vw;
-    height: 7vh;
-    margin: 2vh 0;
-    border: 1px solid #dcdcdc;
-    background-color: #dcdcdc;
+    max-width: 4.7vw;
+    min-width: 4.7vw;
+    height: 6vh;
+    background-color: #deeaf6;
+    margin-left: 0.5vw;
     color: black;
     font-weight: bold;
-    border-radius: 5px;
+    font-size: 1.2rem;
+    border-radius: 10px;
     :hover {
-      background-color: darkgray;
+      //background-color: #c0c0c0;
       cursor: pointer;
     }
     &:active {
-      opacity: 0.5;
+      opacity: 0.8;
     }
-  }
-  span {
-    font-size: 1.2rem;
   }
   :hover {
     cursor: pointer;

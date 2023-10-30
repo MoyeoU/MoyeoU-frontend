@@ -12,7 +12,7 @@ function Accept(item) {
   return (
     <>
       <Contents onClick={moveToPost}>
-        <span>'{item.item.postTitle}' 게시물 참여 신청이 승인되었습니다.</span>
+        <div>'{item.item.postTitle}' 게시물 참여 신청이 승인되었습니다.</div>
       </Contents>
     </>
   );
@@ -24,26 +24,32 @@ const Contents = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  max-height: 12vh;
+  min-height: 12vh;
+  div {
+    max-height: 10vh;
+    min-height: 10vh;
+    font-size: 1.3rem;
+    font-weight: bold;
+    align-items: center;
+    display: flex;
+  }
   button {
-    width: 5vw;
-    height: 7vh;
-    margin: 2vh 0;
-    border: 1px solid #dcdcdc;
-    background-color: #dcdcdc;
+    width: 4.7vw;
+    height: 6vh;
+    background-color: #deeaf6;
+    margin-left: 0.5vw;
     color: black;
     font-weight: bold;
-    border-radius: 5px;
+    font-size: 1.2rem;
+    border-radius: 10px;
     :hover {
-      background-color: darkgray;
+      //background-color: #c0c0c0;
       cursor: pointer;
     }
     &:active {
-      opacity: 0.5;
+      opacity: 0.8;
     }
-  }
-  span {
-    font-size: 1.2rem;
   }
   :hover {
     cursor: pointer;
