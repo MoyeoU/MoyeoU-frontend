@@ -3,6 +3,7 @@ import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
+import likeImg from "../../img/like.png";
 
 function EvaluateModal(props) {
   const submit = () => {
@@ -62,6 +63,11 @@ function EvaluateModal(props) {
     <>
       <Modal onClose={props.onClose}>
         <Div>
+          <Img
+            style={{ width: "8rem", height: "8.5rem" }}
+            src={likeImg}
+            alt="likeImg"
+          ></Img>
           <Name>
             <h2>
               <span>{props.data.member.nickname}</span> 님에 대한 평가
@@ -103,6 +109,10 @@ function EvaluateModal(props) {
   );
 }
 
+const Img = styled.img`
+  margin-bottom: 2vh;
+`;
+
 const Div = styled.div`
   margin: 1vh 1vw;
   height: 50vh;
@@ -134,12 +144,14 @@ const Comment = styled.div`
   text-align: center;
   overflow: auto;
   textarea {
+    font-size: 1.5rem;
     resize: none;
-    padding: 1vh 1vw;
+    padding: 2vh 1vw;
     width: 25vw;
-    height: 20vh;
+    height: 12vh;
     border: 1px solid gray;
     border-radius: 1em;
+    line-height: 150%;
   }
 `;
 
@@ -150,6 +162,7 @@ const Btn = styled.div`
     background-color: #385493;
     color: white;
     font-weight: bold;
+    margin-bottom: 2vh;
     border-radius: 5px;
     :hover {
       cursor: pointer;

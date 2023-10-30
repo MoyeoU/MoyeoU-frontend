@@ -5,6 +5,7 @@ import member3 from "../img/image2.png";
 import { useState } from "react";
 import { useEffect } from "react";
 import EvaluateModal from "./Modal/EvaluateModal";
+import commentLogo from "../img/commentLogo.jpg";
 
 function EvaluateList(props) {
   const [evaluateModalIsOpen, setEvaluateModalIsOpen] = useState(false);
@@ -24,7 +25,14 @@ function EvaluateList(props) {
     <>
       <Div>
         <Img>
-          <img src={memberImg} alt="member"></img>
+          <img
+            src={
+              props.data.member.imagePath
+                ? props.data.member.imagePath
+                : commentLogo
+            }
+            alt="member"
+          ></img>
         </Img>
         <Name>
           <h2>{props.data.member.nickname}</h2>
@@ -63,35 +71,32 @@ const Div = styled.div`
 `;
 
 const Img = styled.div`
-  width: 20vw;
   height: 100%;
+  margin-right: 1.5vw;
   img {
     float: left;
-    width: 50%;
-    height: 50%;
-    margin: 2% 20%;
+    width: 3.5vw;
+    height: 6vh;
+    margin: 0 1vw;
   }
 `;
 const Name = styled.div`
-  float: left;
-  width: 60vw;
+  width: 13vw;
   height: 100%;
   h2 {
-    //justify-content: center;
+    font-size: 1.7rem;
     color: black;
   }
 `;
 const Btn = styled.div`
   float: left;
-  width: 20vw;
+  width: 10vw;
   height: 100%;
-  //display: flex;
-  //justify-content: center;
   button {
     float: left;
     width: 50%;
     height: 5vh;
-    margin: 2% 20%;
+    margin: 2% 28%;
     border: 1px solid #385493;
     background-color: #385493;
     color: white;
