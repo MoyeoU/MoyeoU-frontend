@@ -4,7 +4,12 @@ function End(item) {
   const navigate = useNavigate();
   const onClick = (event) => {
     event.stopPropagation();
-    navigate(`/evaluateMember`, { state: item.item.postId });
+    navigate(`/evaluateMember`, {
+      state: {
+        state: item.item.postId,
+        title: item.item.postTitle,
+      },
+    });
   };
   const moveToPost = () => {
     navigate(`/postView/${item.item.postId}`, {

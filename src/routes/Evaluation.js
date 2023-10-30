@@ -9,7 +9,8 @@ import evaluationImg from "../img/evaluation.png";
 
 function Evaluation(props) {
   const { state } = useLocation();
-  const postId = state;
+  const postId = state.state;
+  const postTitle = state.title;
   const [data, setData] = useState("");
   const navigate = useNavigate();
   const getMember = () => {
@@ -60,7 +61,7 @@ function Evaluation(props) {
               src={evaluationImg}
               alt="evaluationImg"
             ></Img>
-            <h1>"코테 준비 같이해요"</h1>
+            <h1>{postTitle}</h1>
             <h1>스터디가 종료되었습니다.</h1>
           </Notice>
           <List>
