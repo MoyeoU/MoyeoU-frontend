@@ -5,25 +5,22 @@ import Moyeou from "../img/MoyeoU.jpg";
 
 function Post({ info }) {
   const navigate = useNavigate();
-  const onClick = (e) => {
+  const onClick = (postId) => {
     if (localStorage.getItem("id")) {
-      navigate(`/postView/${e.currentTarget.id}`, {
-        state: e.currentTarget.id,
+      navigate(`/postView/${postId}`, {
+        state: postId,
       });
       //state가 postId가 되어야 함
     } else {
       alert("로그인이 필요합니다.");
     }
   };
-  const goMypage = (event) => {
-    event.stopPropagation();
-    let writerName = event.target.innerText.slice(
-      0,
-      event.target.innerText.length - 2
-    );
-    console.log(typeof writerName);
+  const goMypage = (e, host) => {
+    e.stopPropagation();
     if (localStorage.getItem("id")) {
-      navigate(`/mypage/${writerName}`, { state: writerName });
+      navigate(`/mypage/${host.nickname}`, {
+        state: { state: host.nickname, memberId: host.id },
+      });
     } else {
       alert("로그인이 필요합니다.");
     }
@@ -35,14 +32,12 @@ function Post({ info }) {
         info.map((data, idx) => {
           return (
             <PostLayout
-              onClick={(e) => {
-                onClick(e);
-              }}
+              onClick={() => onClick(data.postId)}
               key={idx}
               id={idx + 1}
             >
               <CompleteBtn>
-                {data.complete === "Y" ? `모집완료` : `모집중`}
+                {data.status === "PROGRESS" ? `모집중` : `모집완료`}
               </CompleteBtn>
               <Title>
                 <h2>
@@ -57,23 +52,27 @@ function Post({ info }) {
                 </PersonImg>
                 <span>
                   &nbsp;
-                  {data.presentMember}&nbsp;/&nbsp;{data.totalMember}
+                  {data.currentCount}&nbsp;/&nbsp;{data.headCount}
                 </span>
               </Person>
               <Hashtag>
-                {data.tag.length > 3 ? (
+                {data.hashtags.length > 3 ? (
                   <>
-                    <TagBtn>{data.tag[0]}</TagBtn>
-                    <TagBtn>{data.tag[1]}</TagBtn>
-                    <TagBtn>{data.tag[2]}</TagBtn>
+                    <TagBtn>{data.hashtags[0]}</TagBtn>
+                    <TagBtn>{data.hashtags[1]}</TagBtn>
+                    <TagBtn>{data.hashtags[2]}</TagBtn>
                     <TagBtn>..</TagBtn>
                   </>
                 ) : (
-                  data.tag.map((tags, idx) => <TagBtn key={idx}>{tags}</TagBtn>)
+                  data.hashtags.map((tags, idx) => (
+                    <TagBtn key={idx}>{tags}</TagBtn>
+                  ))
                 )}
               </Hashtag>
               <hr />
-              <Writer onClick={goMypage}>{data.writer}</Writer>
+              <Writer onClick={(e) => goMypage(e, data.host)}>
+                {data.host.nickname}
+              </Writer>
             </PostLayout>
           );
         })

@@ -4,22 +4,23 @@ import { CiCircleRemove } from "react-icons/ci";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useState, useEffect } from "react";
 
-function Search() {
-  const [search, setSearch] = useState("");
+function Search(props) {
+  //const [search, setSearch] = useState("");
   const goSearch = (event) => {
-    setSearch(event.target.value);
+    props.setSearch(event.target.value);
   };
   const remove = () => {
-    setSearch("");
+    props.setSearch("");
   };
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [props.search]);
   return (
     <>
       <ParentDiv>
         <ChildDiv>
-          {search !== "" ? (
+          {props.search !== "" ? (
             <AiFillCloseCircle
               onClick={remove}
               className="aifillclosecircle"
@@ -28,14 +29,14 @@ function Search() {
           ) : (
             ""
           )}
-          <BiSearch className="bisearch" size={25} />
+          {/* <BiSearch className="bisearch" size={25} /> */}
         </ChildDiv>
         <input
           onChange={goSearch}
           className="parent"
           type="text"
-          placeholder="스터디 제목을 입력해주세요"
-          value={search}
+          placeholder="스터디 제목으로 검색하세요"
+          value={props.search}
         ></input>
       </ParentDiv>
     </>
@@ -74,26 +75,12 @@ const ParentDiv = styled.div`
 `;
 
 const ChildDiv = styled.div`
+  justify-content: space-between;
+  align-items: center;
   .aifillclosecircle {
     position: absolute;
-    right: 8%;
-    top: 110%;
-    float: right;
-    color: #939393;
-    :hover {
-      cursor: pointer;
-    }
-    :active {
-      color: #385493;
-      .parent {
-        border-bolor: #385493;
-      }
-    }
-  }
-  .bisearch {
-    position: absolute;
     right: 0%;
-    top: 99%;
+    top: 100%;
     float: right;
     color: #939393;
     :hover {
@@ -106,6 +93,22 @@ const ChildDiv = styled.div`
       }
     }
   }
+  // .bisearch {
+  //   position: absolute;
+  //   right: 0%;
+  //   top: 99%;
+  //   float: right;
+  //   color: #939393;
+  //   :hover {
+  //     cursor: pointer;
+  //   }
+  //   :active {
+  //     color: #385493;
+  //     .parent {
+  //       border-bolor: #385493;
+  //     }
+  //   }
+  // }
 `;
 
 export default Search;

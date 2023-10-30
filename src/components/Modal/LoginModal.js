@@ -2,7 +2,6 @@ import styled from "styled-components";
 import image from "../../img/MoyeoU.jpg";
 import Modal from "./Modal";
 import { useState } from "react";
-import data from "../../data.json";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
