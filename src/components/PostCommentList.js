@@ -8,6 +8,7 @@ import send from "../img/send.jpg";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function PostCommentList({ comment, getPost, postId }) {
   const [modifyTrueOrNot, setModifyTrueOrNot] = useState(false);
@@ -52,9 +53,15 @@ function PostCommentList({ comment, getPost, postId }) {
       )
       .then((response) => {
         console.log(response.data);
-        alert("수정이 완료되었습니다.");
-        setModifyTrueOrNot(false);
-        getPost();
+        Swal.fire({
+          icon: "success",
+          title: "수정이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          setModifyTrueOrNot(false);
+          getPost();
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -74,8 +81,15 @@ function PostCommentList({ comment, getPost, postId }) {
         )
         .then((response) => {
           console.log(response.data);
-          alert("댓글이 삭제되었습니다.");
-          getPost();
+
+          Swal.fire({
+            icon: "success",
+            title: "댓글이 삭제되었습니다.",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#385493",
+          }).then(() => {
+            getPost();
+          });
         })
         .catch((error) => {
           console.log(error);

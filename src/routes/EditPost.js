@@ -102,8 +102,14 @@ function EditPost() {
   };
 
   const goMain = () => {
-    alert("게시글 수정이 취소되었습니다.");
-    navigate(`/postView/${postId}`, { state: postId });
+    Swal.fire({
+      title: "게시글 수정이 취소되었습니다.",
+      icon: "info",
+      confirmButtonText: "확인",
+      confirmButtonColor: "#385493",
+    }).then(() => {
+      navigate(`/postView/${postId}`, { state: postId });
+    });
   };
   const onCreateForm = () => {
     if (items.includes(itemsValue)) {

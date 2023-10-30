@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import EvaluateModal from "./Modal/EvaluateModal";
 import commentLogo from "../img/commentLogo.jpg";
+import Swal from "sweetalert2";
 
 function EvaluateList(props) {
   const [evaluateModalIsOpen, setEvaluateModalIsOpen] = useState(false);
@@ -14,7 +15,12 @@ function EvaluateList(props) {
     setEvaluateModalIsOpen(true);
   };
   const alreadyDone = () => {
-    alert("이미 완료된 평가입니다.");
+    Swal.fire({
+      title: "이미 완료된 평가입니다.",
+      icon: "info",
+      confirmButtonText: "확인",
+      confirmButtonColor: "#385493"
+    })
   };
 
   useEffect(() => {

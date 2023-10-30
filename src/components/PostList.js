@@ -4,6 +4,7 @@ import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import tagJson from "../tag.json";
 import Search from "../components/Search";
+import Swal from "sweetalert2";
 
 function PostList() {
   let data = [
@@ -78,8 +79,13 @@ function PostList() {
     if (login) {
       navigate(`/createPost`);
     } else {
-      alert("로그인이 필요합니다.");
-      setLoginModalIsOpen(true);
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      });
+      // setLoginModalIsOpen(true);
     }
   };
 

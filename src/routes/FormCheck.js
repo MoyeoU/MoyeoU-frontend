@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 import studentImg from "../img/student.png";
+import Swal from "sweetalert2";
 
 function FormCheck() {
   const { state } = useLocation();
@@ -43,8 +44,14 @@ function FormCheck() {
       )
       .then((response) => {
         console.log(response.data);
-        alert("수락되었습니다.");
-        navigate(`/postView/${state.postId}`, { state: state.postId });
+        Swal.fire({
+          icon: "success",
+          title: "수락되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          navigate(`/postView/${state.postId}`, { state: state.postId });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -63,8 +70,14 @@ function FormCheck() {
       )
       .then((response) => {
         console.log(response.data);
-        alert("거절되었습니다.");
-        navigate("/");
+        Swal.fire({
+          icon: "success",
+          title: "거절되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          navigate("/");
+        });
       })
       .catch((error) => {
         console.log(error);

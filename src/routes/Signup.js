@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -26,8 +27,14 @@ function Signup() {
       })
       .then((response) => {
         console.log(response);
-        alert("회원가입이 완료되었습니다.");
-        navigate(`/`);
+        Swal.fire({
+          title: '회원가입이 완료되었습니다.',
+          icon: 'success',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#385493',
+        }).then(() => {
+          navigate(`/`);
+        });
         //document.location.href = "/";
       })
       .catch((err) => {
@@ -201,7 +208,7 @@ const Div = styled.div`
   }
   #department,
   #nickname,
-  #pw {
+  #password {
     width: 30em;
   }
   hr {

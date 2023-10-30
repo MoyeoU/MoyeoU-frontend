@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import studentImg from "../img/student.png";
+import Swal from "sweetalert2";
 
 function ApplyForm() {
   const { state } = useLocation();
@@ -68,8 +69,14 @@ function ApplyForm() {
       )
       .then((response) => {
         console.log(response);
-        alert("신청이 완료되었습니다.");
-        navigate(`/postView/${state}`, { state: state });
+        Swal.fire({
+          icon: "success",
+          title: "신청이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          navigate(`/postView/${state}`, { state: state });
+        });
       })
       .catch((err) => {
         console.log(err);

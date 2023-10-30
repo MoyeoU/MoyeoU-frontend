@@ -72,14 +72,29 @@ function PostView() {
     if (data.isHost) {
       //modify 화면 이동
       if (data.status !== "PROGRESS") {
-        alert("스터디원 모집이 종료되어 수정할 수 없습니다.");
+
+        Swal.fire({
+          title: "스터디원 모집이 종료되어 수정할 수 없습니다.",
+          icon: "info",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          navigate(`/postView/${postId}`, { state: postId });
+        });
       } else {
         navigate(`/editPost`, { state: postId });
       }
     } else {
       if (!data.attended) {
         if (data.status !== "PROGRESS") {
-          alert("모집이 완료되었습니다.");
+
+          Swal.fire({
+            icon: "info",
+            title: "모집이 완료되었습니다.",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#385493",
+          })
+
         } else {
           navigate(`/applyForm`, {
             state: postId,
@@ -87,7 +102,12 @@ function PostView() {
         }
       } else {
         if (data.status !== "PROGRESS") {
-          alert("모집이 완료되어 취소할 수 없습니다.");
+          Swal.fire({
+            title: "모집이 완료되어 취소할 수 없습니다.",
+            icon: "info",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#385493",
+          })
         } else {
           axios
             .post(`http://52.79.241.162:8080/posts/${postId}/cancel`, {
@@ -97,8 +117,14 @@ function PostView() {
             })
             .then((response) => {
               console.log(response);
-              alert("스터디 신청이 취소되었습니다.");
-              getPost();
+              Swal.fire({
+                title: "스터디 신청이 취소되었습니다.",
+                icon: "info",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#385493",
+              }).then(() => {
+                getPost();
+              });
             })
             .catch((err) => {
               console.log(err);
@@ -118,7 +144,16 @@ function PostView() {
       })
       .then((response) => {
         console.log(response);
-        alert("스터디원 모집이 완료되었습니다.");
+
+        Swal.fire({
+          title: "스터디원 모집이 완료되었습니다.",
+          icon: "info",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          getPost();
+        });
+
         getPost();
       })
       .catch((err) => {
@@ -136,8 +171,14 @@ function PostView() {
       })
       .then((response) => {
         console.log(response);
-        alert("스터디가 종료되었습니다.");
-        getPost();
+        Swal.fire({
+          title: "스터디원 모집이 완료되었습니다.",
+          icon: "info",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          getPost();
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -190,9 +231,16 @@ function PostView() {
         })
         .then((response) => {
           console.log(response.data);
-          alert("댓글 작성이 완료되었습니다.");
-          setComments("");
-          getPost();
+
+          Swal.fire({
+            icon: "success",
+            title: "댓글 작성이 완료되었습니다.",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#385493",
+          }).then(() => {
+            setComments("");
+            getPost();
+          });
         })
         .catch((error) => {
           console.log(error);
