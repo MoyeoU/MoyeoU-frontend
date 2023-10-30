@@ -8,13 +8,13 @@ import Search from "../components/Search";
 function PostList(props) {
   const [filteredTag, setFilteredTag] = useState(""); //해당 카테고리 태그들 리스트
 
-  const [login, setLogin] = useState(false);
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  //const [login, setLogin] = useState(false);
+  //const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const typeFiltering = (event) => {
     const temp = event.target.innerText;
     props.setFinalTag("");
-
+    props.setGatheringTag("PROGRESS");
     if (temp === "어학") {
       setFilteredTag(tagJson.tag1);
       props.setTypeClicked([temp, 1]);
@@ -33,9 +33,12 @@ function PostList(props) {
     } else if (temp === "고시/공무원") {
       setFilteredTag(tagJson.tag6);
       props.setTypeClicked([temp, 6]);
-    } else {
+    } else if (temp === "기타") {
       setFilteredTag("");
       props.setTypeClicked([temp, 7]);
+    } else {
+      setFilteredTag("");
+      props.setTypeClicked([temp, 0]);
     }
   };
   const chooseFinalTag = (event) => {
@@ -59,11 +62,11 @@ function PostList(props) {
   };
   const navigate = useNavigate();
   const goCreatePost = () => {
-    if (login) {
+    if (localStorage.getItem("id") !== null) {
       navigate(`/createPost`);
     } else {
       alert("로그인이 필요합니다.");
-      setLoginModalIsOpen(true);
+      //setLoginModalIsOpen(true);
     }
   };
 
@@ -71,19 +74,19 @@ function PostList(props) {
     props.setFinalTag("");
   };
 
-  const getLoginOrNot = () => {
-    //로그인 여부 체크, 나중에는 문자열 있는지없는지
-    if (localStorage.getItem("id")) {
-      setLogin(true);
-    } else {
-      setLogin(false);
-    }
-  };
+  // const getLoginOrNot = () => {
+  //   //로그인 여부 체크, 나중에는 문자열 있는지없는지
+  //   // if (localStorage.getItem("id")) {
+  //   //   setLogin(true);
+  //   // } else {
+  //   //   setLogin(false);
+  //   // }
+  // };
 
-  useEffect(() => {
-    getLoginOrNot();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login, loginModalIsOpen]);
+  // useEffect(() => {
+  //   getLoginOrNot();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loginModalIsOpen]);
 
   return (
     <>
@@ -146,14 +149,14 @@ function PostList(props) {
         </Classification>
         <WriteBtn>
           <p onClick={goCreatePost}>글쓰기</p>
-          {loginModalIsOpen && (
+          {/* {loginModalIsOpen && (
             <LoginModal
               open={loginModalIsOpen}
               onClose={() => {
                 setLoginModalIsOpen(false);
               }}
             />
-          )}
+          )} */}
         </WriteBtn>
       </Gather>
     </>

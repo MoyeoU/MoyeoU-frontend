@@ -6,18 +6,17 @@ import Moyeou from "../img/MoyeoU.jpg";
 function Post({ info }) {
   const navigate = useNavigate();
   const onClick = (postId) => {
-    if (localStorage.getItem("id")) {
+    if (localStorage.getItem("id") !== null) {
       navigate(`/postView/${postId}`, {
         state: postId,
       });
-      //state가 postId가 되어야 함
     } else {
       alert("로그인이 필요합니다.");
     }
   };
   const goMypage = (e, host) => {
     e.stopPropagation();
-    if (localStorage.getItem("id")) {
+    if (localStorage.getItem("id") !== null) {
       navigate(`/mypage/${host.nickname}`, {
         state: { state: host.nickname, memberId: host.id },
       });
