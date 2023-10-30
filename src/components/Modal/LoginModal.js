@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 function LoginModal({ onClose, setLoginModalIsOpen }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleKeyDown = (event) => {
@@ -34,15 +33,10 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
         localStorage.setItem("refreshToken", response.data.refreshToken);
         localStorage.setItem("id", response.data.nickname);
         console.log(response);
-        // if ((response.status = 200)) {
-        //   return navigate("/posts");
-        // }
-        //
         setLoginModalIsOpen((e) => !e);
         navigate(`/`);
       })
       .catch((err) => {
-        //setMessage(err.response.data.message);
         console.log(err);
         alert(err.response.data.message);
       });

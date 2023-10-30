@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Pagenation from "../components/Pagenation";
 import axios from "axios";
+import tagJson from "../tag.json";
 
 function Home() {
   const [page, setPage] = useState(1); //현재 페이지 state
@@ -17,7 +18,7 @@ function Home() {
   const [typeClicked, setTypeClicked] = useState(["전체", 0]); //클릭한 카테고리
   const [finalTag, setFinalTag] = useState(""); //클릭한 태그 리스트
   const [gatheringTag, setGatheringTag] = useState("PROGRESS"); //모집여부버튼
-  //progress모집중 complete모집완료 end스터디완료
+
   const postsData = (posts) => {
     if (posts) {
       let result = posts.slice(offset, offset + limit);
@@ -33,12 +34,15 @@ function Home() {
     }
     if (typeClicked[0] !== "전체") {
       input += "&categoryId=" + typeClicked[1];
-      //이거 id로 바꿔야함
     }
     if (finalTag !== "") {
+      const objectName = "tag" + typeClicked[1];
       for (let i = 0; i < finalTag.length; i++) {
-        input += "&hashTagId=" + finalTag[i];
-        //이거 id로 바꿔야 함
+        for (let j = 0; j < tagJson[objectName].length; j++) {
+          if (finalTag[i] === tagJson[objectName][j][0]) {
+            input += "&hashTagId=" + tagJson[objectName][j][1];
+          }
+        }
       }
     }
     console.log(input);
