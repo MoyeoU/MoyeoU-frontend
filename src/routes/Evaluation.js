@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import evaluationImg from "../img/evaluation.png";
 
 function Evaluation(props) {
   const { state } = useLocation();
@@ -54,8 +55,13 @@ function Evaluation(props) {
       ) : (
         <Div>
           <Notice>
-            <h1>토익 스터디 모임이 종료되었습니다.</h1>
-            <h2>함께한 스터디원을 평가해주세요.</h2>
+            <Img
+              style={{ width: "10rem", height: "10rem" }}
+              src={evaluationImg}
+              alt="evaluationImg"
+            ></Img>
+            <h1>"코테 준비 같이해요"</h1>
+            <h1>스터디가 종료되었습니다.</h1>
           </Notice>
           <List>
             {data.map((ev) => (
@@ -76,34 +82,41 @@ function Evaluation(props) {
   );
 }
 
+const Img = styled.img`
+  margin-top: 2.5vh;
+  margin-bottom: 2vh;
+`;
+
 const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
   max-width: 90%;
   margin: 0 auto;
-  h2 {
-    color: gray;
-  }
 `;
 
 const Notice = styled.div`
   margin: 3vh 0;
   text-align: center;
+  h1 {
+    font-size: 2.5rem;
+  }
 `;
 
 const List = styled.div`
-  margin: 0 auto;
-  padding: 1vh 20vw;
+  max-width: 40%;
+  margin: 7vh auto 0 auto;
+  padding-bottom: 4vh;
   overflow: auto;
+  border-bottom: 2px solid lightgray;
 `;
 
 const Close = styled.div`
-  margin: 0 auto 5vh auto;
+  margin: 5vh auto 10vh auto;
   text-align: center;
   button {
-    width: 7vw;
-    height: 6vh;
+    width: 6vw;
+    height: 5.4vh;
     background-color: #385493;
     color: white;
     font-weight: bold;
