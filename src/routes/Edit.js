@@ -7,6 +7,7 @@ import React from "react";
 import commentLogo from "../img/commentLogo.jpg";
 import { useRef } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Edit() {
   const [data, setData] = useState("");
@@ -70,9 +71,17 @@ function Edit() {
       /////// 여기까지!!!!
       .then((response) => {
         console.log(response.data);
-        alert("수정이 완료되었습니다.");
-        localStorage.setItem("id", id);
-        navigate(`/mypage/${id}`, { state: { state: id, memberId: 0 } });
+
+        Swal.fire({
+          icon: "success",
+          title: "수정이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
+        }).then(() => {
+          localStorage.setItem("id", id);
+          navigate(`/mypage/${id}`, { state: { state: id, memberId: 0 } });
+        });
+
       })
       .catch((error) => {
         console.log(error);
@@ -116,7 +125,12 @@ function Edit() {
     if (id !== "") {
       putUser();
     } else {
-      alert("닉네임을 작성해주세요");
+      Swal.fire({
+        icon: "warning",
+        text: "닉네임을 작성해주세요.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
     }
   };
   const withdrawAccount = () => {
@@ -130,9 +144,15 @@ function Edit() {
         })
         .then((response) => {
           console.log(response.data);
-          alert("탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.");
-          localStorage.clear();
-          navigate(`/`);
+          Swal.fire({
+            icon: "success",
+            title: "탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#385493",
+          }).then(() => {
+            localStorage.clear();
+            navigate(`/`);
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -171,11 +191,21 @@ function Edit() {
   };
   const addTagBtn = () => {
     if (selectTag === "") {
-      alert("해시태그를 선택해주세요");
+      Swal.fire({
+        icon: "warning",
+        text: "해시태그를 선택해주세요.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
       return;
     }
     if (isTagVisible.includes(selectTag)) {
-      alert("이미 선택한 해시태그입니다.");
+      Swal.fire({
+        icon: "warning",
+        text: "이미 선택한 해시태그입니다.",
+        showConfirmButton: false,
+        timer: 1200,
+      });
       return;
     }
     setIsTagVisible((prevList) => [...prevList, selectTag]);

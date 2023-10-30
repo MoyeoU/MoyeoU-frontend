@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import evaluationImg from "../img/evaluation.png";
+import Swal from "sweetalert2";
 
 function Evaluation(props) {
   const { state } = useLocation();
@@ -37,11 +38,21 @@ function Evaluation(props) {
       }
     }
     if (cnt === data.length) {
-      alert("평가가 완료되었습니다.");
-      //document.location.href = "/";
-      navigate(`/`);
+      Swal.fire({
+        icon: "success",
+        title: "평가가 완료되었습니다.",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      }).then(() => {
+        navigate(`/`);
+      });
     } else {
-      alert("평가를 모두 완료해주세요.");
+      Swal.fire({
+        icon: "info",
+        title: "평가를 모두 완료해주세요.",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      })
     }
   };
   useEffect(() => {

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
 import Moyeou from "../img/MoyeoU.jpg";
+import Swal from "sweetalert2";
+
 
 function Post({ info }) {
   const navigate = useNavigate();
@@ -11,7 +13,12 @@ function Post({ info }) {
         state: postId,
       });
     } else {
-      alert("로그인이 필요합니다.");
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      });
     }
   };
   const goMypage = (e, host) => {
@@ -21,7 +28,12 @@ function Post({ info }) {
         state: { state: host.nickname, memberId: host.id },
       });
     } else {
-      alert("로그인이 필요합니다.");
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      });
     }
   };
 
@@ -111,7 +123,7 @@ const PostLayout = styled.div`
   margin: 1vh 1vw;
   padding: 1.5vh 1vw;
   min-height: 35vh;
-  max-height: 35vh;
+  max-height: 38vh;
   border: 3px solid #385493;
   border-radius: 30px;
   float: left;
@@ -126,9 +138,9 @@ const PostLayout = styled.div`
 `;
 const Title = styled.div`
   margin: 0.8em 0.8em 4.5em 0.8em;
-  min-height: 4em;
-  max-height: 4em;
-  font-size: 1.3rem;
+  min-height: 3em;
+  max-height: 3em;
+  font-size: 1.1rem;
   // h3 {
   //   width: 15.4vw;
   //   overflow: hidden;

@@ -4,11 +4,17 @@ import { useState, useEffect } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import likeImg from "../../img/like.png";
+import Swal from "sweetalert2";
 
 function EvaluateModal(props) {
   const submit = () => {
     if (formValue.comment === "") {
-      alert("평가 메시지를 입력하세요.");
+      Swal.fire({
+        icon: "warning",
+        text: "평가 메시지를 입력하세요.",
+        showConfirmButton: false,
+        timer: 1200,
+      })
     } else {
       axios
         .post(

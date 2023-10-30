@@ -4,6 +4,7 @@ import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
 import tagJson from "../tag.json";
 import Search from "../components/Search";
+import Swal from "sweetalert2";
 
 function PostList(props) {
   const [filteredTag, setFilteredTag] = useState(""); //해당 카테고리 태그들 리스트
@@ -65,8 +66,13 @@ function PostList(props) {
     if (localStorage.getItem("id") !== null) {
       navigate(`/createPost`);
     } else {
-      alert("로그인이 필요합니다.");
-      //setLoginModalIsOpen(true);
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#385493",
+      });
+      // setLoginModalIsOpen(true);
     }
   };
 
