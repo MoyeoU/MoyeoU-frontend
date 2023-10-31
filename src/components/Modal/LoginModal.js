@@ -4,6 +4,8 @@ import Modal from "./Modal";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "../../article/swal.css";
 
 function LoginModal({ onClose, setLoginModalIsOpen }) {
   const [email, setEmail] = useState("");
@@ -38,7 +40,15 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
       })
       .catch((err) => {
         console.log(err);
-        alert(err.response.data.message);
+        Swal.fire({
+          icon: "warning",
+          text: err.response.data.message,
+          showConfirmButton: false,
+          timer: 1200,
+          customClass: {
+            overlay: "swal-overlay",
+          },
+        });
       });
   };
 
