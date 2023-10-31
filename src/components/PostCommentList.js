@@ -68,34 +68,43 @@ function PostCommentList({ comment, getPost, postId }) {
       });
   };
   const removeComment = (commentId) => {
-    const removeCommentOrNot = window.confirm("댓글을 삭제하시겠습니까?");
-    if (removeCommentOrNot) {
-      axios
-        .delete(
-          `http://52.79.241.162:8080/posts/${postId}/comments/${commentId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
+    Swal.fire({
+      title: "댓글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      confirmButtonColor: "#385493",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(
+            `http://52.79.241.162:8080/posts/${postId}/comments/${commentId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
 
-          Swal.fire({
-            icon: "success",
-            title: "댓글이 삭제되었습니다.",
-            confirmButtonText: "확인",
-            confirmButtonColor: "#385493",
-          }).then(() => {
-            getPost();
+            Swal.fire({
+              icon: "success",
+              title: "댓글이 삭제되었습니다.",
+              confirmButtonText: "확인",
+              confirmButtonColor: "#385493",
+            }).then(() => {
+              getPost();
+            });
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+      }
+    });
   };
+
   const goMemberPage = () => {
     let MEMBERID = 0;
     if (!comment.isAuthor) MEMBERID = comment.authorId;
