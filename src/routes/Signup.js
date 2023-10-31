@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function Signup() {
+function Signup(props) {
   const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
   const [nickname, setNickname] = useState("");
@@ -28,10 +28,10 @@ function Signup() {
       .then((response) => {
         console.log(response);
         Swal.fire({
-          title: '회원가입이 완료되었습니다.',
-          icon: 'success',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#385493',
+          title: "회원가입이 완료되었습니다.",
+          icon: "success",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#385493",
         }).then(() => {
           navigate(`/`);
         });
@@ -50,7 +50,12 @@ function Signup() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       <Div>
         <H1Div>
           <h1>

@@ -6,8 +6,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import studentImg from "../img/student.png";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
-function FormCheck() {
+function FormCheck(props) {
   const { state } = useLocation();
   const [data, setData] = useState("");
   const navigate = useNavigate();
@@ -91,9 +92,18 @@ function FormCheck() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        <Div>로딩중</Div>
+        <Div>
+          <LoadingImg>
+            <img src={loading} alt="loading.."></img>
+          </LoadingImg>
+        </Div>
       ) : (
         <Div>
           <Content>
@@ -167,6 +177,14 @@ const Table = styled.table`
   border-spacing: 0 2vh;
   padding-bottom: 3vh;
   border-bottom: 2px solid lightgray;
+`;
+
+const LoadingImg = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
 `;
 
 const Img = styled.img`
