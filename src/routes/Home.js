@@ -49,7 +49,7 @@ function Home() {
       }
       input = input.slice(0, -1);
     }
-    console.log(input);
+    //console.log(input);
     axios
       .get(`http://52.79.241.162:8080/posts?${input}`)
       .then((response) => {
