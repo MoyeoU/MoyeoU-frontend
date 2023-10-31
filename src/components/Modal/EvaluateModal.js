@@ -5,6 +5,7 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import likeImg from "../../img/like.png";
 import Swal from "sweetalert2";
+import "../../article/swal.css";
 
 function EvaluateModal(props) {
   const submit = () => {
@@ -14,7 +15,10 @@ function EvaluateModal(props) {
         text: "평가 메시지를 입력하세요.",
         showConfirmButton: false,
         timer: 1200,
-      })
+        customClass: {
+          overlay: "swal-overlay",
+        },
+      });
     } else {
       axios
         .post(

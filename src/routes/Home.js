@@ -82,10 +82,14 @@ function Home() {
           gatheringTag={gatheringTag}
           setGatheringTag={setGatheringTag}
         />
-        {data ? (
-          <Post info={postsData(data)} />
+        {data.length !== 0 ? (
+          <>
+            <Post info={postsData(data)} />
+          </>
         ) : (
-          <img src={loading} alt="loading.."></img>
+          <Img>
+            <img src={loading} alt="loading.."></img>
+          </Img>
         )}
         <Pagenation
           limit={limit}
@@ -106,8 +110,13 @@ const Div = styled.div`
   height: auto;
   overflow: auto;
   max-width: 100%;
+`;
+
+const Img = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
   img {
-    text-align: center;
+    width: 10vw;
   }
 `;
 
