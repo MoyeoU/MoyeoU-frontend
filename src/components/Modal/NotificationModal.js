@@ -65,19 +65,47 @@ function NotificationModal({ onClose }) {
               .reverse()
               .map((item, idx) =>
                 item.type === "ATTEND" ? (
-                  <Attend item={item} key={idx} />
+                  <Attend
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "CANCEL" ? (
-                  <Cancel item={item} key={idx} />
+                  <Cancel
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "ACCEPT" ? (
-                  <Accept item={item} key={idx} />
+                  <Accept
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "REJECT" ? (
-                  <Reject item={item} key={idx} />
+                  <Reject
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "COMPLETE" ? (
-                  <Complete item={item} key={idx} />
+                  <Complete
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "END" ? (
-                  <End item={item} key={idx} />
+                  <End
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : item.type === "COMMENT" ? (
-                  <Comment item={item} key={idx} />
+                  <Comment
+                    item={item}
+                    getNotification={getNotification}
+                    key={idx}
+                  />
                 ) : (
                   <></>
                 )

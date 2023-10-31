@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Pagenation from "../components/Pagenation";
 import axios from "axios";
 import tagJson from "../tag.json";
+import loading from "../img/loading.png";
 
 function Home() {
   const [page, setPage] = useState(1); //현재 페이지 state
@@ -35,17 +36,20 @@ function Home() {
     if (typeClicked[0] !== "전체") {
       input += "&categoryId=" + typeClicked[1];
     }
-    if (finalTag !== "") {
+    if (finalTag.length !== 0) {
+      input += "&hashTagIds=";
       const objectName = "tag" + typeClicked[1];
       for (let i = 0; i < finalTag.length; i++) {
         for (let j = 0; j < tagJson[objectName].length; j++) {
           if (finalTag[i] === tagJson[objectName][j][0]) {
-            input += "&hashTagId=" + tagJson[objectName][j][1];
+            //input += "&hashTagId=" + tagJson[objectName][j][1];
+            input += tagJson[objectName][j][1] + ",";
           }
         }
       }
+      input = input.slice(0, -1);
     }
-    console.log(input);
+    //console.log(input);
     axios
       .get(`http://52.79.241.162:8080/posts?${input}`)
       .then((response) => {
@@ -78,7 +82,11 @@ function Home() {
           gatheringTag={gatheringTag}
           setGatheringTag={setGatheringTag}
         />
-        {data ? <Post info={postsData(data)} /> : <p>로딩중</p>}
+        {data ? (
+          <Post info={postsData(data)} />
+        ) : (
+          <img src={loading} alt="loading.."></img>
+        )}
         <Pagenation
           limit={limit}
           page={page}
@@ -98,6 +106,9 @@ const Div = styled.div`
   height: auto;
   overflow: auto;
   max-width: 100%;
+  img {
+    text-align: center;
+  }
 `;
 
 export default Home;

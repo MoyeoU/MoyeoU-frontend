@@ -38,6 +38,7 @@ const TextEditor = (props) => {
     <>
       <Container>
         <Editor
+          editorClassName="DraftEditor-root"
           placeholder="스터디 소개글을 작성해주세요"
           editorState={editorState}
           onEditorStateChange={updateTextDescription}
@@ -59,6 +60,9 @@ const TextEditor = (props) => {
 
 const Container = styled.div`
   width: 100%;
+  .DraftEditor-root {
+    font-size: 15px;
+  }
 `;
 
 export default TextEditor;

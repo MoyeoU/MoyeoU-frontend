@@ -1,38 +1,68 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { MdPlaylistRemove } from "react-icons/md";
+import axios from "axios";
 
-function Attend(item) {
+function Attend(props) {
   const navigate = useNavigate();
   const onClick = (event) => {
     event.stopPropagation();
     navigate(`/formCheck`, {
       state: {
-        postId: item.item.postId,
-        memberId: item.item.memberId,
-        memberName: item.item.memberNickname,
-        participationId: item.item.participationId,
+        postId: props.item.postId,
+        memberId: props.item.memberId,
+        memberName: props.item.memberNickname,
+        participationId: props.item.participationId,
       },
     });
   };
   const moveToPost = () => {
-    navigate(`/postView/${item.item.postId}`, {
-      state: item.item.postId,
+    navigate(`/postView/${props.item.postId}`, {
+      state: props.item.postId,
     });
+  };
+
+  const removeList = (e) => {
+    e.stopPropagation();
+    axios
+      .post(
+        `http://52.79.241.162:8080/notifications/${props.item.notificationId}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        props.getNotification();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <>
-      <Contents onClick={moveToPost}>
-        <div>
-          {item.item.memberNickname}님이 '{item.item.postTitle}' 게시물에 참여를
-          신청하였습니다.
-        </div>
-        <button onClick={onClick}>
-          신청폼
-          <br />
-          확인
-        </button>
-      </Contents>
+      {props.item.deleted ? (
+        ""
+      ) : (
+        <Contents onClick={moveToPost}>
+          <div>
+            {props.item.memberNickname}님이 '{props.item.postTitle}' 게시물에
+            참여를 신청하였습니다.
+          </div>
+          <button onClick={onClick}>
+            신청폼
+            <br />
+            확인
+          </button>
+          <div className="remove" onClick={removeList}>
+            <MdPlaylistRemove size="30" className="removeIcon" />
+          </div>
+        </Contents>
+      )}
     </>
   );
 }
@@ -52,13 +82,19 @@ const Contents = styled.div`
     font-weight: bold;
     align-items: center;
     display: flex;
+    &.remove {
+      margin-left: 1vw;
+    }
+    .removeIcon {
+      pointer-events: none;
+    }
   }
   button {
     max-width: 4.7vw;
     min-width: 4.7vw;
     height: 6vh;
     background-color: #deeaf6;
-    margin-left: 0.5vw;
+    margin: 0.5vw;
     color: black;
     font-weight: bold;
     font-size: 1.2rem;
@@ -73,6 +109,7 @@ const Contents = styled.div`
   }
   :hover {
     cursor: pointer;
+    color: gray;
   }
 `;
 
