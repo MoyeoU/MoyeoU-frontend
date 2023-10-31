@@ -104,7 +104,7 @@ function Mypage() {
               id="-1"
             />
             <br />
-            <starText>
+            <div className="starText">
               {(dataa.point === null ? 0 : Number(dataa.point) / 20).toFixed(1)}{" "}
               / 5.0 <button onClick={viewComment}>{">"}</button>
               {commentModalIsOpen && (
@@ -117,7 +117,7 @@ function Mypage() {
                   name={dataa.nickname}
                 />
               )}
-            </starText>
+            </div>
             <br />
             <br />
             <hr />
@@ -214,7 +214,7 @@ const Left = styled.div`
     font-size: 4vh;
     margin: 1vh 0 2vh 0;
   }
-  starText {
+  .starText {
     font-weight: bold;
     font-size: 1.8rem;
   }
