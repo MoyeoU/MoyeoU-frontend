@@ -11,8 +11,9 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCommentList from "../components/PostCommentList";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
-function PostView() {
+function PostView(props) {
   const { state } = useLocation();
   const postId = state; //임시번호
   const [data, setData] = useState("");
@@ -72,7 +73,6 @@ function PostView() {
     if (data.isHost) {
       //modify 화면 이동
       if (data.status !== "PROGRESS") {
-
         Swal.fire({
           title: "스터디원 모집이 종료되어 수정할 수 없습니다.",
           icon: "info",
@@ -87,14 +87,12 @@ function PostView() {
     } else {
       if (!data.attended) {
         if (data.status !== "PROGRESS") {
-
           Swal.fire({
             icon: "info",
             title: "모집이 완료되었습니다.",
             confirmButtonText: "확인",
             confirmButtonColor: "#385493",
-          })
-
+          });
         } else {
           navigate(`/applyForm`, {
             state: postId,
@@ -107,7 +105,7 @@ function PostView() {
             icon: "info",
             confirmButtonText: "확인",
             confirmButtonColor: "#385493",
-          })
+          });
         } else {
           axios
             .post(`http://52.79.241.162:8080/posts/${postId}/cancel`, {
@@ -187,12 +185,12 @@ function PostView() {
 
   const removePost = () => {
     Swal.fire({
-      title: '게시물을 삭제하시겠습니까?',
-      icon: 'warning',
+      title: "게시물을 삭제하시겠습니까?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: '확인',
-      confirmButtonColor: '#385493',
-      cancelButtonText: '취소',
+      confirmButtonText: "확인",
+      confirmButtonColor: "#385493",
+      cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -203,17 +201,17 @@ function PostView() {
           })
           .then((response) => {
             Swal.fire({
-              title: '삭제가 완료되었습니다.',
-              icon: 'success',
-              confirmButtonText: '확인',
-              confirmButtonColor: '#385493',
+              title: "삭제가 완료되었습니다.",
+              icon: "success",
+              confirmButtonText: "확인",
+              confirmButtonColor: "#385493",
             }).then(() => {
               navigate(`/`);
             });
           })
           .catch((error) => {
             console.log(error);
-            Swal.fire('게시물 삭제 중 오류가 발생했습니다.', 'error');
+            Swal.fire("게시물 삭제 중 오류가 발생했습니다.", "error");
           });
       }
     });
@@ -256,9 +254,18 @@ function PostView() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        "로딩중"
+        <div>
+          <LoadingImg>
+            <img src={loading} alt="loading.."></img>
+          </LoadingImg>
+        </div>
       ) : (
         <div id="root">
           <div id="articlewrapper">
@@ -411,6 +418,14 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
+`;
+
+const LoadingImg = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
 `;
 
 export default PostView;

@@ -8,8 +8,9 @@ import commentLogo from "../img/commentLogo.jpg";
 import { useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
-function Edit() {
+function Edit(props) {
   const [data, setData] = useState("");
   const [id, setId] = useState();
   const [intro, setIntro] = useState("");
@@ -81,7 +82,6 @@ function Edit() {
           localStorage.setItem("id", id);
           navigate(`/mypage/${id}`, { state: { state: id, memberId: 0 } });
         });
-
       })
       .catch((error) => {
         console.log(error);
@@ -223,9 +223,18 @@ function Edit() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        <Div>로딩중..</Div>
+        <Div>
+          <LoadingImg>
+            <img src={loading} alt="loading.."></img>
+          </LoadingImg>
+        </Div>
       ) : (
         <Div>
           <h1>내 정보 수정하기</h1>
@@ -397,6 +406,14 @@ const Div = styled.div`
     font-weight: bold;
     text-align: center;
     font-size: 2.5rem;
+  }
+`;
+
+const LoadingImg = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
   }
 `;
 

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function CreatePost() {
+function CreatePost(props) {
   const [selectCategory, setselectCategory] = useState("어학");
   const [selectTag, setselectTag] = useState("토익");
   const [itemsValue, setItemsValue] = useState("");
@@ -174,7 +174,12 @@ function CreatePost() {
   };
   return (
     <div>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       <CreateDiv>
         <Div>
           <TitleUl>

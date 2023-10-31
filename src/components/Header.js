@@ -3,20 +3,22 @@ import logo from "../img/MoyeoU.jpg";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
-import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
-import { BiChat, BiHeart } from "react-icons/bi";
+import { BiSolidHeart, BiHeart } from "react-icons/bi";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import NotificationModal from "../components/Modal/NotificationModal";
-import ChatModal from "../components/Modal/ChatModal";
 import axios from "axios";
 
-function Header() {
+function Header(props) {
   //const userId = data.words.filter(word => (word.day === day));
   const [user, setUser] = useState("");
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [notificationModalIsOpen, setNotificationModalIsOpen] = useState(false);
-  const [chatModalIsOpen, setChatModalIsOpen] = useState(false);
+  const [alertData, setAlertData] = useState("");
+  //const [isAlertCountChange, setIsAlertCountChange] = useState(false);
   const navigate = useNavigate();
+  //let alertCount = 0;
   const getLoginOrNot = () => {
     //로그인 여부 체크, 나중에는 문자열 있는지없는지
     if (localStorage.getItem("id") === null) {
@@ -61,18 +63,51 @@ function Header() {
   const goSignup = () => {
     navigate(`/sign-up`);
   };
-  const goChat = () => {
-    navigate(`/chat`, { state: user });
-    //setChatModalIsOpen(true);
-  };
+
   const goAlert = () => {
     setNotificationModalIsOpen(true);
+    props.setIsAlertCountChange(false);
+    props.setAlertCount(alertData.length);
   };
+  const getAlertCount = () => {
+    axios
+      .get("http://52.79.241.162:8080/notifications", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.length);
+        //let data = response.data;
+        console.log(response.data.length);
+        console.log(props.alertCount);
+        if (response.data.length !== props.alertCount) {
+          //변화가 존재
+          props.setIsAlertCountChange(true);
+        }
 
+        setAlertData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  console.log(props.alertCount);
+  console.log(props.isAlertCountChange); //true
   useEffect(() => {
     getLoginOrNot();
+
+    const timer = setInterval(() => {
+      if (localStorage.getItem("id") !== null) {
+        getAlertCount();
+      }
+    }, 5000);
+    // if (props.isAlertCountChange) {
+    //   clearInterval(timer);
+    // }
+    return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loginModalIsOpen]);
+  }, [user, loginModalIsOpen, props.alertCount]);
 
   return (
     <HeaderBar>
@@ -86,24 +121,18 @@ function Header() {
         {/* </a> */}
       </Img>
       <RightDiv>
-        {/*{login ? (
-          //채팅
-          <Btn>
-            <BiChat size="25" onClick={goChat} />
-             {chatModalIsOpen && (
-              <ChatModal
-                open={chatModalIsOpen}
-                onClose={() => {
-                  setChatModalIsOpen(false);
-                }}
-              />
-            )} 
-          </Btn>
-        ) : null}*/}
         {login ? (
           //알림
           <Btn>
-            <BiHeart size="25" onClick={goAlert} />
+            <FaRegHeart
+              className={
+                props.isAlertCountChange & !notificationModalIsOpen
+                  ? "heart"
+                  : ""
+              }
+              size="25"
+              onClick={goAlert}
+            />
             {notificationModalIsOpen && (
               <NotificationModal
                 open={notificationModalIsOpen}
@@ -186,6 +215,9 @@ const Btn = styled.div`
     font-weight: bold;
     font-size: 1.75rem;
     margin: 1vh 0;
+  }
+  .heart {
+    color: red;
   }
 `;
 

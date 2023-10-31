@@ -9,7 +9,7 @@ import axios from "axios";
 import tagJson from "../tag.json";
 import loading from "../img/loading.png";
 
-function Home() {
+function Home(props) {
   const [page, setPage] = useState(1); //현재 페이지 state
   const limit = 12;
   const offset = (page - 1) * limit;
@@ -68,7 +68,12 @@ function Home() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       <Ad />
       <Div>
         <PostList

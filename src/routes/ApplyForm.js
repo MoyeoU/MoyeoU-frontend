@@ -6,8 +6,9 @@ import axios from "axios";
 import { useState } from "react";
 import studentImg from "../img/student.png";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
-function ApplyForm() {
+function ApplyForm(props) {
   const { state } = useLocation();
   const [data, setData] = useState("");
   const [submitData, setSubmitData] = useState([]);
@@ -85,9 +86,18 @@ function ApplyForm() {
 
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        <Div>로딩중</Div>
+        <Div>
+          <LoadingImg>
+            <img src={loading} alt="loading.."></img>
+          </LoadingImg>
+        </Div>
       ) : (
         <Div>
           <Content>
@@ -131,7 +141,6 @@ const Label = styled.label`
   padding-left: 2vw;
 `;
 
-
 const Img = styled.img`
   margin-top: 2.5vh;
 `;
@@ -157,6 +166,14 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
+`;
+
+const LoadingImg = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
 `;
 
 const Content = styled.div`

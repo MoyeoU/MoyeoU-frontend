@@ -8,8 +8,9 @@ import StarRate from "../components/Mypage/StarRate";
 import CommentModal from "../components/Modal/CommentModal";
 import Tag from "../components/Mypage/Tag";
 import axios from "axios";
+import loading from "../img/loading.png";
 
-function Mypage() {
+function Mypage(props) {
   const [user, setUser] = useState(localStorage.getItem("id"));
   const { state } = useLocation();
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
@@ -88,9 +89,18 @@ function Mypage() {
   //console.log(dataa.imagePath);
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {dataa === "" ? (
-        <Div>로딩중</Div>
+        <Div>
+          <Img>
+            <img src={loading} alt="loading.."></img>
+          </Img>
+        </Div>
       ) : (
         <Div>
           <Left>
@@ -357,6 +367,14 @@ const NowOrNot = styled.div`
 const HistoryDiv = styled.div`
   height: auto;
   //overflow: auto;
+`;
+
+const Img = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
 `;
 
 export default Mypage;

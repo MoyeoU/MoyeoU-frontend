@@ -7,8 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import tagJson from "../tag.json";
 import axios from "axios";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
-function EditPost() {
+function EditPost(props) {
   const [selectCategory, setselectCategory] = useState("어학");
   const [selectTag, setselectTag] = useState("토익");
   const [itemsValue, setItemsValue] = useState("");
@@ -192,9 +193,18 @@ function EditPost() {
 
   return (
     <div>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        "로딩중"
+        <div>
+          <Img>
+            <img src={loading} alt="loading.."></img>
+          </Img>
+        </div>
       ) : (
         <>
           <CreateDiv>
@@ -390,6 +400,14 @@ function EditPost() {
     </div>
   );
 }
+
+const Img = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
+`;
 
 const Li = styled.li`
   float: left;

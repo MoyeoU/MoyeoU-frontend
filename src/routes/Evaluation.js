@@ -7,6 +7,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import evaluationImg from "../img/evaluation.png";
 import Swal from "sweetalert2";
+import loading from "../img/loading.png";
 
 function Evaluation(props) {
   const { state } = useLocation();
@@ -52,7 +53,7 @@ function Evaluation(props) {
         title: "평가를 모두 완료해주세요.",
         confirmButtonText: "확인",
         confirmButtonColor: "#385493",
-      })
+      });
     }
   };
   useEffect(() => {
@@ -61,9 +62,18 @@ function Evaluation(props) {
   }, []);
   return (
     <>
-      <Header />
+      <Header
+        isAlertCountChange={props.isAlertCountChange}
+        setIsAlertCountChange={props.setIsAlertCountChange}
+        alertCount={props.alertCount}
+        setAlertCount={props.setAlertCount}
+      />
       {data === "" ? (
-        <Div>로딩중</Div>
+        <Div>
+          <LoadingImg>
+            <img src={loading} alt="loading.."></img>
+          </LoadingImg>
+        </Div>
       ) : (
         <Div>
           <Notice>
@@ -97,6 +107,14 @@ function Evaluation(props) {
 const Img = styled.img`
   margin-top: 2.5vh;
   margin-bottom: 2vh;
+`;
+
+const LoadingImg = styled.div`
+  text-align: center;
+  padding: 5vh 5vw;
+  img {
+    width: 10vw;
+  }
 `;
 
 const Div = styled.div`

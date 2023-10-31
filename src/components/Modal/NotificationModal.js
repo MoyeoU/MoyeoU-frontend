@@ -28,7 +28,7 @@ function NotificationModal({ onClose }) {
       })
       .then((response) => {
         console.log(response.data);
-        setData(response.data);
+        setData(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -44,9 +44,11 @@ function NotificationModal({ onClose }) {
     const $body = document.querySelector("body");
     const overflow = $body.style.overflow;
     $body.style.overflow = "hidden";
+
     return () => {
       $body.style.overflow = overflow;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useOutSideClick(modalRef, handleClose);
@@ -61,55 +63,49 @@ function NotificationModal({ onClose }) {
         </CloseButton>
         {data === ""
           ? ""
-          : data
-              .reverse()
-              .map((item, idx) =>
-                item.type === "ATTEND" ? (
-                  <Attend
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "CANCEL" ? (
-                  <Cancel
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "ACCEPT" ? (
-                  <Accept
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "REJECT" ? (
-                  <Reject
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "COMPLETE" ? (
-                  <Complete
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "END" ? (
-                  <End
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : item.type === "COMMENT" ? (
-                  <Comment
-                    item={item}
-                    getNotification={getNotification}
-                    key={idx}
-                  />
-                ) : (
-                  <></>
-                )
-              )}
+          : data.map((item, idx) =>
+              item.type === "ATTEND" ? (
+                <Attend
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : item.type === "CANCEL" ? (
+                <Cancel
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : item.type === "ACCEPT" ? (
+                <Accept
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : item.type === "REJECT" ? (
+                <Reject
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : item.type === "COMPLETE" ? (
+                <Complete
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : item.type === "END" ? (
+                <End item={item} getNotification={getNotification} key={idx} />
+              ) : item.type === "COMMENT" ? (
+                <Comment
+                  item={item}
+                  getNotification={getNotification}
+                  key={idx}
+                />
+              ) : (
+                <></>
+              )
+            )}
       </ModalWrap>
     </ModalContainer>
   );
