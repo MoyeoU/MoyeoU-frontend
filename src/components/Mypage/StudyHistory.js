@@ -105,11 +105,12 @@ const Div = styled.div`
 const TitleDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-left: 0.5vw;
   margin-top: 1.3vh;
-  margin-bottom: 3.7vh;
+  margin-bottom: 3vh;
   h3 {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
     color: #595959;
     margin: 0;
   }
@@ -119,9 +120,12 @@ const CompleteBtn = styled.div`
   float: right;
   background-color: #ffffff;
   border-radius: 0.7em;
-  height: 4.1vh;
-  padding: 0.005vh 0.6vw;
+  height: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   p {
+    padding: 0.1vh 0.6vw;
     pointer-events: none;
     display: inline-block;
     color: #767171;
@@ -137,7 +141,7 @@ const TagBtn = styled.div`
     margin: 0.5em;
     pointer-events: none;
     display: inline-block;
-    padding: 0.3em 0.8em;
+    padding: 0.5em 0.8em;
     border-radius: 0.4em;
     font-weight: bold;
     font-size: 1.1rem;

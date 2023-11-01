@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 
 function Pagenation({ totalPosts, limit, page, setPage }) {
-  console.log(totalPosts);
   const numPages = Math.ceil(totalPosts / limit);
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;

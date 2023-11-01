@@ -3,22 +3,18 @@ import logo from "../img/MoyeoU.jpg";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginModal from "./Modal/LoginModal";
-import { BiSolidHeart, BiHeart } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import NotificationModal from "../components/Modal/NotificationModal";
 import axios from "axios";
 
 function Header(props) {
-  //const userId = data.words.filter(word => (word.day === day));
   const [user, setUser] = useState("");
   const [login, setLogin] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [notificationModalIsOpen, setNotificationModalIsOpen] = useState(false);
   const [alertData, setAlertData] = useState("");
-  //const [isAlertCountChange, setIsAlertCountChange] = useState(false);
   const navigate = useNavigate();
-  //let alertCount = 0;
   const getLoginOrNot = () => {
     //로그인 여부 체크, 나중에는 문자열 있는지없는지
     if (localStorage.getItem("id") === null) {
@@ -77,10 +73,6 @@ function Header(props) {
         },
       })
       .then((response) => {
-        console.log(response.data.length);
-        //let data = response.data;
-        console.log(response.data.length);
-        console.log(props.alertCount);
         if (response.data.length !== props.alertCount) {
           //변화가 존재
           props.setIsAlertCountChange(true);
@@ -92,8 +84,8 @@ function Header(props) {
         console.log(error);
       });
   };
-  console.log(props.alertCount);
-  console.log(props.isAlertCountChange); //true
+  //console.log(props.alertCount);
+  //console.log(props.isAlertCountChange); //true
   useEffect(() => {
     getLoginOrNot();
 
@@ -101,10 +93,7 @@ function Header(props) {
       if (localStorage.getItem("id") !== null) {
         getAlertCount();
       }
-    }, 5000);
-    // if (props.isAlertCountChange) {
-    //   clearInterval(timer);
-    // }
+    }, 3000);
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loginModalIsOpen, props.alertCount]);
@@ -112,13 +101,11 @@ function Header(props) {
   return (
     <HeaderBar>
       <Img onClick={goHome}>
-        {/* <a href={navigate=(`/`)}> */}
         <img
           style={{ width: "8rem", height: "4rem" }}
           src={logo}
           alt="logo"
         ></img>
-        {/* </a> */}
       </Img>
       <RightDiv>
         {login ? (
@@ -175,6 +162,10 @@ function Header(props) {
                 onClose={() => {
                   setLoginModalIsOpen(false);
                 }}
+                isAlertCountChange={props.isAlertCountChange}
+                setIsAlertCountChange={props.setIsAlertCountChange}
+                alertCount={props.alertCount}
+                setAlertCount={props.setAlertCount}
               />
             )}
           </Btn>

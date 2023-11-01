@@ -170,7 +170,7 @@ function PostView(props) {
       .then((response) => {
         console.log(response);
         Swal.fire({
-          title: "스터디원 모집이 완료되었습니다.",
+          title: "스터디가 종료되었습니다.",
           icon: "info",
           confirmButtonText: "확인",
           confirmButtonColor: "#385493",
@@ -249,8 +249,7 @@ function PostView(props) {
   useEffect(() => {
     getPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  //댓글 업로드하면 리렌더링
+  }, [postId]);
 
   return (
     <>

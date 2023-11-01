@@ -109,12 +109,13 @@ function PostList(props) {
           >
             전체
           </li>
-          {tagJson.category.map((item) => {
+          {tagJson.category.map((item, idx) => {
             return (
               <>
                 <li
                   className={item[0] === props.typeClicked[0] ? "active" : ""}
                   onClick={typeFiltering}
+                  key={idx}
                 >
                   {item[0]}
                 </li>
@@ -123,11 +124,12 @@ function PostList(props) {
           })}
         </ul>
         <Detail>
-          {Object.values(filteredTag).map((item) =>
+          {Object.values(filteredTag).map((item, idx) =>
             item !== "전체" ? (
               <button
                 className={props.finalTag.includes(item[0]) ? "active2" : ""}
                 onClick={chooseFinalTag}
+                key={idx}
               >
                 #{item[0]}
               </button>
@@ -136,7 +138,11 @@ function PostList(props) {
             )
           )}
           <br />
-          <p onClick={resetTag}>필터 초기화 X</p>
+          {props.finalTag.length === 0 ? (
+            ""
+          ) : (
+            <p onClick={resetTag}>필터 초기화 X</p>
+          )}
         </Detail>
       </List>
 

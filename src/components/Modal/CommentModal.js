@@ -101,7 +101,7 @@ const ModalWrap = styled.div`
   background-color: #fff;
   position: absolute;
   top: 50%;
-  left: 25%;
+  left: 30%;
   box-shadow: 0 0.5rem 1rem gray;
 `;
 

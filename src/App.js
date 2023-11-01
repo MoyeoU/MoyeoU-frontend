@@ -21,7 +21,6 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route
-            //path={`${process.env.PUBLIC_URL}/hello`}
             path="/"
             element={
               <Home
@@ -33,8 +32,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //마이페이지 경로
             path="/myPage/:id"
             element={
               <Mypage
@@ -46,8 +43,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //회원가입 경로
             path="/sign-up"
             element={
               <Signup
@@ -59,8 +54,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //postDetail 경로
             path="/postView/:id"
             element={
               <PostView
@@ -72,8 +65,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //createPost 경로
             path="/createPost"
             element={
               <CreatePost
@@ -85,8 +76,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //notice 경로
             path="/evaluateMember"
             element={
               <Evaluation
@@ -98,8 +87,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //edit 경로
             path="/edit/:id"
             element={
               <Edit
@@ -111,8 +98,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //edit 경로
             path="/applyForm"
             element={
               <ApplyForm
@@ -124,8 +109,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //edit 경로
             path="/editPost"
             element={
               <EditPost
@@ -137,8 +120,6 @@ function App() {
             }
           ></Route>
           <Route
-            //path={`${process.env.PUBLIC_URL}/movie/:id`}
-            //edit 경로
             path="/formCheck"
             element={
               <FormCheck

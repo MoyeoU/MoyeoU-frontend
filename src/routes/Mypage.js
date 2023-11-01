@@ -72,7 +72,7 @@ function Mypage(props) {
   useEffect(() => {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [state]);
 
   const viewComment = () => {
     setCommentModalIsOpen(true);
@@ -210,14 +210,13 @@ const Div = styled.div`
   height: auto;
   min-height: 70vh;
   overflow: auto;
-  margin: 0 auto 7vh auto;
-  //float:left;
+  margin: 4vh auto 5vh auto;
 `;
 
 const Left = styled.div`
   float: left;
   text-align: center;
-  width: 28%;
+  width: 25%;
   margin: 4vh 5vw 4vh 5vw;
   h3 {
     font-weight: bold;
@@ -257,7 +256,7 @@ const More = styled.div`
     padding: 0 0 0 2vw;
     color: gray;
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 `;
 const OneLiner = styled.div`
@@ -275,10 +274,9 @@ const OneLiner = styled.div`
 const Btn = styled.div`
   button {
     padding: 1vh 1vw;
-    width: 7em;
+    width: 6.5em;
     height: 3em;
-    font-size: 1.7rem;
-    border: 1px solid #385493;
+    font-size: 1.6rem;
     background-color: #385493;
     color: white;
     font-weight: bold;
@@ -287,7 +285,7 @@ const Btn = styled.div`
       cursor: pointer;
     }
   }
-  margin: 5vh 0;
+  margin: 7vh 0 4vh 0;
 `;
 
 const Middle = styled.div`
@@ -301,7 +299,7 @@ const Middle = styled.div`
 
 const Right = styled.div`
   float: left;
-  width: 45%;
+  width: 50%;
   margin: 4vh 4vw 4vh 5vw;
   h2,
   h3 {

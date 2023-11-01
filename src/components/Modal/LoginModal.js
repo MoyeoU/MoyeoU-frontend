@@ -7,7 +7,14 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../article/swal.css";
 
-function LoginModal({ onClose, setLoginModalIsOpen }) {
+function LoginModal({
+  onClose,
+  setLoginModalIsOpen,
+  setIsAlertCountChange,
+  isAlertCountChange,
+  setAlertCount,
+  alertCount,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -36,6 +43,7 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
         localStorage.setItem("id", response.data.nickname);
         console.log(response);
         setLoginModalIsOpen((e) => !e);
+        getAlert();
         navigate(`/`);
       })
       .catch((err) => {
@@ -52,12 +60,28 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
       });
   };
 
+  const getAlert = () => {
+    axios
+      .get("http://52.79.241.162:8080/notifications", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.length);
+        setAlertCount(response.data.length);
+        //setAlertData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  console.log(alertCount);
   return (
     <Modal onClose={onClose}>
       <Div>
         <img src={image} alt="logo" />
         <br />
-        {/* <form onSubmit={onSubmit}> */}
         <input
           placeholder="학교 이메일"
           type="email"
@@ -83,7 +107,6 @@ function LoginModal({ onClose, setLoginModalIsOpen }) {
         <button type="submit" onClick={onSubmit}>
           로그인
         </button>
-        {/* </form> */}
       </Div>
     </Modal>
   );
