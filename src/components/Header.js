@@ -84,8 +84,8 @@ function Header(props) {
         console.log(error);
       });
   };
-  //console.log(props.alertCount);
-  //console.log(props.isAlertCountChange); //true
+  console.log(props.alertCount);
+  console.log(props.isAlertCountChange); //true
   useEffect(() => {
     getLoginOrNot();
 

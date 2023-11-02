@@ -88,7 +88,7 @@ function FormCheck(props) {
   useEffect(() => {
     getForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [state]);
 
   return (
     <>
@@ -107,7 +107,16 @@ function FormCheck(props) {
       ) : (
         <Div>
           <Content>
-            <Title>{state.memberName}님이</Title>
+            <Title
+              className="hoverName"
+              onClick={() =>
+                navigate(`/mypage/${state.memberName}`, {
+                  state: { state: state.memberName, memberId: state.memberId },
+                })
+              }
+            >
+              {state.memberName}님이
+            </Title>
             <Title>스터디를 신청했어요 :)</Title>
             <Img
               style={{ width: "13rem", height: "12rem" }}
@@ -193,6 +202,11 @@ const Img = styled.img`
 const Title = styled.h1`
   margin-top: 0;
   margin-bottom: 1vh;
+  &.hoverName {
+    :hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const Div = styled.div`

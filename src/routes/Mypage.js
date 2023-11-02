@@ -83,10 +83,6 @@ function Mypage(props) {
     navigate(`/edit/${id}`);
   };
 
-  const goChat = () => {
-    navigate(`/chatRoom/${state.state}`, { state: state.state });
-  };
-  //console.log(dataa.imagePath);
   return (
     <>
       <Header
@@ -148,7 +144,7 @@ function Mypage(props) {
               {user === state.state ? (
                 <button onClick={goEdit}>수정하기</button>
               ) : (
-                <button onClick={goChat}>채팅하기</button>
+                ""
               )}
             </Btn>
           </Left>

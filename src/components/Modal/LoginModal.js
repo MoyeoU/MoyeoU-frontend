@@ -70,6 +70,7 @@ function LoginModal({
       .then((response) => {
         console.log(response.data.length);
         setAlertCount(response.data.length);
+        setIsAlertCountChange(false);
         //setAlertData(response.data);
       })
       .catch((error) => {
