@@ -24,7 +24,7 @@ function Modal({ onClose, memberId, name }) {
       })
       .then((response) => {
         console.log(response.data);
-        setData(response.data);
+        setData(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
